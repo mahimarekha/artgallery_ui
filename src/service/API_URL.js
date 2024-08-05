@@ -3,5 +3,6 @@ export const LOGIN_URL ={
 }
 
 export const EVENTS ={
-    GET:"/exbhition"
+    GET:"/exbhition",
+      POST:"/exbhition"
 }

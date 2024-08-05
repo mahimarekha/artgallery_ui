@@ -30,6 +30,7 @@ const Event = () => {
         discription: '',
         address: '',
         fee: '',
+        imageURL:''
     });
     const [validated, setValidated] = useState(false);
 
@@ -103,9 +104,9 @@ const Event = () => {
       };
     const handleSubmit = (event) => {
         event.preventDefault();
+
         setValidated(true);
-        alert(formData);
-        if (validateForm()) {
+        // if (validateForm()) {
           CommonService.postRequest(EVENTS.POST, formData).then((res) => {
            
             setShowSuccess(true);
@@ -121,15 +122,19 @@ const Event = () => {
                 fee: '',
             });
             setValidated(false);
-            
+            handleClose();
+            getEventList();
           }).catch((err) => {
-    
+            
+            if(err.response.data.message){
+                  alert(err.response.data.message);
+            }
         
           });
           // Handle form submission (e.g., send data to the server)
     
     
-        }
+        // }
       };
     return (
         <>
@@ -241,7 +246,7 @@ const Event = () => {
                                                             value={date.startDate}
                                                             // isInvalid={!!formErrors.startDate}
 
-                                                            onChange={(e) => setDate(e.target.value)}
+                                                            onChange={handleChange}
                                                         />
                                                     </Col>
                                                     <Col xs={6} md={6}>
@@ -252,7 +257,7 @@ const Event = () => {
                                                             value={date.endDate}
                                                             // isInvalid={!!formErrors.startDate}
 
-                                                            onChange={(e) => setDate(e.target.value)}
+                                                            onChange={handleChange}
                                                         />
                                                     </Col>
 
@@ -266,6 +271,7 @@ const Event = () => {
                                                             name="startTime"
                                                             placeholder="TimeRange"
                                                             className="modalTextField"
+                                                            onChange={handleChange}
                                                             value={date.startTime}
                                                             style={{ paddingRight: "6px", width: "100%" }}
                                                         />
@@ -276,6 +282,7 @@ const Event = () => {
                                                             name="endTime"
                                                             placeholder="TimeRange"
                                                             className="modalTextField"
+                                                            onChange={handleChange}
                                                             value={date.endTime}
                                                             style={{ paddingRight: "6px", width: "100%" }}
                                                         />
@@ -309,7 +316,7 @@ const Event = () => {
                                                 </Row>
                                                 <br></br>
                                                 <Row>
-                                                    <Col xs={12} md={12}>
+                                                    <Col xs={6} md={6}>
                                                     <Form.Control
                                                             type="text" style={{ width: "100%" }}
                                                             placeholder="Enter discription"
@@ -319,22 +326,33 @@ const Event = () => {
                                                             isInvalid={!!formErrors.discription}
                                                         />
                                                     </Col>
+                                                    <Col xs={6} md={6}>
+                                                    <Form.Control
+                                                            type="text" style={{ width: "100%" }}
+                                                            placeholder="Enter Image URL"
+                                                            name="imageURL"
+                                                            value={formData.imageURL}
+                                                            onChange={handleChange}
+                                                            isInvalid={!!formErrors.imageURL}
+                                                        />
+                                                    </Col>
 
 
                                                 </Row>
                                             </FormGroup>
                                         </InputGroup>
-                                    </Form>
-                                </Container>
-                            </Modal.Body>
-                            <Modal.Footer>
+                                        <Modal.Footer>
                                 <Button variant="secondary" onClick={handleClose}>
                                     Close
                                 </Button>
-                                <Button variant="primary" type="submit" onClick={handleClose}>
+                                <Button variant="primary" type="submit">
                                     Add
                                 </Button>
                             </Modal.Footer>
+                                    </Form>
+                                </Container>
+                            </Modal.Body>
+                           
                         </Modal>
                     </div>
                 </div>
