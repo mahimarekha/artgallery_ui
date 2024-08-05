@@ -215,61 +215,20 @@ const Header = () => {
                         <div className="offcanvas-menu">
                             <ul>
                                 <li>
-                                    <a href="#!" onClick={() => handleShow("home")}><span>Home</span></a>
-                                    {
+                                    <a href="/" onClick={() => handleShow("home")}><span>Home</span></a>
+                                    {/* {
                                         show === "home" ?
                                             <ul className="mobile-sub-menu">
                                                 <li><Link to="/">Fashion</Link></li>
                                                 <li><Link to="/furniture">Furniture</Link></li>
                                                 <li><Link to="/electronics">Electronics</Link></li>
                                             </ul> : null
-                                    }
+                                    } */}
 
                                 </li>
                                 <li >
-                                    <a href="#!" onClick={() => handleShow("shop")}><span>Shop</span></a>
-                                    {
-                                        show === "shop" ? <>
-                                            <ul className="mobile-sub-menu">
-                                                <li>
-                                                    <a href="#!">Shop Layout</a>
-                                                    <ul className="mobile-sub-menu">
-                                                        <li><Link to="/shop">Shop Four Grid</Link></li>
-                                                        <li><Link to="/shopTwo">Shop Three Grid</Link></li>
-                                                        <li><Link to="/shoplist">Shop List View</Link></li>
-                                                        <li><Link to="/shop-left-bar">Shop Left Sidebar</Link></li>
-                                                        <li><Link to="/shop-right-bar">Shop Right Sidebar</Link></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-
-                                            <ul className="mobile-sub-menu">
-                                                <li>
-                                                    <a href="#!">Shop Pages</a>
-                                                    <ul className="mobile-sub-menu">
-                                                        <li><Link to="/cart">Cart View One</Link></li>
-                                                        <li><Link to="/cartTwo">Cart View Two </Link></li>
-                                                        <li><Link to="/empty-cart">Empty Cart</Link></li>
-                                                        <li><Link to="/checkout-one">Checkout View One</Link></li>
-                                                        <li><Link to="/checkout-two">Checkout View Two</Link></li>
-                                                        <li><Link to="/wishlist">Wishlist</Link></li>
-                                                        <li><Link to="/compare">Compare</Link></li>
-                                                        <li><Link to="/order-tracking">Order Tracking</Link></li>
-                                                        <li><Link to="/order-complete">Order Complete</Link></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                            <ul className="mobile-sub-menu">
-                                                <li>
-                                                    <a href="#!">Product Single</a>
-                                                    <ul className="mobile-sub-menu">
-                                                        <li><Link to="/product-details-one/1">Product Single</Link></li>
-                                                        <li><Link to="/product-details-two/1">Product Single Two</Link></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </> : null
-                                    }
+                                    <a href="/blog-list-view" onClick={() => handleShow("shop")}><span>Events</span></a>
+                                   
 
                                 </li>
                                 <li>
