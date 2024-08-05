@@ -216,14 +216,7 @@ const Header = () => {
                             <ul>
                                 <li>
                                     <a href="/" onClick={() => handleShow("home")}><span>Home</span></a>
-                                    {/* {
-                                        show === "home" ?
-                                            <ul className="mobile-sub-menu">
-                                                <li><Link to="/">Fashion</Link></li>
-                                                <li><Link to="/furniture">Furniture</Link></li>
-                                                <li><Link to="/electronics">Electronics</Link></li>
-                                            </ul> : null
-                                    } */}
+                                    
 
                                 </li>
                                 <li >
