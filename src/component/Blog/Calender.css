@@ -69,6 +69,16 @@ header #logo {
   line-height: 1;
 }
 
+.popover-img{
+  width: 4rem; 
+  height: auto;
+}
+.img{
+  height: auto;
+  width: 4rem;
+  margin-left: 3rem;
+
+}
 header #logo .icon {
   padding-right: 0.25em;
 }
@@ -183,7 +193,8 @@ main {
 
 .calendar .body .selected {
   border-left: 10px solid transparent;
-  border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
+  border-image: linear-gradient(45deg, #f68d2d 0%, #53cbf1 40%);
+  
   border-image-slice: 1;
 }
 
@@ -213,8 +224,22 @@ main {
   pointer-events: none;
 }
 
+.font-color{
+  font-size: 2em;
+  color: #f47738;
+}
 .calendar .body .cell .bg {
   font-weight: 700;
+    line-height: 1;
+    color: var(--main-color);
+    opacity: 0;
+    font-size: 3em;
+    position: absolute;
+    top: 0.7em;
+    right: 0.10em;
+    transition: 0.25s ease-out;
+    letter-spacing: -0.07em;
+  /* font-weight: 700;
   line-height: 1;
   color: var(--main-color);
   opacity: 0;
@@ -223,7 +248,7 @@ main {
   top: -0.2em;
   right: -0.05em;
   transition: 0.25s ease-out;
-  letter-spacing: -0.07em;
+  letter-spacing: -0.07em; */
 }
 
 .calendar .body .cell:hover .bg,
