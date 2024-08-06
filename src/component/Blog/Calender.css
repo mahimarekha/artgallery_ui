@@ -75,7 +75,7 @@ header #logo {
 }
 .img{
   height: auto;
-  width: 4rem;
+  max-width: 100%;
   margin-left: 3rem;
 
 }
@@ -253,7 +253,7 @@ main {
 
 .calendar .body .cell:hover .bg,
 .calendar .body .selected .bg {
-  opacity: 0.50;
+  opacity: 5;
   transition: 0.5s ease-in;
 }
 
