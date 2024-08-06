@@ -12,7 +12,7 @@ const CommonService = {
   },
   getDetails(url) {
     return requests.get(url);
-  },
+  }
 };
 
 export default CommonService;

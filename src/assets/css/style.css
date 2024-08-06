@@ -3027,6 +3027,24 @@ button {
 .text-center{
     text-align: center;
 }
+
+.cal-next{
+   
+    cursor: pointer;
+    right: 25px;
+    color: #ffffff;
+    background-color: var(--main-theme-color);
+    z-index: 4;
+    width: 40px;
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    transition: .9s;
+    border-radius: 50%;
+    top: 88%;
+    opacity: 1;
+    visibility: visible;
+}
 .blog_post_img a img {
     width: 100%;
     transition: .4s all ease-in-out;

@@ -17,6 +17,7 @@
     "axios": "^1.7.3",
     "bootstrap": "^5.1.1",
     "chart.js": "^3.5.1",
+    "date-fns": "1.29.0",
     "font-awesome": "^4.7.0",
     "formik": "^2.4.6",
     "google-map-react": "^2.1.10",

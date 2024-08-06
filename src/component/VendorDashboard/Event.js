@@ -65,9 +65,9 @@ const Event = () => {
     }, []);
     const getEventList = () => {
 
-        CommonService.getDetails(EVENTS.GET).then((res) => {
+        CommonService.postRequest(EVENTS.EVENTGET,{}).then((res) => {
             
-            setEventList(res.results);
+            setEventList(res);
 
         }).catch((err) => {
 
