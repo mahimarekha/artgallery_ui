@@ -37,6 +37,7 @@ const Event = () => {
     const { id } = useParams();
     const [date, setDate] = useState(new Date());
     const [formErrors, setFormErrors] = useState({});
+    const [open, setOpen] = React.useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     const [showSuccess, setShowSuccess] = useState(false);
@@ -136,6 +137,15 @@ const Event = () => {
     
         // }
       };
+      
+      const editEvent = (event) => {
+        setFormData(event);
+        handleOpen();
+    }
+    const handleOpen = () => {
+        setOpen(true);
+    };
+   
     return (
         <>
             <div className="row">
@@ -175,7 +185,13 @@ const Event = () => {
                                             <td>{data.address}</td>
                                             <td>{data.fee}</td>
                                             <td>{data.organizer}</td>
-                                            <td><i className="fa fa-edit"></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash"></i></button></td>
+
+                                            {/* <TableCell>
+                                            <EditIcon style={{ cursor: 'pointer' }} onClick={() => editDoctor(doctor)} >
+                                            </EditIcon >
+                                        </TableCell> */}
+
+                                            <td><i className="fa fa-edit" onClick={() => editEvent()}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash"></i></button></td>
                                         </tr>
                                     ))}
 

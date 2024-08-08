@@ -20,17 +20,17 @@ class Calendar extends React.Component {
     };
   }
   componentDidMount() {
-    this.getEventList();
+  const date =  dateFns.format(this.state.currentMonth, "YYYY-MM-DD");
+    this.getEventList(date);
   }
 
-  getEventList = () => {
+  getEventList = (date) => {
 
-    CommonService.postRequest(EVENTS.EVENTGET, {}).then((res) => {
+    CommonService.postRequest(EVENTS.EVENTGET, {currentMonth:date}).then((res) => {
 
       this.setState({
         list: res,
-        currentMonth: new Date(),
-        selectedDate: new Date()
+       
       });
     }).catch((err) => {
 
@@ -182,15 +182,21 @@ class Calendar extends React.Component {
   };
 
   nextMonth = () => {
+    const date =  dateFns.format(dateFns.addMonths(this.state.currentMonth, 1), "YYYY-MM-DD");
+     this.getEventList(date);
     this.setState({
       currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
     });
+    
   };
 
   prevMonth = () => {
+    const date =  dateFns.format(dateFns.subMonths(this.state.currentMonth, 1), "YYYY-MM-DD");
+    this.getEventList(date);
     this.setState({
       currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
     });
+   
   };
 
   render() {
