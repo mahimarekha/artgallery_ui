@@ -6,6 +6,9 @@ import Popover from 'react-bootstrap/Popover';
 import CommonService from '../../service/commonService';
 import { EVENTS } from '../../service/API_URL';
 import { Link } from 'react-router-dom'
+// import Card from 'react-bootstrap/Card';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 
 class Calendar extends React.Component {
@@ -80,16 +83,19 @@ class Calendar extends React.Component {
     return <div className="days row">{days}</div>;
   }
 
+  filterByDate(records, targetDate) {
+    return records.filter(record => record.eventsDates.includes(targetDate));
+  }
   findEventByDate = (date) => {
-
     for (const event of this.state.list) {
       // console.log(event );
       console.log(event.eventsDates.includes(date));
       if (event.eventsDates.includes(date)) {
-        return { eventName: event.eventName, 
+        return  { eventName: event.eventName, 
           imageURL: event.imageURL,
           organizer:event.organizer,
           id:event.id,
+          imageURList:this.filterByDate(this.state.list,date),
           address:event.address };
       }
     }
@@ -114,8 +120,8 @@ class Calendar extends React.Component {
       for (let i = 0; i < 7; i++) {
 
         const datess = dateFns.format(day, showDateFormate);
-
         const eventDetails = this.findEventByDate(datess);
+        console.log(eventDetails);
         formattedDate = dateFns.format(day, dateFormat);
         const cloneDay = day;
         days.push(
@@ -127,6 +133,8 @@ class Calendar extends React.Component {
             key={day}
             // onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
           >
+            {eventDetails && eventDetails.imageURList.length > 1 ?            <span className="eventnumber">{(eventDetails.imageURList.length-1)+"+"}</span>
+:'' }
 
             <span className="number">{formattedDate}</span>
             {eventDetails ?  <span className="bg"> 
@@ -137,23 +145,32 @@ class Calendar extends React.Component {
           
 
             <span className="">
-              {eventDetails ? <OverlayTrigger trigger={['focus','hover']} placement="top"  overlay={<Popover id="popover-basic" show={false}>
+              {eventDetails ? <OverlayTrigger trigger={[ "click"]} placement="auto"  overlay={<Popover id="popover-basic" show={false}>
                 <Popover.Header as="h3" style={{ backgroundColor: '#f58233', color: 'white' }}> {eventDetails.eventName}   </Popover.Header>
                 <Popover.Body>
-                <div>
-               <span style={{"font-weight":"bold"}}>
-               Project type
-                </span> : {eventDetails.organizer}
-               </div>
-               <div>
-               <span style={{"font-weight":"bold"}}>
-             Address
-                </span>       : {eventDetails.address}
-               </div>
+                {/* <ListGroup.Item> */}
+                {eventDetails.imageURList.map((items)=>(
+                  <Card >
+                 <Card.Body>
+                 <Card.Img variant="top" sizes="" src={items.imageURL} style={{height:"50px",width:"50px"}}/>
+                 <Card.Subtitle className="mb-2 text-muted" style={{marginTop:"10px"}}>{items.eventName}</Card.Subtitle>
+
+                 {/* <Card.Title style={{fontSize:"20px"}}>{items.eventName}</Card.Title> */}
+                 
+        <Card.Link href={"/vieweventdetails/"+items.id}>View More</Card.Link>
+                  </Card.Body>
+                </Card>
+    
+                 
+                ))}
+                {/* </ListGroup.Item> */}
+                  
+               
 
                 </Popover.Body>
               </Popover>}>
               {/* <Link to={"/vieweventdetails/"+eventDetails.id}> */}
+                 
                 <img src={eventDetails.imageURL} className="img" />
                 {/* </Link> */}
               </OverlayTrigger> : ""}
