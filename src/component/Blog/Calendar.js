@@ -9,20 +9,26 @@ import { Link } from 'react-router-dom'
 // import Card from 'react-bootstrap/Card';
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
-
+import { useHistory ,useLocation,} from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 class Calendar extends React.Component {
 
   constructor(props) {
     super(props);
+    const queryParams = new URLSearchParams(props.location.search);
+    
+    // Extract query parameters
+    const currentMonth = queryParams.get('currentMonth');
 
     this.state = {
       list: [],
-      currentMonth: new Date(),
+      currentMonth:currentMonth ?  new Date(currentMonth) : new Date(),
       selectedDate: new Date()
     };
   }
   componentDidMount() {
+
   const date =  dateFns.format(this.state.currentMonth, "YYYY-MM-DD");
     this.getEventList(date);
   }
@@ -35,7 +41,6 @@ class Calendar extends React.Component {
 
         return {...result,...{colorCode:colors[index % colors.length]}};
       });
-console.log(resulatDetails)
       this.setState({
         list: resulatDetails,
        
@@ -258,6 +263,7 @@ console.log(resulatDetails)
   };
 
   render() {
+
     return (
       <div className="calendar">
         {this.renderHeader()}
@@ -277,4 +283,4 @@ const popover = (
     </Popover.Body>
   </Popover>
 );
-export default Calendar;
+export default withRouter(Calendar); ;

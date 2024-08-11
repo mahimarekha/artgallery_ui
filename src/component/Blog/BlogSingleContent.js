@@ -8,7 +8,7 @@ import post1 from '../../assets/img/blog/post2.png'
 import post2 from '../../assets/img/blog/post3.png'
 import post4 from '../../assets/img/blog/post4.png'
 import author from '../../assets/img/user/author.png'
-import { useHistory } from 'react-router-dom';
+import { useHistory ,useLocation,} from 'react-router-dom';
 
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -18,9 +18,16 @@ const formatDate = (timestamp) => {
   return date.toLocaleDateString('en-US', options);
 };
 const BlogSingleContent = (props) => {
+  const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+  
+    const currentMonth = queryParams.get('currentMonth');
+   
+
   const history = useHistory();
   const goBack = () => {
-    history.goBack(); 
+   // history.goBack(); 
+    history.push("/blog-list-view?currentMonth="+currentMonth);
 };
   return (
     <>
