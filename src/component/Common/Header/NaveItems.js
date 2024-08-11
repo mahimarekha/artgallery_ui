@@ -36,7 +36,7 @@ const NaveItems = (props) => {
                 </li>
             ) : (
                 <li className="has-dropdown">
-                                                    <Link to={props.item.href} className="main-menu-link">{props.item.name}</Link>
+                                                    {/* <Link to={props.item.href} className="main-menu-link">{props.item.name}</Link> */}
 
                     {/* <a href="#!" className="main-menu-link">{props.item.name} <i className="fa fa-angle-down"></i></a>
                     <ul className="sub-menu">

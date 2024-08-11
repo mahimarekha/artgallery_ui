@@ -135,7 +135,7 @@ main {
   width: 100%;
   background: var(--neutral-color);
   border: 1px solid var(--border-color);
-  margin-top: 38px;
+  margin-top: 6rem;
 }
 
 .calendar .header {
@@ -176,7 +176,7 @@ main {
 
 .calendar .body .cell {
   position: relative;
-  height: 5em;
+  height: 9em;
   border-right: 1px solid var(--border-color);
   overflow: hidden;
   cursor: pointer;
@@ -222,6 +222,41 @@ main {
   text-align: center;
  
 }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 4px;          
+}
+
+/* Default for small screens */
+.truncate {
+  width: 100px;
+}
+
+/* Medium screens (tablets, small desktops) */
+@media (min-width: 600px) {
+  .truncate {
+      width: 6rem;
+      font-size: 10px;
+  }
+}
+
+/* Large screens (desktops, large tablets) */
+@media (min-width: 1024px) {
+  .truncate {
+      width: 300px;
+  }
+}
+
+/* Extra large screens (large desktops) */
+@media (min-width: 1440px) {
+  .truncate {
+      width: 14rem;
+      font-size: 14px;
+  }
+}
 .calendar .body .cell .eventnumber {
   position: absolute;
   font-size: 60.5%;
@@ -233,7 +268,7 @@ main {
     background-color: #ff6347;
     
     color: #ffffff;
-    padding: 3px 3px;
+    padding: 3px 5px;
     border-radius: 50%;
     text-align: center;
     

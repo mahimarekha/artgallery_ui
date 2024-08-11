@@ -776,7 +776,8 @@ button {
 
 .header-logo .logo img {
     width: 100%;
-    height: auto;
+    height: 6rem;
+    
 }
 
 .header-action-link {

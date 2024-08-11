@@ -90,7 +90,7 @@ const Footer = () => {
 
     return (
         <>
-            <footer id="footer_one">
+            {/* <footer id="footer_one">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-4 col-md-12 col-sm-12 col-12">
@@ -167,23 +167,26 @@ const Footer = () => {
                     <i className="fa fa-chevron-up"></i>
                     <i className="fa fa-arrow-up"></i>
                 </div>
-            </footer>
+            </footer> */}
 
             <section id="copyright_one">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div className="copyright_left">
-                                <h6>© CopyRight 2022 <span>AndShop</span></h6>
+                                <h6>© CopyRight 2024 <span> Chitramayee State Gallery of Art</span></h6>
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div className="copyright_right">
-                                <img src={payment} alt="img" />
+                            {/* <div className="copyright_left"> */}
+                            <h5 style={{color:"white"}}>Address</h5>
+                                <span style={{color:"white"}}>State Gallery of Art,Road no.1, Kavuri Hills, Madhapur, Hyderabad-500033, Telangana</span>
+                            {/* </div> */}
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>   
             </section>
             {/* {
                 cookie ? <Cookie accept={acceptCookie} cancel={cancelCookie} /> : null

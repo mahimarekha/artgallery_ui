@@ -51,9 +51,9 @@ const BlogSingleOnes = () => {
             {/* <Banner title="Blog Single" /> */}
             <BlogSingleOne>
                 <BlogSingleContent eventList={eventList} />
-                <BlogSideBar />
+                {/* <BlogSideBar /> */}
             </BlogSingleOne>
-            <InstgramSlider />
+            {/* <InstgramSlider /> */}
             <Footer />
         </>
     )

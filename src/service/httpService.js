@@ -3,7 +3,7 @@ import React, { useState } from "react";
 console.log(process.env.REACT_APP_NAME)
 // https://demo.jeetho.srshta.com/api
 
-const baseURL = process.env.REACT_APP_APIURL?process.env.REACT_APP_APIURL:'http://localhost:8081/v1/';
+const baseURL = process.env.REACT_APP_APIURL?process.env.REACT_APP_APIURL:'https://artgallery-api-v9o9.onrender.com/v1/';
 const instance = axios.create({
   baseURL:baseURL,
   timeout: 500000,

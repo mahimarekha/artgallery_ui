@@ -28,11 +28,16 @@ class Calendar extends React.Component {
   }
 
   getEventList = (date) => {
-
+    const colors = ["red", "blue", "green", "orange", "purple", "brown"];
     CommonService.postRequest(EVENTS.EVENTGET, {currentMonth:date}).then((res) => {
 
+      const resulatDetails = res.map((result,index)=>{
+
+        return {...result,...{colorCode:colors[index % colors.length]}};
+      });
+console.log(resulatDetails)
       this.setState({
-        list: res,
+        list: resulatDetails,
        
       });
     }).catch((err) => {
@@ -87,6 +92,8 @@ class Calendar extends React.Component {
     return records.filter(record => record.eventsDates.includes(targetDate));
   }
   findEventByDate = (date) => {
+ 
+    let index = 0;
     for (const event of this.state.list) {
       // console.log(event );
       console.log(event.eventsDates.includes(date));
@@ -95,9 +102,11 @@ class Calendar extends React.Component {
           imageURL: event.imageURL,
           organizer:event.organizer,
           id:event.id,
+          organizer:event.organizer,
           imageURList:this.filterByDate(this.state.list,date),
           address:event.address };
       }
+      index++; 
     }
     return null;
   };
@@ -111,7 +120,7 @@ class Calendar extends React.Component {
     const dateFormat = "D";
     const showDateFormate = "YYYY-MM-DD";
     const rows = [];
-
+    const currentMonthParames = new URLSearchParams({ currentMonth: currentMonth.toISOString() });
     let days = [];
     let day = startDate;
     let formattedDate = "";
@@ -133,29 +142,29 @@ class Calendar extends React.Component {
             key={day}
             // onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
           >
-            {eventDetails && eventDetails.imageURList.length > 1 ?            <span className="eventnumber">{(eventDetails.imageURList.length-1)+"+"}</span>
+            {eventDetails && eventDetails.imageURList.length > 1 ?            <span className="eventnumber">{(eventDetails.imageURList.length)}</span>
 :'' }
 
             <span className="number">{formattedDate}</span>
             {eventDetails ?  <span className="bg"> 
-                            <Link to={"/vieweventdetails/"+eventDetails.id}>
+                            <Link to={"/vieweventdetails/"+eventDetails.id+"?"+currentMonthParames.toString()}>
                 <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> 
                 </Link>
              </span>:""}
           
 
-            <span className="">
+            {/* <span className="">
               {eventDetails ? <OverlayTrigger trigger={[ "click"]} placement="auto"  overlay={<Popover id="popover-basic" show={false}>
                 <Popover.Header as="h3" style={{ backgroundColor: '#f58233', color: 'white' }}> {eventDetails.eventName}   </Popover.Header>
                 <Popover.Body>
-                {/* <ListGroup.Item> */}
+               
                 {eventDetails.imageURList.map((items)=>(
                   <Card >
                  <Card.Body>
                  <Card.Img variant="top" sizes="" src={items.imageURL} style={{height:"50px",width:"50px"}}/>
                  <Card.Subtitle className="mb-2 text-muted" style={{marginTop:"10px"}}>{items.eventName}</Card.Subtitle>
 
-                 {/* <Card.Title style={{fontSize:"20px"}}>{items.eventName}</Card.Title> */}
+               
                  
         <Card.Link href={"/vieweventdetails/"+items.id}>View More</Card.Link>
                   </Card.Body>
@@ -163,18 +172,50 @@ class Calendar extends React.Component {
     
                  
                 ))}
-                {/* </ListGroup.Item> */}
+              
                   
                
 
                 </Popover.Body>
               </Popover>}>
-              {/* <Link to={"/vieweventdetails/"+eventDetails.id}> */}
-                 
+             
+                
                 <img src={eventDetails.imageURL} className="img" />
-                {/* </Link> */}
+              
               </OverlayTrigger> : ""}
+            </span> */}
+            <span>
+            {eventDetails?eventDetails.imageURList.map((items)=>(<div class="truncate" > 
+              
+              <OverlayTrigger trigger={[ "focus","hover"]} placement="top"  overlay={<Popover id="popover-basic" show={false}>
+                <Popover.Header as="h3" style={{ backgroundColor: '#f58233', color: 'white' }}> {items.eventName}   </Popover.Header>
+                <Popover.Body>
+               
+         
+                  <Card >
+                 <Card.Body>
+                 {items.imageURL ? <Card.Img variant="top" sizes="" src={items.imageURL} style={{height:"50px",width:"50px"}}/> :""}
+                 {/* <Card.Title className="mb-2 text-muted" style={{marginTop:"10px"}}>{items.eventName}</Card.Title> */}
+                 <Card.Subtitle className="mb-2 text-muted" style={{marginTop:"10px"}}>{items.organizer}</Card.Subtitle>
 
+                  <Card.Link href={"/vieweventdetails/"+items.id+"?"+currentMonthParames.toString()}>View More</Card.Link>
+                  </Card.Body>
+                </Card>
+    
+               
+
+                </Popover.Body>
+              </Popover>}>
+             
+                
+              <Link to={"/vieweventdetails/"+eventDetails.id+"?"+currentMonthParames.toString()}> <span style={{"color":`${items.colorCode}`,"text-decoration":"underline"}}>{items.eventName} </span></Link>
+             
+              
+              </OverlayTrigger> 
+
+              {/* <Link to={"/vieweventdetails/"+eventDetails.id}> <span style={{"color":`${items.colorCode}`,"text-decoration":"underline"}}>{items.eventName} </span></Link> */}
+              
+              </div>)):''}
             </span>
           </div>
         );

@@ -8,6 +8,7 @@ import post1 from '../../assets/img/blog/post2.png'
 import post2 from '../../assets/img/blog/post3.png'
 import post4 from '../../assets/img/blog/post4.png'
 import author from '../../assets/img/user/author.png'
+import { useHistory } from 'react-router-dom';
 
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -17,15 +18,21 @@ const formatDate = (timestamp) => {
   return date.toLocaleDateString('en-US', options);
 };
 const BlogSingleContent = (props) => {
+  const history = useHistory();
+  const goBack = () => {
+    history.goBack(); 
+};
   return (
     <>
       <div className="col-lg-9">
         <div className="blog_single_content">
           <div className="text-center">
-            <img src={props?.eventList.imageURL} alt="img" style={{height:"20rem"}} />
+         
+           {props?.eventList.imageURL ? <img src={props?.eventList.imageURL} alt="img" style={{height:"20rem"}} /> :"" } 
+
           </div>
           <div>
-          <h2>{props?.eventList.eventName} </h2>
+          <h2>  <i class="fa fa-arrow-circle-left font-color" style={{fontSize:"2rem"}} onClick={goBack} aria-hidden="true"></i> {props?.eventList.eventName} </h2>
           </div>
           <div className="blog_single_widget">
             
@@ -34,14 +41,14 @@ const BlogSingleContent = (props) => {
                 <li>{formatDate(props?.eventList.startDate)} TO {formatDate(props?.eventList.endDate)} - By <a href="#!"> {props?.eventList.organizer}</a></li>
               </ul>
               <ul>
-                <li> Timing : {props?.eventList.startTime} TO {props?.eventList.endTime}</li>
+                <li> Timing : {props?.eventList.startTime ? <span >{props?.eventList.startTime} TO {props?.eventList.endTime}</span> :"N/A"}</li>
               </ul>
              
               <ul>
-                <li> Address : {props?.eventList.address} </li>
+                <li> Address : {props?.eventList.address?props?.eventList.address:"N/A"} </li>
               </ul>
               <ul>
-                <li> Fee : {props?.eventList.fee} </li>
+                <li> Fee : {props?.eventList.fee ? props?.eventList.fee : "N/A"} </li>
               </ul>
             </div>
             <div className="blog_single_first_Widget">
@@ -68,7 +75,7 @@ const BlogSingleContent = (props) => {
                 rutrum congue leo eget malesuada.
               </p> */}
             </div>
-            <div className="blog_details_center_img">
+            {/* <div className="blog_details_center_img">
               <div className="row">
                 <div className="col-lg-4 col-md-6 col-sm-12 col-12">
                   <div className="single_center_img img-zoom-hover">
@@ -86,8 +93,8 @@ const BlogSingleContent = (props) => {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="blog_single_secend_widget">
+            </div> */}
+            {/* <div className="blog_single_secend_widget">
               <h2>There Are Many Variayions Of Product</h2>
               <p>
                 Cras ultricies ligula sed magna dictum porta. Praesent
@@ -101,17 +108,17 @@ const BlogSingleContent = (props) => {
                 Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
                 Curabitur aliquet quam id dui posuere blandit
               </p>
-            </div>
-            <div className="single_categoris_bottom">
+            </div> */}
+            {/* <div className="single_categoris_bottom">
               <ul>
                 <li><a href="#!">Fashion</a></li>
                 <li><a href="#!">Style</a></li>
                 <li><a href="#!">Woman</a></li>
                 <li><a href="#!">Man</a></li>
               </ul>
-            </div>
+            </div> */}
           </div>
-          <div className="card post_author">
+          {/* <div className="card post_author">
             <div className="card-body">
               <div className="author_img">
                 <img src={author} alt="author" />
@@ -129,10 +136,10 @@ const BlogSingleContent = (props) => {
                 </p>
               </div>
             </div>
-          </div>
-          <RelatedPost />
+          </div> */}
+          {/* <RelatedPost />
           <SingleCommentArea />
-          <CommentForm />
+          <CommentForm /> */}
         </div>
       </div>
     </>

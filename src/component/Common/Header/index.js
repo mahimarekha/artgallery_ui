@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import logo from '../../../assets/img/logo.png'
-import logoWhite from '../../../assets/img/logo-white.png'
+import logo from '../../../assets/img/Logo SGA.jpg'
+import logoWhite from '../../../assets/img/Telangana Govt Logo PNG.png'
 import { MenuData } from './MenuData'
 import NaveItems from './NaveItems'
 import TopHeader from './TopHeader'
@@ -97,7 +97,7 @@ const Header = () => {
 
     return (
         <>
-            <TopHeader />
+            {/* <TopHeader /> */}
             <header className="header-section d-none d-xl-block is-sticky">
                 <div className="header-wrapper">
                     <div className="header-bottom header-bottom-color--golden section-fluid sticky-header sticky-color--golden">
@@ -141,11 +141,11 @@ const Header = () => {
                                                 <img src={svgsearch} alt="img" />
                                             </a>
                                         </li> */}
-                                        <li>
+                                        {/* <li>
                                             <a href="#offcanvas-about" className="offacnvas offside-about offcanvas-toggle" onClick={handleabout}>
                                                 <i className="fa fa-bars"></i>
                                             </a>
-                                        </li>
+                                        </li> */}
                                     </ul>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@ const Header = () => {
                                 </ul>
                             </div>
 
-                            <div className="mobile-right-side">
+                            {/* <div className="mobile-right-side">
                                 <ul className="header-action-link action-color--black action-hover-color--golden">
                                     <li>
                                         <a href="#!" className="search_width" onClick={handleSearch}>
@@ -196,7 +196,7 @@ const Header = () => {
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>
