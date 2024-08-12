@@ -151,11 +151,11 @@ class Calendar extends React.Component {
 :'' }
 
             <span className="number">{formattedDate}</span>
-            {eventDetails ?  <span className="bg"> 
+            {/* {eventDetails ?  <span className="bg"> 
                             <Link to={"/vieweventdetails/"+eventDetails.id+"?"+currentMonthParames.toString()}>
                 <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> 
                 </Link>
-             </span>:""}
+             </span>:""} */}
           
 
             {/* <span className="">
@@ -190,7 +190,8 @@ class Calendar extends React.Component {
               </OverlayTrigger> : ""}
             </span> */}
             <span>
-            {eventDetails?eventDetails.imageURList.map((items)=>(<div class="truncate" > 
+              <div className="scrolling">
+              {eventDetails?eventDetails.imageURList.map((items)=>(<div class="truncate" > 
               
               <OverlayTrigger trigger={[ "focus","hover"]} placement="top"  overlay={<Popover id="popover-basic" show={false}>
                 <Popover.Header as="h3" style={{ backgroundColor: '#f58233', color: 'white' }}> {items.eventName}   </Popover.Header>
@@ -211,9 +212,11 @@ class Calendar extends React.Component {
 
                 </Popover.Body>
               </Popover>}>
-             
+           
+             <Link to={"/vieweventdetails/"+items.id+"?"+currentMonthParames.toString()}> <span style={{"color":`${items.colorCode}`,"text-decoration":"underline"}}>{items.eventName} </span></Link>
+            
+           
                 
-              <Link to={"/vieweventdetails/"+eventDetails.id+"?"+currentMonthParames.toString()}> <span style={{"color":`${items.colorCode}`,"text-decoration":"underline"}}>{items.eventName} </span></Link>
              
               
               </OverlayTrigger> 
@@ -221,6 +224,8 @@ class Calendar extends React.Component {
               {/* <Link to={"/vieweventdetails/"+eventDetails.id}> <span style={{"color":`${items.colorCode}`,"text-decoration":"underline"}}>{items.eventName} </span></Link> */}
               
               </div>)):''}
+              </div>
+         
             </span>
           </div>
         );

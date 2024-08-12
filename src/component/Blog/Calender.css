@@ -227,7 +227,10 @@ main {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: 4px;          
+  padding: 3px;  
+  word-wrap: break-word;
+  white-space: normal;
+  
 }
 
 /* Default for small screens */
@@ -235,13 +238,61 @@ main {
   width: 100px;
 }
 
+
+@media only screen and (min-width: 320px) and (max-width: 374px) {
+  .truncate {
+    width: 6rem;
+    font-size: 10px;
+}
+
+}
+
+@media only screen and (min-width: 320px) and (max-width: 374px) {
+
+.scrolling{
+  width: 20px; /* Set a fixed width for the container */
+  white-space: nowrap; /* Prevents the text from wrapping to the next line */
+  overflow-x: auto; 
+}
+}
+/* For medium iPhones (e.g., iPhone 6, 7, 8, X) */
+@media only screen and (min-width: 375px) and (max-width: 413px) {
+  .truncate {
+    width: 6rem;
+    font-size: 10px;
+}
+
+}
+
+@media only screen and (min-width: 375px) and (max-width: 413px) {
+  .scrolling{
+    white-space: nowrap; /* Prevents the text from wrapping to the next line */
+    overflow-x: auto; 
+  }
+
+}
+
+/* For large iPhones (e.g., iPhone 6 Plus, 7 Plus, 8 Plus, XR, 11, 12, 13 Pro Max) */
+@media only screen and (min-width: 414px) and (max-width: 427px) {
+  .truncate {
+    width: 6rem;
+    font-size: 10px;
+}
+.scrolling{
+  white-space: nowrap; /* Prevents the text from wrapping to the next line */
+  overflow-x: auto; 
+}
+}
+
+
 /* Medium screens (tablets, small desktops) */
-@media (min-width: 600px) {
+@media (min-width: 430px) {
   .truncate {
       width: 6rem;
       font-size: 10px;
   }
 }
+
 
 /* Large screens (desktops, large tablets) */
 @media (min-width: 1024px) {
