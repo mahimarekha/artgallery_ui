@@ -271,6 +271,11 @@ class Calendar extends React.Component {
 
     return (
       <div className="calendar">
+       
+         <div className="headertitle">
+         <h5>CALENDAR OF EVENTS 2024-25</h5>
+         </div>
+       
         {this.renderHeader()}
         {this.renderDays()}
         {this.renderCells()}

@@ -135,7 +135,7 @@ main {
   width: 100%;
   background: var(--neutral-color);
   border: 1px solid var(--border-color);
-  margin-top: 6rem;
+  margin-top: 8rem;
 }
 
 .calendar .header {
@@ -206,6 +206,10 @@ main {
 
 .calendar .body .cell:last-child {
   border-right: none;
+}
+.headertitle{
+  text-align: center;
+  margin-top: 10px;
 }
 
 .calendar .body .cell .number {
