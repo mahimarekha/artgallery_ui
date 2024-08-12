@@ -242,6 +242,9 @@ main {
   width: 100px;
 }
 
+.scrolling{
+  margin-top: 10px;
+}
 
 @media only screen and (min-width: 320px) and (max-width: 374px) {
   .truncate {
