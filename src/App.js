@@ -65,6 +65,7 @@ const ContactOne = loadable(() => pMinDelay(import('./page/contact'), 250), { fa
 const ContactTwo = loadable(() => pMinDelay(import('./page/contact/contact-two'), 250), { fallback: <Loading /> });
 const ScrollToTop = loadable(() => pMinDelay(import('./component/Common/ScrollToTop'), 250), { fallback: <Loading /> });
 const Fashion = loadable(() => pMinDelay(import('./page/'), 250), { fallback: <Loading /> });
+const Artist = loadable(() => pMinDelay(import('./page/vendor/artist'), 250), { fallback: <Loading /> });
 
 const App = () => {
   return (
@@ -88,6 +89,7 @@ const App = () => {
             <Route path='/product-details-one/:id' exact component={ProductDetails} />
             <Route path='/product-details-two/:id' exact component={ProductDetailsTwos} />
             <Route path='/cart' exact component={Cart} />
+            <Route path='/vendor/artist' exact component={Artist} />
             <Route path='/cartTwo' exact component={CartTwo} />
             <Route path='/cartThree' exact component={CartThree} />
             <Route path='/empty-cart' exact component={EmptyCarts} />

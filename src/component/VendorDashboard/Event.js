@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { HelpBlock } from 'react-bootstrap';
-import { EVENTS } from '../../service/API_URL';
+import { ARTIST, EVENTS } from '../../service/API_URL';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import { useEffect } from 'react';
@@ -20,17 +20,21 @@ const Event = () => {
     let allData = [...useSelector((state) => state.products.products)];
     const [show, setShow] = useState(false);
     const [eventList, setEventList] = useState([]);
+    const [artistList, setArtistList] = useState([]);
+
     const [formData, setFormData] = useState({
+        id:'',
         eventName: '',
-        startDate: '',
-        startDate: '',
-        startTime: '',
-        endTime: '',
+        startDate: new Date(),
+        endDate: new Date(),
+        startTime: new Date(),
+        endTime: new Date(),
         organizer: '',
         discription: '',
         address: '',
         fee: '',
-        imageURL:''
+        imageURL: '',
+        artiest:""
     });
     const [validated, setValidated] = useState(false);
 
@@ -38,8 +42,12 @@ const Event = () => {
     const [date, setDate] = useState(new Date());
     const [formErrors, setFormErrors] = useState({});
     const [open, setOpen] = React.useState(false);
+    const [file, setFile] = useState(null);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        resetForm();
+        setShow(true);
+    }
     const [showSuccess, setShowSuccess] = useState(false);
     const randProduct = (page) => {
         if (page) {
@@ -58,16 +66,30 @@ const Event = () => {
     };
     useEffect(() => {
         getEventList();
-
+        getArtistList();
         //  sumOfTotal();
         return () => {
             setEventList([]);
+            setArtistList([]);
         }
     }, []);
+    const getArtistList = () => {
+
+        CommonService.getDetails(ARTIST.GET, {}).then((res) => {
+
+            setArtistList(res);
+
+        }).catch((err) => {
+
+        });
+    }
+    const handleFileChange = (event) => {
+        setFile(event.target.files[0]);
+      };
     const getEventList = () => {
 
-        CommonService.postRequest(EVENTS.EVENTGET,{}).then((res) => {
-            
+        CommonService.postRequest(EVENTS.EVENTGET, {}).then((res) => {
+
             setEventList(res);
 
         }).catch((err) => {
@@ -85,67 +107,98 @@ const Event = () => {
         let errors = {};
         let formIsValid = true;
         if (!formData.eventName) {
-          formIsValid = false;
-          errors["eventName"] = "event name is required";
+            formIsValid = false;
+            errors["eventName"] = "event name is required";
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-          formIsValid = false;
-          errors["email"] = "Email is invalid";
+            formIsValid = false;
+            errors["email"] = "Email is invalid";
         }
-    
+
         if (!formData.password) {
-          formIsValid = false;
-          errors["password"] = "Password is required";
+            formIsValid = false;
+            errors["password"] = "Password is required";
         } else if (formData.password.length < 6) {
-          formIsValid = false;
-          errors["password"] = "Password must be at least 6 characters";
+            formIsValid = false;
+            errors["password"] = "Password must be at least 6 characters";
         }
-    
+
         setFormErrors(errors);
         return formIsValid;
-      };
+    };
+    const resetForm = ()=>{
+        setFormData({
+            eventName: '',
+            startDate: '',
+            startDate: '',
+            startTime: '',
+            endTime: '',
+            organizer: '',
+            discription: '',
+            address: '',
+            fee: '',
+            id:""
+        });
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
 
         setValidated(true);
-        // if (validateForm()) {
-          CommonService.postRequest(EVENTS.POST, formData).then((res) => {
-           
-            setShowSuccess(true);
-            setFormData({
-                eventName: '',
-                startDate: '',
-                startDate: '',
-                startTime: '',
-                endTime: '',
-                organizer: '',
-                discription: '',
-                address: '',
-                fee: '',
-            });
-            setValidated(false);
-            handleClose();
-            getEventList();
-          }).catch((err) => {
+        if(formData.id){
             
-            if(err.response.data.message){
-                  alert(err.response.data.message);
-            }
-        
-          });
-          // Handle form submission (e.g., send data to the server)
+            CommonService.patchRequest(EVENTS.POST+"/"+formData.id, formData).then((res) => {
+
+                setShowSuccess(true);
+                resetForm();
+                setValidated(false);
+                handleClose();
+                getEventList();
+            }).catch((err) => {
     
+                if (err.response.data.message) {
+                    alert(err.response.data.message);
+                }
     
+            });
+        }else{
+            CommonService.postRequest(EVENTS.POST, formData).then((res) => {
+
+                setShowSuccess(true);
+                resetForm();
+                setValidated(false);
+                handleClose();
+                getEventList();
+            }).catch((err) => {
+    
+                if (err.response.data.message) {
+                    alert(err.response.data.message);
+                }
+    
+            });
+        }
+        // if (validateForm()) {
+       
+        // Handle form submission (e.g., send data to the server)
+
+
         // }
-      };
-      
-      const editEvent = (event) => {
-        setFormData(event);
-        handleOpen();
+    };
+
+    const editEvent = (event) => {
+       const updateJSON =  JSON.parse(JSON.stringify(event));
+       updateJSON.artiest = updateJSON.artiest ? updateJSON.artiest.id :'';
+       updateJSON.startDate = updateJSON.startDate ? updateJSON.startDate :'';
+       updateJSON.endDate = updateJSON.endDate ? updateJSON.endDate :'';
+
+
+
+        setFormData(updateJSON);
+        setShow(true);
+       /// handleOpen();
     }
     const handleOpen = () => {
         setOpen(true);
     };
-   
+
     return (
         <>
             <div className="row">
@@ -153,9 +206,8 @@ const Event = () => {
                     <div className="vendor_order_boxed pt-4">
                         <div className="mb-2">
                             <h4>All Events</h4>
-                            <Link
-                                // to="/vendor/add-products"
-                                data-toggle="tab" className="theme-btn-one bg-black btn_sm add_prod_button" onClick={handleShow}>Add Event</Link>
+                            <button className="theme-btn-one bg-black btn_sm add_prod_button"  onClick={handleShow}>Add Event</button>
+                            {/* <Link data-toggle="tab" className="theme-btn-one bg-black btn_sm add_prod_button" onClick={handleShow}>Add Event</Link> */}
                         </div>
                         <div className="table-responsive">
                             <table className="table pending_table">
@@ -168,6 +220,7 @@ const Event = () => {
                                         <th scope="col">Address</th>
                                         <th scope="col">Fee</th>
                                         <th scope="col">Organizer</th>
+                                        <th scope="col">Artiest Name</th>
                                         <th scope="col">Edit/Delete</th>
                                     </tr>
                                 </thead>
@@ -185,13 +238,9 @@ const Event = () => {
                                             <td>{data.address}</td>
                                             <td>{data.fee}</td>
                                             <td>{data.organizer}</td>
-
-                                            {/* <TableCell>
-                                            <EditIcon style={{ cursor: 'pointer' }} onClick={() => editDoctor(doctor)} >
-                                            </EditIcon >
-                                        </TableCell> */}
-
-                                            <td><i className="fa fa-edit" onClick={() => editEvent()}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash"></i></button></td>
+                                            <td>{data.artiest ? data.artiest.artiestName :'' }</td>
+                                           
+                                            <td><i className="fa fa-edit" onClick={() => editEvent(data)}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash"></i></button></td>
                                         </tr>
                                     ))}
 
@@ -219,15 +268,15 @@ const Event = () => {
         Launch demo modal
       </Button> */}
 
-                        <Modal show={show} onHide={handleClose}  size="sm">
+                        <Modal show={show} onHide={handleClose} size="sm">
                             <Modal.Header closeButton  >
                                 <Modal.Title >Add Event</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <Container>
-                                <Form
-                  noValidate validated={validated} onSubmit={handleSubmit} >
-                                    
+                                    <Form
+                                        noValidate validated={validated} onSubmit={handleSubmit} >
+
                                         <InputGroup >
                                             <FormGroup >
                                                 <Row>
@@ -252,14 +301,15 @@ const Event = () => {
                                                         />
                                                     </Col>
                                                 </Row>
-<br></br>
+                                                <br></br>
                                                 <Row>
                                                     <Col xs={6} md={6}>
                                                         <Form.Control
+                                                            disabled={formData.id != ""}
                                                             type="date" style={{ width: "100%" }}
                                                             name="startDate"
                                                             placeholder="DateRange"
-                                                            value={date.startDate}
+                                                            value={formData.startDate}
                                                             // isInvalid={!!formErrors.startDate}
 
                                                             onChange={handleChange}
@@ -267,10 +317,11 @@ const Event = () => {
                                                     </Col>
                                                     <Col xs={6} md={6}>
                                                         <Form.Control
+                                                           disabled={formData.id != ""}
                                                             type="date" style={{ width: "100%" }}
                                                             name="endDate"
                                                             placeholder="DateRange"
-                                                            value={date.endDate}
+                                                            value={formData.endDate}
                                                             // isInvalid={!!formErrors.startDate}
 
                                                             onChange={handleChange}
@@ -288,7 +339,7 @@ const Event = () => {
                                                             placeholder="TimeRange"
                                                             className="modalTextField"
                                                             onChange={handleChange}
-                                                            value={date.startTime}
+                                                            value={formData.startTime}
                                                             style={{ paddingRight: "6px", width: "100%" }}
                                                         />
                                                     </Col>
@@ -299,7 +350,7 @@ const Event = () => {
                                                             placeholder="TimeRange"
                                                             className="modalTextField"
                                                             onChange={handleChange}
-                                                            value={date.endTime}
+                                                            value={formData.endTime}
                                                             style={{ paddingRight: "6px", width: "100%" }}
                                                         />
                                                     </Col>
@@ -308,7 +359,7 @@ const Event = () => {
                                                 <br></br>
                                                 <Row>
                                                     <Col xs={6} md={6}>
-                                                    <Form.Control
+                                                        <Form.Control
                                                             type="text" style={{ width: "100%" }}
                                                             placeholder="Enter fee"
                                                             name="fee"
@@ -316,7 +367,7 @@ const Event = () => {
                                                             onChange={handleChange}
                                                             isInvalid={!!formErrors.fee}
                                                         />
-                                                      
+
                                                     </Col>
                                                     <Col xs={6} md={6}>
                                                         <Form.Control
@@ -333,7 +384,7 @@ const Event = () => {
                                                 <br></br>
                                                 <Row>
                                                     <Col xs={6} md={6}>
-                                                    <Form.Control
+                                                        <Form.Control
                                                             type="text" style={{ width: "100%" }}
                                                             placeholder="Enter discription"
                                                             name="discription"
@@ -343,32 +394,60 @@ const Event = () => {
                                                         />
                                                     </Col>
                                                     <Col xs={6} md={6}>
-                                                    <Form.Control
-                                                            type="text" style={{ width: "100%" }}
+                                                        {/* <Form.Control
+                                                            type="text" 
+                                                            style={{ width: "100%" }}
                                                             placeholder="Enter Image URL"
                                                             name="imageURL"
                                                             value={formData.imageURL}
                                                             onChange={handleChange}
                                                             isInvalid={!!formErrors.imageURL}
-                                                        />
+                                                        /> */}
+                                                         <Form.Control type="file" style={{ width: "100%" }} onChange={handleFileChange} accept="image/*" /> 
+                                                    
+                                                   
+                                                    {/* <Button onClick={uploadImage} variant="contained" style={{marginTop:'10px'}} >Upload</Button>
+                                                   
+                                                    {logourl?  <img src={logourl}  alt='logo' height="50%" width="50%"/>:''} */}
                                                     </Col>
+                                                   
 
 
+                                                </Row>
+                                                <br></br>
+                                                <Row>
+                                                    <Col  xs={12} md={12}>
+                                                    <Form.Group controlId="formSelect">
+                                                        <Form.Control
+                                                            as="select"
+                                                            name="artiest"
+                                                            value={formData.artiest}
+                                                            onChange={handleChange}
+                                                        >
+                                                            <option value="">Select Arties</option>
+
+                                                             {artistList.map((data, index) => (
+                                                                      
+                                                          <option value={data.id} key={index}> {data.artiestName}</option>
+                                                             ))}
+                                                        </Form.Control>
+                                                    </Form.Group>
+                                                    </Col>
                                                 </Row>
                                             </FormGroup>
                                         </InputGroup>
                                         <Modal.Footer>
-                                <Button variant="secondary" onClick={handleClose}>
-                                    Close
-                                </Button>
-                                <Button variant="primary" type="submit">
-                                    Add
-                                </Button>
-                            </Modal.Footer>
+                                            <Button variant="secondary" onClick={handleClose}>
+                                                Close
+                                            </Button>
+                                            <Button variant="primary" type="submit">
+                                                Add
+                                            </Button>
+                                        </Modal.Footer>
                                     </Form>
                                 </Container>
                             </Modal.Body>
-                           
+
                         </Modal>
                     </div>
                 </div>

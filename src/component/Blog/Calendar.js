@@ -39,7 +39,12 @@ class Calendar extends React.Component {
 
       const resulatDetails = res.map((result,index)=>{
 
-        return {...result,...{colorCode:colors[index % colors.length]}};
+        return {...result,
+          artiestName:result.artiest ? result.artiest.artiestName :'',
+          profile:result.artiest ? result.artiest.profile :'',
+          expreance:result.artiest ? result.artiest.expreance :'' ,
+          artiesDiscription:result.artiest ? result.artiest.discription :'' ,
+          ...{colorCode:colors[index % colors.length]}};
       });
       this.setState({
         list: resulatDetails,
@@ -200,9 +205,10 @@ class Calendar extends React.Component {
          
                   <Card >
                  <Card.Body>
-                 {items.imageURL ? <Card.Img variant="top" sizes="" src={items.imageURL} style={{height:"50px",width:"50px"}}/> :""}
-                 {/* <Card.Title className="mb-2 text-muted" style={{marginTop:"10px"}}>{items.eventName}</Card.Title> */}
-                 <Card.Subtitle className="mb-2 text-muted" style={{marginTop:"10px"}}>{items.organizer}</Card.Subtitle>
+                 {items.imageURL ? <Card.Img variant="top" sizes="" src={items.profile} style={{height:"50px",width:"50px"}}/> :""}
+                 <Card.Title className="mb-2 text-muted" style={{marginTop:"10px"}}>{items.artiestName}</Card.Title>
+
+                 <Card.Subtitle className="mb-2 text-muted" style={{marginTop:"10px"}}>{items.artiesDiscription}</Card.Subtitle>
 
                   <Card.Link href={"/vieweventdetails/"+items.id+"?"+currentMonthParames.toString()}>View More</Card.Link>
                   </Card.Body>
