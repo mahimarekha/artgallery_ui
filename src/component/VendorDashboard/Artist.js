@@ -72,6 +72,7 @@ const Artist = () => {
 
     const uploadImage = async (event) => {
         event.preventDefault();
+        const file =  event.target.files[0];
         if (!file) {
            alert("Please select image to upload");
         }
@@ -136,37 +137,87 @@ const Artist = () => {
 
         setValidated(true);
         // if (validateForm()) {
-       formData.profile =   logourl ? logourl :'';
-        CommonService.postRequest(ARTIST.POST, formData).then((res) => {
-
-            setShowSuccess(true);
-            setFormData({
-                artiestName: '',
-                expreance: '',
-                profile: '',
-                status: '',
-                discription: '',
+        if(formData.id){
+            formData.profile =   logourl ? logourl :formData.profile;
+            CommonService.putRequest(ARTIST.POST+"/"+formData.id, formData).then((res) => {
+    
+                setShowSuccess(true);
+                setFormData({
+                    artiestName: '',
+                    expreance: '',
+                    profile: '',
+                    status: '',
+                    discription: '',
+                });
+                setValidated(false);
+                handleClose();
+                getArtistList();
+            }).catch((err) => {
+    
+                if (err.response.data.message) {
+                    alert(err.response.data.message);
+                }
+    
             });
-            setValidated(false);
-            handleClose();
-            getArtistList();
-        }).catch((err) => {
-
-            if (err.response.data.message) {
-                alert(err.response.data.message);
-            }
-
-        });
+        }else{
+            formData.profile =   logourl ? logourl :'';
+            CommonService.postRequest(ARTIST.POST, formData).then((res) => {
+    
+                setShowSuccess(true);
+                setFormData({
+                    artiestName: '',
+                    expreance: '',
+                    profile: '',
+                    status: '',
+                    discription: '',
+                });
+                setValidated(false);
+                handleClose();
+                getArtistList();
+            }).catch((err) => {
+    
+                if (err.response.data.message) {
+                    alert(err.response.data.message);
+                }
+    
+            });
+        }
+     
 
     };
 
     const editArtist = (event) => {
         setFormData(event);
-        handleOpen();
+        handleShow();
     }
-    const handleOpen = () => {
-        setOpen(true);
-    };
+   
+    const deleteArtist = (event) => {
+        const userConfirmed = window.confirm('Do you want to delete the record?');
+
+        if (userConfirmed) {
+            CommonService.deleteRequest(ARTIST.POST+"/"+event.id).then((res) => {
+    
+                setShowSuccess(true);
+               
+                setValidated(false);
+                handleClose();
+                getArtistList();
+            }).catch((err) => {
+    
+                if (err.response.data.message) {
+                    alert(err.response.data.message);
+                }
+    
+            });
+        } else {
+          // User clicked "Cancel"
+          console.log('User canceled the action.');
+          // You can handle the cancelation here
+        }
+
+      
+    }
+    
 
     return (
         <>
@@ -204,7 +255,7 @@ const Artist = () => {
                                             <td>{data.expreance} </td>
                                             <td>{data.discription}</td>
                                             <td>{data.status?'Active':"In Active"}</td>
-                                            <td><i className="fa fa-edit" onClick={() => editArtist()}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash"></i></button></td>
+                                            <td><i className="fa fa-edit" onClick={() => editArtist(data)}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash" onClick={() => deleteArtist(data)}></i></button></td>
                                         </tr>
                                     ))}
 
@@ -254,7 +305,7 @@ const Artist = () => {
                                                     <Row>
                                                         <Col >
                                                         
-                                                        <Form.Control type="file" style={{ width: "100%" }} onChange={handleFileChange} accept="image/*" /> 
+                                                        <Form.Control type="file" style={{ width: "100%" }} onChange={uploadImage} accept="image/*" /> 
                                                     
                                                    
                                                     {/* <Button onClick={uploadImage} variant="contained" style={{marginTop:'10px'}} >Upload</Button>
@@ -313,7 +364,7 @@ const Artist = () => {
                                                 Close
                                             </Button>
                                             <Button variant="primary" type="submit">
-                                                Add
+                                                {formData.id ? "Update":"Create"}
                                             </Button>
                                         </Modal.Footer>
                                     </Form>

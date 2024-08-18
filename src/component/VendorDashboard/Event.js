@@ -37,7 +37,7 @@ const Event = () => {
         artiest:""
     });
     const [validated, setValidated] = useState(false);
-
+    const [logourl, setLogoURL] = useState(null);
     const { id } = useParams();
     const [date, setDate] = useState(new Date());
     const [formErrors, setFormErrors] = useState({});
@@ -144,7 +144,7 @@ const Event = () => {
 
         setValidated(true);
         if(formData.id){
-            
+            formData.imageURL =   logourl ? logourl :formData.imageURL;
             CommonService.patchRequest(EVENTS.POST+"/"+formData.id, formData).then((res) => {
 
                 setShowSuccess(true);
@@ -160,6 +160,7 @@ const Event = () => {
     
             });
         }else{
+            formData.imageURL =   logourl ? logourl :'';
             CommonService.postRequest(EVENTS.POST, formData).then((res) => {
 
                 setShowSuccess(true);
@@ -182,6 +183,29 @@ const Event = () => {
 
         // }
     };
+
+    const uploadImage = async (event) => {
+        event.preventDefault();
+      const file =  event.target.files[0];
+        if (!file) {
+           alert("Please select image to upload");
+        }
+    
+       
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('imageName', file.name);
+        try {
+            const response = await CommonService.fileUpload(EVENTS.IMG_UPLOAD,formData);
+            
+              //console.log(response.data);
+             
+            setLogoURL(response.url);
+            
+            } catch (error) {
+              console.error(error);
+            }
+      };
 
     const editEvent = (event) => {
        const updateJSON =  JSON.parse(JSON.stringify(event));
@@ -215,6 +239,7 @@ const Event = () => {
                                     <tr>
 
                                         <th scope="col">Event Name</th>
+                                        <th scope="col">Artiest Name</th>
                                         <th scope="col">Start Date</th>
                                         <th scope="col">End Date</th>
                                         <th scope="col">Address</th>
@@ -229,6 +254,7 @@ const Event = () => {
                                         <tr key={index}>
                                             {/* <td><Link to={ `/product-details-one/${data.id}`}><img width="70px" src={data.img} alt="img" /></Link></td> */}
                                             <td>{data.eventName}</td>
+                                            <td>{data.artiest ? data.artiest.artiestName : ''}</td>
                                             <td>{formatDate(data.startDate)} </td>
                                             <td>{formatDate(data.endDate)} </td>
                                             {/* <td> Timing : {data.startTime} TO {data.endTime}</td> */}
@@ -240,7 +266,9 @@ const Event = () => {
                                             <td>{data.organizer}</td>
                                             <td>{data.artiest ? data.artiest.artiestName :'' }</td>
                                            
-                                            <td><i className="fa fa-edit" onClick={() => editEvent(data)}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash"></i></button></td>
+                                            <td><i className="fa fa-edit" onClick={() => editEvent(data)}></i>
+                                          
+                                             </td>
                                         </tr>
                                     ))}
 
@@ -403,7 +431,7 @@ const Event = () => {
                                                             onChange={handleChange}
                                                             isInvalid={!!formErrors.imageURL}
                                                         /> */}
-                                                         <Form.Control type="file" style={{ width: "100%" }} onChange={handleFileChange} accept="image/*" /> 
+                                                         <Form.Control type="file" style={{ width: "100%" }} onChange={uploadImage} accept="image/*" /> 
                                                     
                                                    
                                                     {/* <Button onClick={uploadImage} variant="contained" style={{marginTop:'10px'}} >Upload</Button>

@@ -34,14 +34,15 @@ export const MenuData = [
 
     //     ]
     // },
-    // {
-    //     name: "Events",
-    //     href: "/blog-list-view",
-    //     mega_menu: false,
-    //     children: [
+    {
+        name: "Events",
+        href: "/blog-list-view",
+        mega_menu: false,
+        children: [
           
-    //     ]
-    // },
+        ]
+    },
+ 
     // {
     //     name: "Shop",
     //     href: "#!",

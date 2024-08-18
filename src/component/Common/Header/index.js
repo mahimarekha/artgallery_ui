@@ -171,32 +171,32 @@ const Header = () => {
                                 </ul>
                             </div>
 
-                            {/* <div className="mobile-right-side">
+                             <div className="mobile-right-side">
                                 <ul className="header-action-link action-color--black action-hover-color--golden">
-                                    <li>
+                                    {/* <li>
                                         <a href="#!" className="search_width" onClick={handleSearch}>
                                             <img src={svgsearch} alt="img" />
                                         </a>
-                                    </li>
-                                    <li>
+                                    </li> */}
+                                    {/* <li>
                                         {favorites.length
                                             ? <a href="#offcanvas-wishlish" className="offcanvas-toggle" onClick={handleWish}><i className="fa fa-heart"></i><span className="item-count">{favorites.length}</span></a>
                                             : <a href="#offcanvas-wishlish" className="offcanvas-toggle"><i className="fa fa-heart"></i><span className="item-count">{favorites.length}</span></a>
                                         }
-                                    </li>
-                                    <li>
+                                    </li> */}
+                                    {/* <li>
                                         {carts.length
                                             ? <a href="#!" className="offcanvas-toggle" onClick={handleClick}><i className="fa fa-shopping-bag"></i><span className="item-count">{carts.length}</span></a>
                                             : <a href="#!" className="offcanvas-toggle"><i className="fa fa-shopping-bag"></i><span className="item-count">{carts.length}</span></a>
                                         }
-                                    </li>
+                                    </li> */}
                                     <li>
                                         <a href="#!" className="offcanvas-toggle offside-menu" onClick={handlemenu}>
                                             <i className="fa fa-bars"></i>
                                         </a>
                                     </li>
                                 </ul>
-                            </div> */}
+                            </div> 
 
                         </div>
                     </div>
@@ -224,7 +224,12 @@ const Header = () => {
                                    
 
                                 </li>
-                                <li>
+                                <li >
+                                    <a href="/login" onClick={() => handleShow("shop")}><span>Login</span></a>
+                                   
+
+                                </li>
+                                {/* <li>
                                     <a href="#!" onClick={() => handleShow("feature")}><span>Feature</span></a>
                                     {
                                         show === "feature" ?
@@ -256,8 +261,8 @@ const Header = () => {
                                             </ul>
                                             : null
                                     }
-                                </li>
-                                <li>
+                                </li> */}
+                                {/* <li>
                                     <a href="#!" onClick={() => handleShow("pages")}><span>Pages</span></a>
 
                                     {
@@ -276,7 +281,7 @@ const Header = () => {
                                             </ul>
                                             : null
                                     }
-                                </li>
+                                </li> */}
                             </ul>
                         </div>
 
