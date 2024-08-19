@@ -27,12 +27,12 @@ const Event = () => {
         eventName: '',
         startDate: new Date(),
         endDate: new Date(),
-        startTime: new Date(),
-        endTime: new Date(),
+        // startTime: new Date(),
+        // endTime: new Date(),
         organizer: '',
         discription: '',
-        address: '',
-        fee: '',
+        // address: '',
+        // fee: '',
         imageURL: '',
         artiest:""
     });
@@ -130,12 +130,12 @@ const Event = () => {
             eventName: '',
             startDate: '',
             startDate: '',
-            startTime: '',
-            endTime: '',
+            // startTime: '',
+            // endTime: '',
             organizer: '',
             discription: '',
-            address: '',
-            fee: '',
+            // address: '',
+            // fee: '',
             id:""
         });
     }
@@ -242,8 +242,8 @@ const Event = () => {
                                         <th scope="col">Artiest Name</th>
                                         <th scope="col">Start Date</th>
                                         <th scope="col">End Date</th>
-                                        <th scope="col">Address</th>
-                                        <th scope="col">Fee</th>
+                                        {/* <th scope="col">Address</th> */}
+                                        {/* <th scope="col">Fee</th> */}
                                         <th scope="col">Organizer</th>
                                         <th scope="col">Artiest Name</th>
                                         <th scope="col">Edit/Delete</th>
@@ -261,8 +261,8 @@ const Event = () => {
 
                                             {/* <td>{data.startDate}</td>
                                             <td>{data.endDate}</td> */}
-                                            <td>{data.address}</td>
-                                            <td>{data.fee}</td>
+                                            {/* <td>{data.address}</td> */}
+                                            {/* <td>{data.fee}</td> */}
                                             <td>{data.organizer}</td>
                                             <td>{data.artiest ? data.artiest.artiestName :'' }</td>
                                            
@@ -359,7 +359,7 @@ const Event = () => {
                                                 </Row>
                                                 <br></br>
 
-                                                <Row>
+                                                {/* <Row>
                                                     <Col xs={6} md={6}>
                                                         <Form.Control
                                                             type="time"
@@ -383,9 +383,9 @@ const Event = () => {
                                                         />
                                                     </Col>
 
-                                                </Row>
+                                                </Row> */}
                                                 <br></br>
-                                                <Row>
+                                                {/* <Row>
                                                     <Col xs={6} md={6}>
                                                         <Form.Control
                                                             type="text" style={{ width: "100%" }}
@@ -408,7 +408,7 @@ const Event = () => {
                                                         />
                                                     </Col>
 
-                                                </Row>
+                                                </Row> */}
                                                 <br></br>
                                                 <Row>
                                                     <Col xs={6} md={6}>

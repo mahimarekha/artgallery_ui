@@ -48,15 +48,15 @@ const BlogSingleContent = (props) => {
                 <li>{formatDate(props?.eventList.startDate)} TO {formatDate(props?.eventList.endDate)} - By <a href="#!"> {props?.eventList.organizer}</a></li>
               </ul>
               <ul>
-                <li> Timing : {props?.eventList.startTime ? <span >{props?.eventList.startTime} TO {props?.eventList.endTime}</span> :"N/A"}</li>
+                <li> Timing : {props?.eventList.startTime ? <span >{props?.eventList.startTime} TO {props?.eventList.endTime}</span> :"11-00 AM to 7-00 PM"}</li>
               </ul>
              
               <ul>
-                <li> Address : {props?.eventList.address?props?.eventList.address:"N/A"} </li>
+                <li> Address : {props?.eventList.address?props?.eventList.address:"State Gallery of ART, Road No 1, Kavuri Hills, Madhapur, Hyderabad -500033"} </li>
               </ul>
-              <ul>
+              {/* <ul>
                 <li> Fee : {props?.eventList.fee ? props?.eventList.fee : "N/A"} </li>
-              </ul>
+              </ul> */}
             </div>
             <div className="blog_single_first_Widget">
              
