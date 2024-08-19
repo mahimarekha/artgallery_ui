@@ -26,7 +26,8 @@ const BlogSingleOnes = () => {
         imageURL :"",
         organizer :"",
         startDate :"",
-        startTime : ""
+        startTime : "",
+        artList:[],
     });
     useEffect(() => {
         getEventList();
@@ -39,6 +40,7 @@ const BlogSingleOnes = () => {
     const getEventList = () => {
 
         CommonService.getDetails(EVENTS.GET + "/" + id).then((res) => {
+            debugger
             setEventList(res);
 
         }).catch((err) => {

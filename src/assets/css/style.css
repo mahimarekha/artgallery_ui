@@ -561,6 +561,7 @@ button {
 .main-menu {
     position: relative;
     width: 60%;
+    text-align: end;
 }
 
 .main-menu nav>ul>li {

@@ -11,6 +11,7 @@ import svgsearch from '../../../assets/img/svg/search.svg'
 
 import { useDispatch, useSelector } from "react-redux";
 import Swal from 'sweetalert2'
+import { pink } from '@mui/material/colors'
 
 const Header = () => {
     const [click, setClick] = useState(false);
@@ -105,8 +106,20 @@ const Header = () => {
                             <div className="row">
                                 <div className="col-12 d-flex align-items-center justify-content-between">
                                     <div className="header-logo">
+                                        
                                         <div className="logo">
                                             <Link to="/"><img src={logo} alt="logo" /></Link>
+                                        </div>
+                                    </div>
+                                    <div>
+                                       
+                                    <div style={{color:"black", fontSize: "18px"}}>
+                                      <div>
+                                      Welcome to State Gallery of ART
+                                      </div>
+                                      <div>
+                                      <p>Asia's biggest gallery</p>
+                                      </div>
                                         </div>
                                     </div>
                                     <div className="main-menu menu-color--black menu-hover-color--golden d-none d-xl-block">

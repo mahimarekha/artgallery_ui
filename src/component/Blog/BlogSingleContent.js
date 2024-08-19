@@ -82,14 +82,17 @@ const BlogSingleContent = (props) => {
                 rutrum congue leo eget malesuada.
               </p> */}
             </div>
-            {/* <div className="blog_details_center_img">
+            <div className="blog_details_center_img">
               <div className="row">
-                <div className="col-lg-4 col-md-6 col-sm-12 col-12">
-                  <div className="single_center_img img-zoom-hover">
-                    <img src={post1} alt="img" />
-                  </div>
-                </div>
-                <div className="col-lg-4 col-md-6 col-sm-12 col-12">
+                {props?.eventList?.artList?.map((url)=>(
+ <div className="col-lg-4 col-md-6 col-sm-12 col-12">
+ <div className="single_center_img img-zoom-hover">
+   <img src={url} alt="img" />
+ </div>
+</div>
+                ))}
+               
+                {/* <div className="col-lg-4 col-md-6 col-sm-12 col-12">
                   <div className="single_center_img img-zoom-hover">
                     <img src={post2} alt="img" />
                   </div>
@@ -98,9 +101,9 @@ const BlogSingleContent = (props) => {
                   <div className="single_center_img img-zoom-hover">
                     <img src={post4} alt="img" />
                   </div>
-                </div>
+                </div> */}
               </div>
-            </div> */}
+            </div>
             {/* <div className="blog_single_secend_widget">
               <h2>There Are Many Variayions Of Product</h2>
               <p>
