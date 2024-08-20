@@ -6,8 +6,9 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { HelpBlock } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { ARTIST, EVENTS } from '../../service/API_URL';
+import { ARTIST, EVENTS, IMAGES} from '../../service/API_URL';
 import { Grid, Card, Box, MenuItem, Select, InputLabel, TextField } from "react-bootstrap";
+import Image from 'react-bootstrap/Image';
 
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -22,7 +23,10 @@ const Artist = () => {
     const [page, setPage] = useState(1)
     let allData = [...useSelector((state) => state.products.products)];
     const [show, setShow] = useState(false);
+    const [show1, setShow1] = useState(false);
+    const [artistImageList, setArtistImageList] = useState([]);
     const [artistList, setArtistList] = useState([]);
+    const [artistId, setArtistId] = useState('');
     const [formData, setFormData] = useState({
         artiestName: '',
         expreance: '',
@@ -31,17 +35,26 @@ const Artist = () => {
         discription: '',
 
     });
-    const [validated, setValidated] = useState(false);
+    const [imageData, setImageData] = useState({
+        
+        profile: '',
+      
 
+    });
+    const [validated, setValidated] = useState(false);
+    const [validated1, setValidated1] = useState(false);
     const { id } = useParams();
     const [date, setDate] = useState(new Date());
     const [formErrors, setFormErrors] = useState({});
     const [open, setOpen] = React.useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const handleShow1 = () => setShow1(true);
+    const handleClose1 = () => setShow1(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [file, setFile] = useState(null);
     const [logourl, setLogoURL] = useState(null);
+    const [imageurl, setImageURL] = useState(null);
     const randProduct = (page) => {
         if (page) {
             let data = allData.sort((a, b) => 0.5 - Math.random())
@@ -68,31 +81,74 @@ const Artist = () => {
 
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
-      };
+    };
 
     const uploadImage = async (event) => {
         event.preventDefault();
-        const file =  event.target.files[0];
+        const file = event.target.files[0];
         if (!file) {
-           alert("Please select image to upload");
+            alert("Please select image to upload");
         }
-    
-       
+
+
         const formData = new FormData();
         formData.append('image', file);
         formData.append('imageName', file.name);
         try {
-            const response = await CommonService.fileUpload(EVENTS.IMG_UPLOAD,formData);
-            
-              //console.log(response.data);
-             
+            const response = await CommonService.fileUpload(EVENTS.IMG_UPLOAD, formData);
+
+            //console.log(response.data);
+
             setLogoURL(response.url);
-            
-            } catch (error) {
-              console.error(error);
-            }
-      };
-    
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    const uploadImage1 = async (event) => {
+
+        event.preventDefault();
+       // const file = event.target.files[0];
+        if (!file) {
+            alert("Please select image to upload");
+        }
+
+
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('imageName', file.name);
+       
+        try {
+            const response = await CommonService.fileUpload(EVENTS.IMG_UPLOAD, formData);
+            const images = await CommonService.postRequest(IMAGES.GET,
+                 {"imageName":response.imageName,
+                    "imageURL":response.url,
+                    "artiesId":artistId
+                 });
+
+            //console.log(response.data);
+            setArtistImageList([...artistImageList,images]);
+
+           // setArtistImageList([response.url])
+            // setLogoURL(response.url);
+           // setImageURL(images.url)
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const getArtistImageList = (artistId) => {
+
+        CommonService.postRequest(IMAGES.GET+"/getlist", {artiesId:artistId}).then((res) => {
+
+            setArtistImageList(res);
+
+        }).catch((err) => {
+
+        });
+    }
+
     const getArtistList = () => {
 
         CommonService.getDetails(ARTIST.GET, {}).then((res) => {
@@ -137,10 +193,10 @@ const Artist = () => {
 
         setValidated(true);
         // if (validateForm()) {
-        if(formData.id){
-            formData.profile =   logourl ? logourl :formData.profile;
-            CommonService.putRequest(ARTIST.POST+"/"+formData.id, formData).then((res) => {
-    
+        if (formData.id) {
+            formData.profile = logourl ? logourl : formData.profile;
+            CommonService.putRequest(ARTIST.POST + "/" + formData.id, formData).then((res) => {
+
                 setShowSuccess(true);
                 setFormData({
                     artiestName: '',
@@ -153,16 +209,16 @@ const Artist = () => {
                 handleClose();
                 getArtistList();
             }).catch((err) => {
-    
+
                 if (err.response.data.message) {
                     alert(err.response.data.message);
                 }
-    
+
             });
-        }else{
-            formData.profile =   logourl ? logourl :'';
+        } else {
+            formData.profile = logourl ? logourl : '';
             CommonService.postRequest(ARTIST.POST, formData).then((res) => {
-    
+
                 setShowSuccess(true);
                 setFormData({
                     artiestName: '',
@@ -175,49 +231,55 @@ const Artist = () => {
                 handleClose();
                 getArtistList();
             }).catch((err) => {
-    
+
                 if (err.response.data.message) {
                     alert(err.response.data.message);
                 }
-    
+
             });
         }
-     
+
 
     };
+    const imageArtist = (artiesdetails) => {
+        getArtistImageList(artiesdetails.id);
+        setArtistId(artiesdetails.id)
+        setShow1();
+        handleShow1();
+    }
 
     const editArtist = (event) => {
         setFormData(event);
         handleShow();
     }
-   
+
     const deleteArtist = (event) => {
         const userConfirmed = window.confirm('Do you want to delete the record?');
 
         if (userConfirmed) {
-            CommonService.deleteRequest(ARTIST.POST+"/"+event.id).then((res) => {
-    
+            CommonService.deleteRequest(ARTIST.POST + "/" + event.id).then((res) => {
+
                 setShowSuccess(true);
-               
+
                 setValidated(false);
                 handleClose();
                 getArtistList();
             }).catch((err) => {
-    
+
                 if (err.response.data.message) {
                     alert(err.response.data.message);
                 }
-    
+
             });
         } else {
-          // User clicked "Cancel"
-          console.log('User canceled the action.');
-          // You can handle the cancelation here
+            // User clicked "Cancel"
+            console.log('User canceled the action.');
+            // You can handle the cancelation here
         }
 
-      
+
     }
-    
+
 
     return (
         <>
@@ -234,28 +296,33 @@ const Artist = () => {
                             <table className="table pending_table">
                                 <thead className="thead-light">
                                     <tr>
-                                    <th scope="col">Profile</th>
+                                        <th scope="col">Profile</th>
                                         <th scope="col">Artist Name</th>
                                         <th scope="col">Experience</th>
-                                      
+
                                         <th scope="col">Discription</th>
                                         <th scope="col">Status</th>
-                                      
+
                                         <th scope="col">Edit/Delete</th>
+                                        <th scope="col">Images </th>
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {artistList.map((data, index) => (
                                         <tr key={index}>
-                                                                                           
-                                             <td><img src={data.profile} height={50} width={50}/> </td>
+
+                                            <td><img src={data.profile} height={50} width={50} /> </td>
 
                                             {/* <td><Link to={ `/product-details-one/${data.id}`}><img width="70px" src={data.img} alt="img" /></Link></td> */}
                                             <td>{data.artiestName}</td>
                                             <td>{data.expreance} </td>
                                             <td>{data.discription}</td>
-                                            <td>{data.status?'Active':"In Active"}</td>
+                                            <td>{data.status ? 'Active' : "In Active"}</td>
                                             <td><i className="fa fa-edit" onClick={() => editArtist(data)}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash" onClick={() => deleteArtist(data)}></i></button></td>
+                                           
+                                            <td><Button style={{backgroundColor:'#f79837',border:'none'}} onClick={() => imageArtist(data)}>Add Images</Button> </td>
                                         </tr>
                                     ))}
 
@@ -304,15 +371,15 @@ const Artist = () => {
                                                     <br></br>
                                                     <Row>
                                                         <Col >
-                                                        
-                                                        <Form.Control type="file" style={{ width: "100%" }} onChange={uploadImage} accept="image/*" /> 
-                                                    
-                                                   
-                                                    {/* <Button onClick={uploadImage} variant="contained" style={{marginTop:'10px'}} >Upload</Button>
+
+                                                            <Form.Control type="file" style={{ width: "100%" }} onChange={uploadImage} accept="image/*" />
+
+
+                                                            {/* <Button onClick={uploadImage} variant="contained" style={{marginTop:'10px'}} >Upload</Button>
                                                    
                                                     {logourl?  <img src={logourl}  alt='logo' height="50%" width="50%"/>:''} */}
 
-                                                            
+
 
                                                         </Col>
                                                         <Col>
@@ -327,16 +394,16 @@ const Artist = () => {
                                                                 </Dropdown.Menu>
                                                             </Dropdown> */}
                                                             <Form.Group controlId="formSelect">
-          <Form.Control
-            as="select"
-            name="status"
-            value={formData.status}
-            onChange={(e) => handleChange(e.target.value)}
-          >
-            <option value={true}>Active</option>
-            <option value={false}> In Active</option>
-          </Form.Control>
-        </Form.Group>
+                                                                <Form.Control
+                                                                    as="select"
+                                                                    name="status"
+                                                                    value={formData.status}
+                                                                    onChange={(e) => handleChange(e.target.value)}
+                                                                >
+                                                                    <option value={true}>Active</option>
+                                                                    <option value={false}> In Active</option>
+                                                                </Form.Control>
+                                                            </Form.Group>
                                                         </Col>
 
                                                     </Row>
@@ -364,8 +431,59 @@ const Artist = () => {
                                                 Close
                                             </Button>
                                             <Button variant="primary" type="submit">
-                                                {formData.id ? "Update":"Create"}
+                                                {formData.id ? "Update" : "Create"}
                                             </Button>
+                                        </Modal.Footer>
+                                    </Form>
+                                </Container>
+                            </Modal.Body>
+
+                        </Modal>
+                        <Modal show={show1} onHide={handleClose1} size="sm">
+                            <Modal.Header closeButton  >
+                                <Modal.Title >Add Images</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <Container>
+                                    <Form
+                                        noValidate validated={validated} onSubmit={handleSubmit} >
+
+                                        <InputGroup >
+                                            <FormGroup >
+                                                <Container>
+                                                   <Row>
+                                                   <Col xs={6} md={4}>
+                                                   <Form.Control type="file" style={{ width: "100%" }} onChange={handleFileChange} accept="image/*" />
+
+                                                   </Col>
+                                                   <Col xs={6} md={4}>
+                                                   <Button  variant="primary" onClick={uploadImage1} style={{marginTop:'10px'}} >Upload</Button>
+
+                                                   </Col>
+                                                   </Row>
+             <div style={{marginTop:'1rem',height:"22rem","overflow":"auto"}}>
+                                                             
+      <Row>
+      {artistImageList.map((result)=>(
+         <Col xs={6} md={4}>
+         <Image src={result.imageURL} thumbnail />
+       </Col>
+                                                    ))}
+       
+      </Row>
+                </div>                                          
+     
+   
+                                                 
+                                                    
+                                                </Container>
+                                            </FormGroup>
+                                        </InputGroup>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={handleClose1}>
+                                                Close
+                                            </Button>
+                                           
                                         </Modal.Footer>
                                     </Form>
                                 </Container>

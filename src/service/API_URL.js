@@ -8,6 +8,12 @@ export const EVENTS ={
       POST:"/exbhition",
        EVENTGET:"/exbhition/getevents"
 }
+export const IMAGES ={
+  GET:"/images",
+  IMG_UPLOAD:"/images/uploadimage",
+    POST:"/images",
+     EVENTGET:"/images/getimages"
+}
 export const ARTIST ={
     GET:"/artiest",
       POST:"/artiest",
