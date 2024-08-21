@@ -18,6 +18,7 @@ const formatDate = (timestamp) => {
   return date.toLocaleDateString('en-US', options);
 };
 const BlogSingleContent = (props) => {
+  
   const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
   
@@ -65,8 +66,13 @@ const BlogSingleContent = (props) => {
               </p>
              
               <blockquote>
-               {props?.eventList.address}
+               {/* {props?.eventList.address} */}
+               
+               {/* <img src={img1}  /> */}
               </blockquote>
+              <div>
+              
+              </div>
               {/* <p>
                 Quisque velit nisi, pretium ut lacinia in, elementum id
                 enim. Curabitur arcu erat, accumsan id imperdiet et,
@@ -118,8 +124,8 @@ const BlogSingleContent = (props) => {
                 Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
                 Curabitur aliquet quam id dui posuere blandit
               </p>
-            </div> */}
-            {/* <div className="single_categoris_bottom">
+            </div>
+            <div className="single_categoris_bottom">
               <ul>
                 <li><a href="#!">Fashion</a></li>
                 <li><a href="#!">Style</a></li>
@@ -130,8 +136,8 @@ const BlogSingleContent = (props) => {
           </div>
           {/* <div className="card post_author">
             <div className="card-body">
-              <div className="author_img">
-                <img src={author} alt="author" />
+              <div className="author_img" >
+              <img src={props?.eventList?.artiest?.profile} alt="img" style={{width:"100px"}}/>
               </div>
               <div className="author_info">
                 <h6 className="author_name">
@@ -146,10 +152,10 @@ const BlogSingleContent = (props) => {
                 </p>
               </div>
             </div>
-          </div> */}
-          {/* <RelatedPost />
-          <SingleCommentArea />
-          <CommentForm /> */}
+          </div>
+          <RelatedPost /> */}
+          {/* <SingleCommentArea /> */}
+          {/* <CommentForm /> */}
         </div>
       </div>
     </>

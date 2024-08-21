@@ -8,6 +8,8 @@ import { HelpBlock } from 'react-bootstrap';
 import { ARTIST, EVENTS } from '../../service/API_URL';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+
 import { useEffect } from 'react';
 import CommonService from '../../service/commonService';
 import { useParams } from "react-router-dom";
@@ -412,14 +414,25 @@ const Event = () => {
                                                 <br></br>
                                                 <Row>
                                                     <Col xs={6} md={6}>
-                                                        <Form.Control
+                                                        {/* <Form.Control
                                                             type="text" style={{ width: "100%" }}
                                                             placeholder="Enter discription"
                                                             name="discription"
                                                             value={formData.discription}
                                                             onChange={handleChange}
                                                             isInvalid={!!formErrors.discription}
-                                                        />
+                                                        /> */}
+                                                        <FloatingLabel controlId="floatingTextarea2" >
+                                                                <Form.Control
+                                                                name="discription"
+                                                                value={formData.discription}
+                                                                onChange={handleChange}
+                                                                isInvalid={!!formErrors.discription}
+                                                                    as="textarea"
+                                                                    placeholder="Enter discription"
+                                                                    style={{ height: '100px' }}
+                                                                />
+                                                            </FloatingLabel>
                                                     </Col>
                                                     <Col xs={6} md={6}>
                                                         {/* <Form.Control

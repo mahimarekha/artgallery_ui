@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
@@ -300,7 +302,6 @@ const Artist = () => {
                                         <th scope="col">Artist Name</th>
                                         <th scope="col">Experience</th>
 
-                                        <th scope="col">Discription</th>
                                         <th scope="col">Status</th>
 
                                         <th scope="col">Edit/Delete</th>
@@ -318,7 +319,6 @@ const Artist = () => {
                                             {/* <td><Link to={ `/product-details-one/${data.id}`}><img width="70px" src={data.img} alt="img" /></Link></td> */}
                                             <td>{data.artiestName}</td>
                                             <td>{data.expreance} </td>
-                                            <td>{data.discription}</td>
                                             <td>{data.status ? 'Active' : "In Active"}</td>
                                             <td><i className="fa fa-edit" onClick={() => editArtist(data)}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash" onClick={() => deleteArtist(data)}></i></button></td>
                                            
@@ -412,14 +412,25 @@ const Artist = () => {
                                                     <Row>
 
                                                         <Col >
-                                                            <Form.Control
+                                                            {/* <Form.Control
                                                                 type="text" style={{ width: "100%" }}
                                                                 placeholder="Enter discription"
                                                                 name="discription"
                                                                 value={formData.discription}
                                                                 onChange={handleChange}
                                                                 isInvalid={!!formErrors.discription}
-                                                            />
+                                                            /> */}
+                                                            <FloatingLabel controlId="floatingTextarea2" >
+                                                                <Form.Control
+                                                                name="discription"
+                                                                value={formData.discription}
+                                                                onChange={handleChange}
+                                                                isInvalid={!!formErrors.discription}
+                                                                    as="textarea"
+                                                                    placeholder="Enter discription"
+                                                                    style={{ height: '100px' }}
+                                                                />
+                                                            </FloatingLabel>
 
                                                         </Col>
                                                     </Row>
