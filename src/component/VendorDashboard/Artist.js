@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { HelpBlock } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { ARTIST, EVENTS, IMAGES} from '../../service/API_URL';
+import { ARTIST, EVENTS, IMAGES } from '../../service/API_URL';
 import { Grid, Card, Box, MenuItem, Select, InputLabel, TextField } from "react-bootstrap";
 import Image from 'react-bootstrap/Image';
 
@@ -38,9 +38,9 @@ const Artist = () => {
 
     });
     const [imageData, setImageData] = useState({
-        
+
         profile: '',
-      
+
 
     });
     const [validated, setValidated] = useState(false);
@@ -110,30 +110,38 @@ const Artist = () => {
     const uploadImage1 = async (event) => {
 
         event.preventDefault();
-       // const file = event.target.files[0];
+        // const file = event.target.files[0];
         if (!file) {
             alert("Please select image to upload");
+            return;
         }
 
 
         const formData = new FormData();
         formData.append('image', file);
         formData.append('imageName', file.name);
-       
+
         try {
             const response = await CommonService.fileUpload(EVENTS.IMG_UPLOAD, formData);
             const images = await CommonService.postRequest(IMAGES.GET,
-                 {"imageName":response.imageName,
-                    "imageURL":response.url,
-                    "artiesId":artistId
-                 });
+                {
+                    "imageName": response.imageName,
+                    "imageURL": response.url,
+                    "artiesId": artistId,
+                    "type":"artiest"
+                });
 
             //console.log(response.data);
-            setArtistImageList([...artistImageList,images]);
+            setArtistImageList([...artistImageList, {
+                "imageName": response.imageName,
+                "imageURL": response.url,
+                "artiesId": artistId,
+                "type":"artiest"
+            }]);
 
-           // setArtistImageList([response.url])
+            // setArtistImageList([response.url])
             // setLogoURL(response.url);
-           // setImageURL(images.url)
+            // setImageURL(images.url)
 
         } catch (error) {
             console.error(error);
@@ -142,7 +150,7 @@ const Artist = () => {
 
     const getArtistImageList = (artistId) => {
 
-        CommonService.postRequest(IMAGES.GET+"/getlist", {artiesId:artistId}).then((res) => {
+        CommonService.postRequest(IMAGES.GET + "/getlist", { artiesId: artistId }).then((res) => {
 
             setArtistImageList(res);
 
@@ -255,6 +263,25 @@ const Artist = () => {
         handleShow();
     }
 
+    const deleteImage = async (image,index)=>{
+        const userConfirmed = window.confirm('Do you want to delete the image?');
+
+        if (userConfirmed) {
+          try {
+            const images = await CommonService.postRequest(IMAGES.DELETEIMAGES,
+                {
+                    "imageName": image.imageName,
+                    "imageId": image.id,
+                    
+                });
+              const newItems = artistImageList.filter((item, i) => i !== index);
+              setArtistImageList(newItems);
+          } catch (error) {
+            alert(error);
+          }
+        }
+    }
+
     const deleteArtist = (event) => {
         const userConfirmed = window.confirm('Do you want to delete the record?');
 
@@ -321,8 +348,8 @@ const Artist = () => {
                                             <td>{data.expreance} </td>
                                             <td>{data.status ? 'Active' : "In Active"}</td>
                                             <td><i className="fa fa-edit" onClick={() => editArtist(data)}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash" onClick={() => deleteArtist(data)}></i></button></td>
-                                           
-                                            <td><Button style={{backgroundColor:'#f79837',border:'none'}} onClick={() => imageArtist(data)}>Add Images</Button> </td>
+
+                                            <td><Button style={{ backgroundColor: '#f79837', border: 'none' }} onClick={() => imageArtist(data)}>Add Images</Button> </td>
                                         </tr>
                                     ))}
 
@@ -422,10 +449,10 @@ const Artist = () => {
                                                             /> */}
                                                             <FloatingLabel controlId="floatingTextarea2" >
                                                                 <Form.Control
-                                                                name="discription"
-                                                                value={formData.discription}
-                                                                onChange={handleChange}
-                                                                isInvalid={!!formErrors.discription}
+                                                                    name="discription"
+                                                                    value={formData.discription}
+                                                                    onChange={handleChange}
+                                                                    isInvalid={!!formErrors.discription}
                                                                     as="textarea"
                                                                     placeholder="Enter discription"
                                                                     style={{ height: '100px' }}
@@ -462,31 +489,39 @@ const Artist = () => {
                                         <InputGroup >
                                             <FormGroup >
                                                 <Container>
-                                                   <Row>
-                                                   <Col xs={6} md={4}>
-                                                   <Form.Control type="file" style={{ width: "100%" }} onChange={handleFileChange} accept="image/*" />
+                                                    <Row>
+                                                        <Col xs={6} md={4}>
+                                                            <Form.Control type="file" style={{ width: "100%" }} onChange={handleFileChange} accept="image/*" />
 
-                                                   </Col>
-                                                   <Col xs={6} md={4}>
-                                                   <Button  variant="primary" onClick={uploadImage1} style={{marginTop:'10px'}} >Upload</Button>
+                                                        </Col>
+                                                        <Col xs={6} md={4}>
+                                                            <Button variant="primary" onClick={uploadImage1} style={{ marginTop: '10px' }} >Upload</Button>
 
-                                                   </Col>
-                                                   </Row>
-             <div style={{marginTop:'1rem',height:"22rem","overflow":"auto"}}>
-                                                             
-      <Row>
-      {artistImageList.map((result)=>(
-         <Col xs={6} md={4}>
-         <Image src={result.imageURL} thumbnail />
-       </Col>
-                                                    ))}
-       
-      </Row>
-                </div>                                          
-     
-   
-                                                 
+                                                        </Col>
+                                                    </Row>
+                                                    <div style={{ marginTop: '1rem', height: "22rem", "overflow": "auto" }}>
+
+                                                    <Row>
+                                                            {artistImageList.map((result,index) => (
+                                                                 
+                                                                <Col xs={6} md={4}>
+                                                                    <div class="image-container">
+                                                                    <Image src={result.imageURL} thumbnail  class="image"/>
+
+    <div class="overlay-text"><i className="fa fa-trash" onClick={() => deleteImage(result,index)} ></i></div>
+</div>
+
+                                                                </Col>
+                                                            ))}
+
+                                                        </Row>
+                                                    </div>
+
                                                     
+
+
+
+
                                                 </Container>
                                             </FormGroup>
                                         </InputGroup>
@@ -494,7 +529,7 @@ const Artist = () => {
                                             <Button variant="secondary" onClick={handleClose1}>
                                                 Close
                                             </Button>
-                                           
+
                                         </Modal.Footer>
                                     </Form>
                                 </Container>

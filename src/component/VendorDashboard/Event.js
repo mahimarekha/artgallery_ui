@@ -3,13 +3,13 @@ import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
+import Image from 'react-bootstrap/Image';
 import Form from 'react-bootstrap/Form';
 import { HelpBlock } from 'react-bootstrap';
-import { ARTIST, EVENTS } from '../../service/API_URL';
+import { ARTIST, EVENTS, IMAGES  } from '../../service/API_URL';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-
 import { useEffect } from 'react';
 import CommonService from '../../service/commonService';
 import { useParams } from "react-router-dom";
@@ -23,7 +23,8 @@ const Event = () => {
     const [show, setShow] = useState(false);
     const [eventList, setEventList] = useState([]);
     const [artistList, setArtistList] = useState([]);
-
+    const [eventImageList, setEventImageList] = useState([]);
+    const [show1, setShow1] = useState(false);
     const [formData, setFormData] = useState({
         id:'',
         eventName: '',
@@ -45,6 +46,9 @@ const Event = () => {
     const [formErrors, setFormErrors] = useState({});
     const [open, setOpen] = React.useState(false);
     const [file, setFile] = useState(null);
+    const [eventId, setEventId] = useState('');
+    const handleShow1 = () => setShow1(true);
+    const handleClose1 = () => setShow1(false);
     const handleClose = () => setShow(false);
     const handleShow = () => {
         resetForm();
@@ -81,6 +85,19 @@ const Event = () => {
 
             setArtistList(res);
 
+        }).catch((err) => {
+
+        });
+    }
+    const imageArtist = (eventdetails) => {
+        getEventImageList(eventdetails.id);
+        setEventId(eventdetails.id)
+        setShow1();
+        handleShow1();
+    }
+    const getEventImageList = (eventId) => {
+        CommonService.postRequest(IMAGES.GET+"/getlist", {artiesId:eventId}).then((res) => {
+            setEventImageList(res);
         }).catch((err) => {
 
         });
@@ -208,7 +225,60 @@ const Event = () => {
               console.error(error);
             }
       };
+      const uploadImage1 = async (event) => {
 
+        event.preventDefault();
+        // const file = event.target.files[0];
+        if (!file) {
+            alert("Please select image to upload");
+            return;
+        }
+
+
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('imageName', file.name);
+
+        try {
+            const response = await CommonService.fileUpload(EVENTS.IMG_UPLOAD, formData);
+            const images = await CommonService.postRequest(IMAGES.GET,
+                {
+                    "imageName": response.imageName,
+                    "imageURL": response.url,
+                    "artiesId": eventId,
+                    "type":"events"
+                });
+
+            //console.log(response.data);
+            setEventImageList([...eventImageList, images]);
+
+            // setArtistImageList([response.url])
+            // setLogoURL(response.url);
+            // setImageURL(images.url)
+
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const deleteImage = async (image,index)=>{
+        const userConfirmed = window.confirm('Do you want to delete the image?');
+
+        if (userConfirmed) {
+          try {
+            const images = await CommonService.postRequest(IMAGES.DELETEIMAGES,
+                {
+                    "imageName": image.imageName,
+                    "imageId": image.id,
+                    
+                });
+              const newItems = eventImageList.filter((item, i) => i !== index);
+            setEventImageList(newItems);
+          } catch (error) {
+            alert(error);
+          }
+        }
+    }
     const editEvent = (event) => {
        const updateJSON =  JSON.parse(JSON.stringify(event));
        updateJSON.artiest = updateJSON.artiest ? updateJSON.artiest.id :'';
@@ -245,10 +315,10 @@ const Event = () => {
                                         <th scope="col">Start Date</th>
                                         <th scope="col">End Date</th>
                                         {/* <th scope="col">Address</th> */}
-                                        {/* <th scope="col">Fee</th> */}
+                                       
                                         <th scope="col">Organizer</th>
-                                        <th scope="col">Artiest Name</th>
                                         <th scope="col">Edit/Delete</th>
+                                        <th scope="col">Images </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -266,11 +336,12 @@ const Event = () => {
                                             {/* <td>{data.address}</td> */}
                                             {/* <td>{data.fee}</td> */}
                                             <td>{data.organizer}</td>
-                                            <td>{data.artiest ? data.artiest.artiestName :'' }</td>
                                            
                                             <td><i className="fa fa-edit" onClick={() => editEvent(data)}></i>
                                           
                                              </td>
+                                             <td><Button style={{backgroundColor:'#f79837',border:'none'}} onClick={() => imageArtist(data)}>Add Images</Button> </td>
+
                                         </tr>
                                     ))}
 
@@ -484,6 +555,63 @@ const Event = () => {
                                             <Button variant="primary" type="submit">
                                                 Add
                                             </Button>
+                                        </Modal.Footer>
+                                    </Form>
+                                </Container>
+                            </Modal.Body>
+
+                        </Modal>
+                        <Modal show={show1} onHide={handleClose1} size="sm">
+                            <Modal.Header closeButton  >
+                                <Modal.Title >Add Images</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <Container>
+                                    <Form
+                                        noValidate validated={validated} onSubmit={handleSubmit} >
+
+                                        <InputGroup >
+                                            <FormGroup >
+                                                <Container>
+                                                    <Row>
+                                                        <Col xs={6} md={4}>
+                                                            <Form.Control type="file" style={{ width: "100%" }} onChange={handleFileChange} accept="image/*" />
+
+                                                        </Col>
+                                                        <Col xs={6} md={4}>
+                                                            <Button variant="primary" onClick={uploadImage1} style={{ marginTop: '10px' }} >Upload</Button>
+
+                                                        </Col>
+                                                    </Row>
+                                                    <div style={{ marginTop: '1rem', height: "22rem", "overflow": "auto" }}>
+                                                    
+                                                        <Row>
+                                                            {eventImageList.map((result,index) => (
+                                                                 
+                                                                <Col xs={6} md={4}>
+                                                                    <div class="image-container">
+                                                                    <Image src={result.imageURL} thumbnail  class="image"/>
+
+    <div class="overlay-text"><i className="fa fa-trash" onClick={() => deleteImage(result,index)} ></i></div>
+</div>
+
+                                                                </Col>
+                                                            ))}
+
+                                                        </Row>
+                                                    </div>
+
+
+
+
+                                                </Container>
+                                            </FormGroup>
+                                        </InputGroup>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={handleClose1}>
+                                                Close
+                                            </Button>
+
                                         </Modal.Footer>
                                     </Form>
                                 </Container>

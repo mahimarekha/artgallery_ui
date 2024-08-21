@@ -12,7 +12,7 @@ export const IMAGES ={
   GET:"/images",
   IMG_UPLOAD:"/images/uploadimage",
     POST:"/images",
-     EVENTGET:"/images/getimages"
+     DELETEIMAGES:"/images/deleteimages"
 }
 export const ARTIST ={
     GET:"/artiest",

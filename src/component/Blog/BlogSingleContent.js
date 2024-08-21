@@ -1,4 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Col from 'react-bootstrap/Col';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Image from 'react-bootstrap/Image';
+
 import CommentForm from './CommentForm'
 import RelatedPost from './RelatedPost'
 import SingleCommentArea from './SingleCommentArea'
@@ -8,70 +13,93 @@ import post1 from '../../assets/img/blog/post2.png'
 import post2 from '../../assets/img/blog/post3.png'
 import post4 from '../../assets/img/blog/post4.png'
 import author from '../../assets/img/user/author.png'
-import { useHistory ,useLocation,} from 'react-router-dom';
-
+import { useHistory, useLocation, } from 'react-router-dom';
+import CommonService from '../../service/commonService';
+import { ARTIST, EVENTS, IMAGES } from '../../service/API_URL';
+import { useEffect } from 'react';
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
 
   // Format the date
-  const options = { year: 'numeric', month: 'long', day: 'numeric'};
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return date.toLocaleDateString('en-US', options);
 };
 const BlogSingleContent = (props) => {
-  
-  const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-  
-    const currentMonth = queryParams.get('currentMonth');
-   
 
+  const location = useLocation();
+  const [artistImageList, setArtistImageList] = useState([]);
+  const queryParams = new URLSearchParams(location.search);
+
+  const currentMonth = queryParams.get('currentMonth');
+
+  useEffect(() => {
+
+    if (props?.eventList.artiest && props?.eventList.artiest.id) {
+      getArtistImageList(props?.eventList.artiest.id);
+    }
+
+
+    //  sumOfTotal();
+    return () => {
+      setArtistImageList([]);
+    }
+  }, []);
   const history = useHistory();
   const goBack = () => {
-   // history.goBack(); 
-    history.push("/blog-list-view?currentMonth="+currentMonth);
-};
+    // history.goBack(); 
+    history.push("/blog-list-view?currentMonth=" + currentMonth);
+  };
+  const getArtistImageList = (artistId) => {
+
+    CommonService.postRequest(IMAGES.GET + "/getlist", { artiesId: artistId }).then((res) => {
+
+      setArtistImageList(res);
+
+    }).catch((err) => {
+
+    });
+  }
+
   return (
     <>
       <div className="col-lg-9">
         <div className="blog_single_content">
           <div className="text-center">
-         
-           {props?.eventList.imageURL ? <img src={props?.eventList.imageURL} alt="img" style={{height:"20rem"}} /> :"" } 
+
+            {props?.eventList.imageURL ? <img src={props?.eventList.imageURL} alt="img" style={{ height: "20rem" }} /> : ""}
 
           </div>
           <div>
-          <h2>  <i class="fa fa-arrow-circle-left font-color" style={{fontSize:"2rem"}} onClick={goBack} aria-hidden="true"></i> {props?.eventList.eventName} </h2>
+            <h2>  <i class="fa fa-arrow-circle-left font-color" style={{ fontSize: "2rem" }} onClick={goBack} aria-hidden="true"></i> {props?.eventList.eventName} </h2>
           </div>
           <div className="blog_single_widget">
-            
+
             <div className="blog_single_date">
               <ul>
                 <li>{formatDate(props?.eventList.startDate)} TO {formatDate(props?.eventList.endDate)} - By <a href="#!"> {props?.eventList.organizer}</a></li>
               </ul>
               <ul>
-                <li> Timing : {props?.eventList.startTime ? <span >{props?.eventList.startTime} TO {props?.eventList.endTime}</span> :"11-00 AM to 7-00 PM"}</li>
+                <li> <span className='secound_font_color'>Timing</span>  : <br></br>{props?.eventList.startTime ? <span >{props?.eventList.startTime} TO {props?.eventList.endTime}</span> : "11-00 AM to 7-00 PM"}</li>
               </ul>
-             
+
               <ul>
-                <li> Address : {props?.eventList.address?props?.eventList.address:"State Gallery of ART, Road No 1, Kavuri Hills, Madhapur, Hyderabad -500033"} </li>
+                <li> <span className='secound_font_color'>Address</span>   :  
+                <br></br>
+                State Gallery of ART, Road No 1,<br></br> Kavuri Hills, Madhapur, <br></br>Hyderabad -500033 </li>
               </ul>
               {/* <ul>
                 <li> Fee : {props?.eventList.fee ? props?.eventList.fee : "N/A"} </li>
               </ul> */}
             </div>
             <div className="blog_single_first_Widget">
-             
+
               <p>
-              {props?.eventList.discription}
+                {props?.eventList.discription}
               </p>
-             
-              <blockquote>
-               {/* {props?.eventList.address} */}
-               
-               {/* <img src={img1}  /> */}
-              </blockquote>
+
+
               <div>
-              
+
               </div>
               {/* <p>
                 Quisque velit nisi, pretium ut lacinia in, elementum id
@@ -90,14 +118,14 @@ const BlogSingleContent = (props) => {
             </div>
             <div className="blog_details_center_img">
               <div className="row">
-                {props?.eventList?.artList?.map((url)=>(
- <div className="col-lg-4 col-md-6 col-sm-12 col-12">
- <div className="single_center_img img-zoom-hover">
-   <img src={url} alt="img" />
- </div>
-</div>
+                {props?.eventList?.artList?.map((url) => (
+                  <div className="col-lg-4 col-md-6 col-sm-12 col-12">
+                    <div className="single_center_img img-zoom-hover">
+                      <img src={url.imageURL} alt="img" />
+                    </div>
+                  </div>
                 ))}
-               
+
                 {/* <div className="col-lg-4 col-md-6 col-sm-12 col-12">
                   <div className="single_center_img img-zoom-hover">
                     <img src={post2} alt="img" />
@@ -134,26 +162,41 @@ const BlogSingleContent = (props) => {
               </ul>
             </div> */}
           </div>
-          {/* <div className="card post_author">
+          <div className="blog_single_secend_widget">
+            <h3 className='primary_font_orange'>Artiest Details</h3>
+          </div>
+          {props?.eventList?.artiest ? <div className="card post_author">
             <div className="card-body">
               <div className="author_img" >
-              <img src={props?.eventList?.artiest?.profile} alt="img" style={{width:"100px"}}/>
+                <img src={props?.eventList?.artiest?.profile} alt="img" style={{ width: "100px" }} />
               </div>
               <div className="author_info">
                 <h6 className="author_name">
-                  <a href="#!" className="mb-1 d-inline-block">Maria Redwood</a>
+                  <a href="#!" className="mb-1 d-inline-block">{props?.eventList?.artiest?.artiestName}</a>
                 </h6>
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a
-                  type specimen book.
+                  {props?.eventList?.artiest?.discription}
+
                 </p>
               </div>
             </div>
+          </div> : 'N/A'}
+          <div className="blog_single_secend_widget margin-bottom-10">
+            <h3 className='primary_font_orange'>Artiest Works</h3>
           </div>
-          <RelatedPost /> */}
+          {props?.eventList?.artiestImages ?
+          <Container>
+            <Row>
+              {props?.eventList?.artiestImages?.map((result) => (
+                <Col xs={6} md={4}>
+                  <div >
+                  <Image src={result.imageURL} thumbnail />
+                  </div>
+                </Col>
+              ))}
+
+            </Row>
+          </Container> : 'N/A'}
           {/* <SingleCommentArea /> */}
           {/* <CommentForm /> */}
         </div>
