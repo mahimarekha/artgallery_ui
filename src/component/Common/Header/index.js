@@ -113,12 +113,12 @@ const Header = () => {
                                     </div>
                                     <div>
                                        
-                                    <div style={{color:"black", fontSize: "18px"}}>
+                                    <div style={{color:"black", fontSize: "30px", fontWeight:"500"}}>
                                       <div>
                                       Welcome to State Gallery of ART
                                       </div>
                                       <div>
-                                      <p>Asia's biggest gallery</p>
+                                      <p style={{ fontWeight:"500"}}>Asia's biggest gallery</p>
                                       </div>
                                         </div>
                                     </div>

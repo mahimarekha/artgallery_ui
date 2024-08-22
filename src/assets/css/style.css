@@ -560,7 +560,7 @@ button {
 
 .main-menu {
     position: relative;
-    width: 60%;
+    /* width: 60%; */
     text-align: end;
 }
 
