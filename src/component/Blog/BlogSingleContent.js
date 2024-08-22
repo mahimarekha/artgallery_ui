@@ -163,7 +163,7 @@ const BlogSingleContent = (props) => {
             </div> */}
           </div>
           <div className="blog_single_secend_widget">
-            <h3 className='primary_font_orange'>Artiest Details</h3>
+            <h3 className='primary_font_orange'>Artist Details</h3>
           </div>
           {props?.eventList?.artiest ? <div className="card post_author">
             <div className="card-body">
@@ -182,7 +182,7 @@ const BlogSingleContent = (props) => {
             </div>
           </div> : 'N/A'}
           <div className="blog_single_secend_widget margin-bottom-10">
-            <h3 className='primary_font_orange'>Artiest Works</h3>
+            <h3 className='primary_font_orange'>Artist Works</h3>
           </div>
           {props?.eventList?.artiestImages ?
           <Container>
