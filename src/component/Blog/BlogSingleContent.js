@@ -74,18 +74,18 @@ const BlogSingleContent = (props) => {
           </div>
           <div className="blog_single_widget">
 
-            <div className="blog_single_date">
+            <div className="blog_single_date" style={{fontFamily:"Poppins", fontWeight:"0", lineHeight:"1.8"}}>
               <ul>
                 <li>{formatDate(props?.eventList.startDate)} TO {formatDate(props?.eventList.endDate)} - By <a href="#!"> {props?.eventList.organizer}</a></li>
               </ul>
               <ul>
-                <li> <span className='secound_font_color'>Timing</span>  : <br></br>{props?.eventList.startTime ? <span >{props?.eventList.startTime} TO {props?.eventList.endTime}</span> : "11-00 AM to 7-00 PM"}</li>
+                <li> <span className='secound_font_color'>Timing</span>  : {props?.eventList.startTime ? <span >{props?.eventList.startTime} TO {props?.eventList.endTime}</span> : "11-00 AM to 7-00 PM"}</li>
               </ul>
 
               <ul>
                 <li> <span className='secound_font_color'>Address</span>   :  
-                <br></br>
-                State Gallery of ART, Road No 1,<br></br> Kavuri Hills, Madhapur, <br></br>Hyderabad -500033 </li>
+               
+                State Gallery of ART, Road No 1, Kavuri Hills, Madhapur, Hyderabad -500033. </li>
               </ul>
               {/* <ul>
                 <li> Fee : {props?.eventList.fee ? props?.eventList.fee : "N/A"} </li>

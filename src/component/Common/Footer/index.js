@@ -174,14 +174,14 @@ const Footer = () => {
                     <div className="row">
                         <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div className="copyright_left">
-                                <h6>© CopyRight 2024 <span> Chitramayee State Gallery of Art</span></h6>
+                                <h6 style={{fontSize:"large"}}>© CopyRight 2024 <span> Chitramayee State Gallery of Art</span></h6>
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div className="copyright_right">
                             {/* <div className="copyright_left"> */}
-                            <h5 style={{color:"white"}}>Address</h5>
-                                <span style={{color:"white"}}>State Gallery of Art,Road no.1, Kavuri Hills, Madhapur, Hyderabad-500033, Telangana</span>
+                            <h5 style={{color:"white"}}>Address:</h5>
+                                <span style={{color:"white"}}>State Gallery of Art,Road no.1, <br></br> Kavuri Hills, Madhapur, <br></br> Hyderabad-500033, Telangana</span>
                             {/* </div> */}
                             </div>
                         </div>

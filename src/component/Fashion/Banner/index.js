@@ -10,7 +10,7 @@ const Banner = () => {
             <div className="row">
                 <div className="col-lg-6">
                     <div className="banner_text_one">
-                        <h1 className="wow flipInX " style={{color:"#fef5ef"}} data-wow-duration="3.0s" data-wow-delay=".3s">Welcome to the <span className="wow flipInX" data-wow-duration="2.0s" data-wow-delay=".5s">State Gallery of Art</span></h1>
+                        <h1 className="wow flipInX " style={{color:"#fef5ef"}} data-wow-duration="3.0s" data-wow-delay=".3s"> <span className="wow flipInX" data-wow-duration="2.0s" data-wow-delay=".5s">State Gallery of Art</span></h1>
                         <h3>Biggest Gallery in Asia</h3>
                         {/* <Link to="/shop" className="theme-btn-one bg-black btn_md">Shop Now</Link> */}
                     </div>
