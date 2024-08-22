@@ -158,6 +158,32 @@ const Event = () => {
             id:""
         });
     }
+    const deleteEvent = (event) => {
+        const userConfirmed = window.confirm('Do you want to delete the record?');
+
+        if (userConfirmed) {
+            CommonService.deleteRequest(EVENTS.POST + "/" + event.id).then((res) => {
+
+                setShowSuccess(true);
+
+                setValidated(false);
+                handleClose();
+                getEventList();
+            }).catch((err) => {
+
+                if (err.response.data.message) {
+                    alert(err.response.data.message);
+                }
+
+            });
+        } else {
+            // User clicked "Cancel"
+            console.log('User canceled the action.');
+            // You can handle the cancelation here
+        }
+
+
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -279,11 +305,12 @@ const Event = () => {
           }
         }
     }
-    const editEvent = (event) => {
+    const editEvent = (event, dateString) => {
        const updateJSON =  JSON.parse(JSON.stringify(event));
        updateJSON.artiest = updateJSON.artiest ? updateJSON.artiest.id :'';
-       updateJSON.startDate = updateJSON.startDate ? updateJSON.startDate :'';
-       updateJSON.endDate = updateJSON.endDate ? updateJSON.endDate :'';
+       
+       updateJSON.startDate = updateJSON.startDate ? new Date(updateJSON.startDate).toISOString().split('T')[0] :'';
+       updateJSON.endDate = updateJSON.endDate ? new Date(updateJSON.endDate).toISOString().split('T')[0] :'';
 
 
 
@@ -311,7 +338,7 @@ const Event = () => {
                                     <tr>
 
                                         <th scope="col">Event Name</th>
-                                        <th scope="col">Artiest Name</th>
+                                        {/* <th scope="col">Artiest Name</th> */}
                                         <th scope="col">Start Date</th>
                                         <th scope="col">End Date</th>
                                         {/* <th scope="col">Address</th> */}
@@ -326,7 +353,7 @@ const Event = () => {
                                         <tr key={index}>
                                             {/* <td><Link to={ `/product-details-one/${data.id}`}><img width="70px" src={data.img} alt="img" /></Link></td> */}
                                             <td>{data.eventName}</td>
-                                            <td>{data.artiest ? data.artiest.artiestName : ''}</td>
+                                            {/* <td>{data.artiest ? data.artiest.artiestName : ''}</td> */}
                                             <td>{formatDate(data.startDate)} </td>
                                             <td>{formatDate(data.endDate)} </td>
                                             {/* <td> Timing : {data.startTime} TO {data.endTime}</td> */}
@@ -336,10 +363,12 @@ const Event = () => {
                                             {/* <td>{data.address}</td> */}
                                             {/* <td>{data.fee}</td> */}
                                             <td>{data.organizer}</td>
-                                           
-                                            <td><i className="fa fa-edit" onClick={() => editEvent(data)}></i>
+                                            {/* <td><i className="fa fa-edit" onClick={() => editArtist(data)}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash" onClick={() => deleteArtist(data)}></i></button></td> */}
+
+                                            <td><i className="fa fa-edit" onClick={() => editEvent(data)}></i><button style={{ background: "Transparent" }}><i className="fa fa-trash" onClick={() => deleteEvent(data)}></i></button></td>
+
                                           
-                                             </td>
+                                             
                                              <td><Button style={{backgroundColor:'#f79837',border:'none'}} onClick={() => imageArtist(data)}>Add Images</Button> </td>
 
                                         </tr>
@@ -406,7 +435,7 @@ const Event = () => {
                                                 <Row>
                                                     <Col xs={6} md={6}>
                                                         <Form.Control
-                                                            disabled={formData.id != ""}
+                                                            // disabled={formData.id != ""}
                                                             type="date" style={{ width: "100%" }}
                                                             name="startDate"
                                                             placeholder="DateRange"
@@ -418,7 +447,7 @@ const Event = () => {
                                                     </Col>
                                                     <Col xs={6} md={6}>
                                                         <Form.Control
-                                                           disabled={formData.id != ""}
+                                                        //    disabled={formData.id != ""}
                                                             type="date" style={{ width: "100%" }}
                                                             name="endDate"
                                                             placeholder="DateRange"
@@ -457,7 +486,7 @@ const Event = () => {
                                                     </Col>
 
                                                 </Row> */}
-                                                <br></br>
+                                               
                                                 {/* <Row>
                                                     <Col xs={6} md={6}>
                                                         <Form.Control
@@ -482,7 +511,7 @@ const Event = () => {
                                                     </Col>
 
                                                 </Row> */}
-                                                <br></br>
+                                                
                                                 <Row>
                                                     <Col xs={6} md={6}>
                                                         {/* <Form.Control
@@ -527,7 +556,7 @@ const Event = () => {
 
                                                 </Row>
                                                 <br></br>
-                                                <Row>
+                                                {/* <Row>
                                                     <Col  xs={12} md={12}>
                                                     <Form.Group controlId="formSelect">
                                                         <Form.Control
@@ -545,7 +574,7 @@ const Event = () => {
                                                         </Form.Control>
                                                     </Form.Group>
                                                     </Col>
-                                                </Row>
+                                                </Row> */}
                                             </FormGroup>
                                         </InputGroup>
                                         <Modal.Footer>

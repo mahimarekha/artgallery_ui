@@ -162,10 +162,10 @@ const BlogSingleContent = (props) => {
               </ul>
             </div> */}
           </div>
-          <div className="blog_single_secend_widget">
+          {/* <div className="blog_single_secend_widget">
             <h3 className='primary_font_orange'>Artist Details</h3>
-          </div>
-          {props?.eventList?.artiest ? <div className="card post_author">
+          </div> */}
+          {/* {props?.eventList?.artiest ? <div className="card post_author">
             <div className="card-body">
               <div className="author_img" >
                 <img src={props?.eventList?.artiest?.profile} alt="img" style={{ width: "100px" }} />
@@ -180,11 +180,11 @@ const BlogSingleContent = (props) => {
                 </p>
               </div>
             </div>
-          </div> : 'N/A'}
-          <div className="blog_single_secend_widget margin-bottom-10">
+          </div> : 'N/A'} */}
+          {/* <div className="blog_single_secend_widget margin-bottom-10">
             <h3 className='primary_font_orange'>Artist Works</h3>
-          </div>
-          {props?.eventList?.artiestImages ?
+          </div> */}
+          {/* {props?.eventList?.artiestImages ?
           <Container>
             <Row>
               {props?.eventList?.artiestImages?.map((result) => (
@@ -196,7 +196,7 @@ const BlogSingleContent = (props) => {
               ))}
 
             </Row>
-          </Container> : 'N/A'}
+          </Container> : 'N/A'} */}
           {/* <SingleCommentArea /> */}
           {/* <CommentForm /> */}
         </div>

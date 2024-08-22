@@ -8,9 +8,9 @@ const SideBar = () => {
             <div className="col-sm-12 col-md-12 col-lg-3">
                     <div className="dashboard_tab_button">
                         <ul role="tablist" className="nav flex-column dashboard-list">
-                            <li><Link to="/vendor-dashboard" className={location.pathname === '/vendor-dashboard'?'active':null}><i className="fa fa-tachometer"></i>  Dashboard</Link></li>
+                            {/* <li><Link to="/vendor-dashboard" className={location.pathname === '/vendor-dashboard'?'active':null}><i className="fa fa-tachometer"></i>  Dashboard</Link></li> */}
                             {/* <li> <Link to="/vendor/all-product" className={location.pathname === '/vendor/all-product'?'active':null}><i className="fa fa-shopping-cart"></i>Product</Link></li> */}
-                            <li> <Link to="/vendor/artist" className={location.pathname === '/vendor/artist'?'active':null}><i className="fa fa-user"></i>Artist</Link></li>
+                            {/* <li> <Link to="/vendor/artist" className={location.pathname === '/vendor/artist'?'active':null}><i className="fa fa-user"></i>Artist</Link></li> */}
 
                             <li> <Link to="/vendor/event" className={location.pathname === '/vendor/event'?'active':null}><i className="fa fa-shopping-cart"></i>Events</Link></li>
                             {/* <li><Link to="/vendor/all-order" className={location.pathname === '/vendor/all-order'?'active':null}><i className="fa fa-shopping-bag"></i>Order</Link></li> */}

@@ -77,7 +77,8 @@ const LoginArea = () => {
           title: 'Login Sucessfull',
           text: 'Welcome ' + res.user.name
         })
-        history.push("/vendor-dashboard");
+       
+        history.push("/vendor/event");
       }).catch((err) => {
 
         Swal.fire({
