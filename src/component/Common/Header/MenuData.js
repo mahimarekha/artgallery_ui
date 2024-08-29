@@ -35,6 +35,14 @@ export const MenuData = [
     //     ]
     // },
     {
+        name: "Gallery Booking",
+        href: "/gallerybooking",
+        mega_menu: false,
+        children: [
+          
+        ]
+    },
+    {
         name: "Events",
         href: "/blog-list-view",
         mega_menu: false,

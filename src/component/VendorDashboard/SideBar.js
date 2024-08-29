@@ -13,6 +13,9 @@ const SideBar = () => {
                             {/* <li> <Link to="/vendor/artist" className={location.pathname === '/vendor/artist'?'active':null}><i className="fa fa-user"></i>Artist</Link></li> */}
 
                             <li> <Link to="/vendor/event" className={location.pathname === '/vendor/event'?'active':null}><i className="fa fa-shopping-cart"></i>Events</Link></li>
+                            <li> <Link to="/vendor/gallery" className={location.pathname === '/vendor/gallery'?'active':null}><i className="fa fa-shopping-cart"></i>Gallery</Link></li>
+                            <li> <Link to="/vendor/gallery-booking-detail" className={location.pathname === '/vendor/gallery-booking-detaile'?'active':null}><i className="fa fa-shopping-cart"></i>Gallery Booking Detail</Link></li>
+
                             {/* <li><Link to="/vendor/all-order" className={location.pathname === '/vendor/all-order'?'active':null}><i className="fa fa-shopping-bag"></i>Order</Link></li> */}
                             {/* <li><Link to="/vendor/vendor-profile" className={location.pathname === '/vendor/vendor-profile'?'active':null}><i className="fa fa-id-badge"></i>Profile</Link></li> */}
                             {/* <li><Link to="/vendor/add-products" className={location.pathname === '/vendor/add-products'?'active':null}><i className="fa fa-user"></i>Add PRoduct</Link></li> */}

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, BrowserRouter } from 'react-rou
 import loadable from './component/Common/loader/loadable';
 import Loading from './component/Common/loader';
 import pMinDelay from 'p-min-delay';
+import GalleryBookingsMain from './page/gallerybooking';
 
 // All Page Lazy Import
 const Furniture = loadable(() => pMinDelay(import('./page/furniture'), 250), { fallback: <Loading /> });
@@ -45,6 +46,9 @@ const BlogSingleTwos = loadable(() => pMinDelay(import('./page/blog/blog-single-
 const Vendor = loadable(() => pMinDelay(import('./page/vendor/'), 250), { fallback: <Loading /> });
 const AllProducts = loadable(() => pMinDelay(import('./page/vendor/all-product'), 250), { fallback: <Loading /> });
 const Event = loadable(() => pMinDelay(import('./page/vendor/event'), 250), { fallback: <Loading /> });
+const Gallery = loadable(() => pMinDelay(import('./page/vendor/gallery'), 250), { fallback: <Loading /> });
+const GalleryBookingDetail = loadable(() => pMinDelay(import('./page/vendor/gallery-booking-detail'), 250), { fallback: <Loading /> });
+
 const AllOrders = loadable(() => pMinDelay(import('./page/vendor/all-order'), 250), { fallback: <Loading /> });
 const VendorProfile = loadable(() => pMinDelay(import('./page/vendor/vendor-profile'), 250), { fallback: <Loading /> });
 const AddProducts = loadable(() => pMinDelay(import('./page/vendor/add-products'), 250), { fallback: <Loading /> });
@@ -111,12 +115,16 @@ const App = () => {
             <Route path='/blog-grid-three' exact component={BlogGridThrees} />
             <Route path='/blog-grid-two' exact component={BlogGridTwos} />
             <Route path='/blog-list-view' exact component={BlogListView} />
+            <Route path='/gallerybooking' exact component={GalleryBookingsMain} />
             <Route path='/blog-single-one' exact component={BlogSingleOnes} />
             <Route path='/vieweventdetails/:id' exact component={BlogSingleOnes} />
             <Route path='/blog-single-two' exact component={BlogSingleTwos} />
             {/* <Route path='/vendor-dashboard' exact component={Vendor} /> */}
             <Route path='/vendor/all-product' exact component={AllProducts} />
             <Route path='/vendor/event' exact component={Event} />
+            <Route path='/vendor/gallery' exact component={Gallery} />
+            <Route path='/vendor/gallery-booking-detail' exact component={GalleryBookingDetail} />
+
             <Route path='/vendor/all-order' exact component={AllOrders} />
             <Route path='/vendor/vendor-profile' exact component={VendorProfile} />
             <Route path='/vendor/add-products' exact component={AddProducts} />
