@@ -7,6 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { HelpBlock } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { Toast, ToastContainer } from 'react-bootstrap';
 import { GALLERYBOOKING, GALLERY } from '../../service/API_URL';
 import { Grid, Card, Box, MenuItem, Select, InputLabel, TextField } from "react-bootstrap";
 import Image from 'react-bootstrap/Image';
@@ -69,7 +70,7 @@ const GalleryBooking = () => {
     const [imageurl, setImageURL] = useState(null);
     const [galleryList, setGalleryList] = useState([]);
     const [auditoriamList, setAuditoriamList] = useState([]);
-
+    const [toastMessage, setToastMessage] = useState('');
     const [selectedOption, setSelectedOption] = useState('');
     const [selectedGuestOption, setSelectedGuestOption] = useState('');
     const [radioList, setRadioList] = useState([
@@ -312,6 +313,7 @@ const GalleryBooking = () => {
 
         if (userConfirmed) {
             CommonService.deleteRequest(GALLERYBOOKING.POST + "/" + gallerybooking.id).then((res) => {
+                setToastMessage('Data submitted successfully!');
                 alert(" Registration Successfully.");
                 setShowSuccess(true);
                 setValidated(false);
@@ -320,7 +322,7 @@ const GalleryBooking = () => {
             }).catch((err) => {
 
                 if (err.response.data.message) {
-                    alert(err.response.data.message);
+                    setToastMessage('An error occurred while submitting data.');
                 }
 
             });
@@ -547,7 +549,7 @@ const GalleryBooking = () => {
 
                                                     <Row>
                                                         {galleryList.map((gallery, index) => (
-                                                            <Col xs={6} md={3}>
+                                                            <Col xs={6} md={3} style={{flex:"none", maxWidth:"33%"}}>
                                                                 <ToggleButton
 
                                                                     className="mb-2"
@@ -738,7 +740,7 @@ const GalleryBooking = () => {
                 }}>
 
                     <Card.Body >
-                        <Card.Title style={{ color: "#ef7528", marginLeft: "2rem" }}> <i className="fa fa-shopping-cart" style={{ marginRight: "5px" }}></i>Amount To Be Paid</Card.Title>
+                        <Card.Title style={{ color: "#ef7528", marginLeft: "2rem" }}> <i className="fa fa-shopping-cart" style={{ marginRight: "5px" }}></i>Booking Details</Card.Title>
 
 
                         <Container>

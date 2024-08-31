@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import { HelpBlock } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
-import {  GALLERYBOOKING } from '../../service/API_URL';
+import { GALLERYBOOKING } from '../../service/API_URL';
 import { Grid, Card, Box, MenuItem, Select, InputLabel, TextField } from "react-bootstrap";
 import Image from 'react-bootstrap/Image';
 
@@ -26,10 +26,10 @@ const GalleryBookingDetail = () => {
     let allData = [...useSelector((state) => state.products.products)];
     const [show, setShow] = useState(false);
     const [show1, setShow1] = useState(false);
-
+    const [isActive, setIsActive] = useState(false);
     const [galleryBookingDetailList, setGalleryBookingDetailList] = useState([]);
     const [galleryBookingList, setGalleryBookingList] = useState([]);
-
+    const [isAccepted, setIsAccepted] = useState(null);
     const [validated, setValidated] = useState(false);
     const [validated1, setValidated1] = useState(false);
     const { id } = useParams();
@@ -52,7 +52,19 @@ const GalleryBookingDetail = () => {
             setPage(page);
         }
     }
-  
+
+    const handleAccept = (id, status) => {
+        
+        setIsAccepted(true);
+
+        CommonService.putRequest(GALLERYBOOKING.POST + "/" + id, {bookingStatus:status}).then((res) => {
+            getGalleryBookingDetailList();
+        })
+    };
+
+    const handleReject = () => {
+        setIsAccepted(false);
+    };
     useEffect(() => {
         getGalleryBookingDetailList();
 
@@ -64,7 +76,7 @@ const GalleryBookingDetail = () => {
 
     const getGalleryBookingDetailList = () => {
         CommonService.getDetails(GALLERYBOOKING.GET, {}).then((res) => {
-debugger
+
             setGalleryBookingList(res);
 
 
@@ -72,8 +84,8 @@ debugger
 
         });
     }
-   
-  
+
+
 
     return (
         <>
@@ -88,7 +100,7 @@ debugger
                                 <thead className="thead-light">
                                     <tr>
                                         <th scope="col">Artist Name</th>
-                                       
+
                                         <th scope="col">Contact</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">From Date</th>
@@ -99,13 +111,12 @@ debugger
                                         <th scope="col">Number Of Participents</th>
                                         <th scope="col">Enclosed Photograph</th>
                                         <th scope="col">Guest Room Accomodation</th>
-                                        {/* <th scope="col">start Date</th>
-                                        <th scope="col">end Date</th> */}
+                                        <th scope="col">start Date</th>
+                                        <th scope="col">end Date</th>
                                         <th scope="col">Any Other Detailes</th>
                                         <th scope="col">Booking Status</th>
-                                        {/* <th scope="col">Any Other Detailes</th> */}
                                         <th scope="col"> Payment Status</th>
-                                        
+                                        <th scope="col"> Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -113,7 +124,7 @@ debugger
 
                                         <tr key={index}>
                                             <td>{data.artistName}</td>
-                                            
+
                                             <td>{data.contact}</td>
                                             <td>{data.email}</td>
                                             <td>{data.fromDate}</td>
@@ -124,10 +135,31 @@ debugger
                                             <td>{data.numberOfParticipents}</td>
                                             <td>{data.enclosedPhotograph} </td>
                                             <td>{data.guestRoomAccomodation} </td>
+                                            {/* <td>{row.active ? 'Active' : 'Inactive'}</td> */}
+                                            <td>{data.startDate ? data.startDate : "null"} </td>
+                                            <td>{data.endDate ? data.endDate : "null"} </td>
                                             <td>{data.anyOtherDetailes}</td>
                                             <td>{data.bookingStatus}</td>
                                             <td>{data.paymentStatus}</td>
-                                           
+                                            <td >
+                                                {data.bookingStatus === "Pending" ? (
+                                                    <>
+                                                        <Button variant="success" onClick={() => handleAccept(data.id, "Accepted")}
+                                                        >
+                                                            
+                                                            Accept
+                                                        </Button>
+                                                        
+                                                        <br></br>
+                                                        <br></br>
+
+                                                        <Button variant="danger" onClick={() => handleAccept(data.id, "Rejected")} className="ms-2">
+                                                            Reject
+                                                        </Button>
+                                                    </>
+                                                ) : ""}
+                                            </td>
+
 
                                         </tr>
                                     ))}
