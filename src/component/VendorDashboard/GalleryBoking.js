@@ -49,6 +49,7 @@ const GalleryBooking = () => {
         endDate: '',
         anyOtherDetailes: '',
     });
+    
     const [finalCost, setFinalCost] = useState({
         galleryFee: 0,
         auditoriamFee: 0,
@@ -73,6 +74,11 @@ const GalleryBooking = () => {
     const [toastMessage, setToastMessage] = useState('');
     const [selectedOption, setSelectedOption] = useState('');
     const [selectedGuestOption, setSelectedGuestOption] = useState('');
+
+    const [show2, setShow2] = useState(false);
+    const handleClose2 = () => setShow(false);
+    const handleShow2 = () => setShow(true);
+
     const [radioList, setRadioList] = useState([
         { name: "Solo", value: 4500 },
         { name: "Group", value: 6000 },
@@ -142,18 +148,14 @@ const GalleryBooking = () => {
         const finalAuditoriam = auditoriamSelectList ? auditoriamSelectList : auditoriamList;
         // let getPrice = 0
         let natureOfCate = 0;
-        const sum = finalAuditoriam.filter(item => item.isChecked).reduce((acc, item) => acc + item.price + item.ac, 0);
+        const sum = finalAuditoriam.filter(item => item.isChecked).reduce((acc, item) => acc + item.price, 0);
 
         const getPrice = radioList.find((item) => item.name === natureOfExc);
         if (getPrice) {
             natureOfCate = getPrice.value;
         }
         const finalPrice = (numberOfDays * galerryList.length) * natureOfCate;
-        console.log(numberOfDays);
-        console.log(galerryList);
-        console.log(getPrice);
-        console.log(finalPrice);
-        console.log(sum);
+    
         setFinalCost({ galleryFee: finalPrice, auditoriamFee: sum * numberOfDays, numberOfDays: numberOfDays });
     }
     const fromDateToDate = (fromDate, toDate) => {
@@ -175,7 +177,10 @@ const GalleryBooking = () => {
 
         setGalleryList(updatedGalleryList);
 
-        calculatFinalPrice(updatedGalleryList, null);
+        if(formData.fromDate && formData.toDate){
+            calculatFinalPrice(updatedGalleryList, null);
+        }
+       
 
 
     };
@@ -228,33 +233,39 @@ const GalleryBooking = () => {
             [name]: value
         });
     };
-    // const validateForm = () => {
-    //     let errors = {};
-    //     let formIsValid = true;
-    //     if (!formData.eventName) {
-    //         formIsValid = false;
-    //         errors["artiestName"] = "artiest name is required";
-    //     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-    //         formIsValid = false;
-    //         errors["email"] = "Email is invalid";
-    //     }
+    const validateForm = () => {
+        let errors = {};
+        let formIsValid = true;
+        if (!formData.artistName) {
+            formIsValid = false;
+            errors["artistName"] = "Artiest name is required";
+        } if (!formData.contact) {
+            formIsValid = false;
+            errors["contact"] = "Phone Number is required";
+        }
+        if (!formData.email) {
+            formIsValid = false;
+            errors["email"] = "Email is required";
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            formIsValid = false;
+            errors["email"] = "Email is invalid";
+        }if (!formData.fromDate) {
+            formIsValid = false;
+            errors["fromDate"] = "Event Start Date is required";
+        }if (!formData.toDate) {
+            formIsValid = false;
+            errors["toDate"] = "Event End Date is required";
+        }
 
-    //     if (!formData.password) {
-    //         formIsValid = false;
-    //         errors["password"] = "Password is required";
-    //     } else if (formData.password.length < 6) {
-    //         formIsValid = false;
-    //         errors["password"] = "Password must be at least 6 characters";
-    //     }
-
-    //     setFormErrors(errors);
-    //     return formIsValid;
-    // };
+       
+        setFormErrors(errors);
+        return formIsValid;
+    };
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(formData)
         setValidated(true);
-        // if (validateForm()) {
+        if (validateForm()) {
 
         formData.bookedAuditorium = auditoriamList.filter((item) => item.isChecked);
         formData.bookedGallery = galleryList.filter((item) => item.isChecked);
@@ -262,6 +273,11 @@ const GalleryBooking = () => {
         formData.auditoriumBookedAmount = finalCost.auditoriamFee;
         formData.galleryBookedAmount = finalCost.galleryFee;
         formData.numberOfDays = finalCost.numberOfDays;
+        
+        if(formData.totalAmount<1){
+            alert("Invaid amount")
+            return;
+        }
         CommonService.postRequest(GALLERYBOOKING.POST, formData).then((res) => {
 
             setShowSuccess(true);
@@ -296,7 +312,7 @@ const GalleryBooking = () => {
 
         });
 
-
+    }
 
     };
 
@@ -359,9 +375,23 @@ const GalleryBooking = () => {
                                 <FormGroup >
                                     <Container>
                                         <Row >
+                                        {/* <Form.Group as={Col} md="6" controlId="validationFormik03">
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="City"
+                name="city"
+                value={values.city}
+                onChange={handleChange}
+                isInvalid={!!errors.city}
+              />
 
+              <Form.Control.Feedback type="invalid">
+                {errors.city}
+              </Form.Control.Feedback>
+            </Form.Group> */}
                                             <Col xs={12} md={6}>
-                                                <Form.Label>Artist name</Form.Label>
+                                                <Form.Label>Artist name <span style={{color:"red"}}>*</span></Form.Label>
 
                                                 <Form.Control
                                                     type="text"
@@ -370,7 +400,11 @@ const GalleryBooking = () => {
                                                     value={formData.artistName}
                                                     onChange={handleChange}
                                                     isInvalid={!!formErrors.artistName}
+
                                                 />
+                                                  <Form.Control.Feedback type="invalid">
+                {formErrors.artistName}
+              </Form.Control.Feedback>
                                             </Col>
                                             <Col xs={12} md={6}>
                                                 <Form.Label>Qualification</Form.Label>
@@ -417,7 +451,7 @@ const GalleryBooking = () => {
                                         <br></br>
                                         <Row>
                                             <Col xs={12} md={6} >
-                                                <Form.Label>Phone Number</Form.Label>
+                                                <Form.Label>Phone Number <span style={{color:"red"}}>*</span></Form.Label>
 
                                                 <Form.Control
                                                     type="text"
@@ -427,9 +461,12 @@ const GalleryBooking = () => {
                                                     onChange={handleChange}
                                                     isInvalid={!!formErrors.contact}
                                                 />
+                                                 <Form.Control.Feedback type="invalid">
+                {formErrors.contact}
+              </Form.Control.Feedback>
                                             </Col>
                                             <Col xs={12} md={6}  >
-                                                <Form.Label>Email</Form.Label>
+                                                <Form.Label>Email <span style={{color:"red"}}>*</span></Form.Label>
 
                                                 <Form.Control
                                                     type="text"
@@ -439,6 +476,9 @@ const GalleryBooking = () => {
                                                     onChange={handleChange}
                                                     isInvalid={!!formErrors.email}
                                                 />
+                                                  <Form.Control.Feedback type="invalid">
+                {formErrors.email}
+              </Form.Control.Feedback>
                                             </Col>
                                         </Row>
                                     </Container>
@@ -479,7 +519,7 @@ const GalleryBooking = () => {
                                         <Container>
                                             <Row>
                                                 <Col xs={12} md={6}>
-                                                    <Form.Label> From Date</Form.Label>
+                                                    <Form.Label> From Date <span style={{color:"red"}}>*</span></Form.Label>
 
                                                     <Form.Control
                                                         // disabled={formData.id != ""}
@@ -488,16 +528,19 @@ const GalleryBooking = () => {
                                                         name="fromDate"
                                                         placeholder="DateRange"
                                                         value={formData.fromDate}
-                                                        // isInvalid={!!formErrors.startDate}
+                                                         isInvalid={!!formErrors.fromDate}
                                                         onChange={(event) => {
                                                             handleChange(event);
                                                             fromDateToDate(event.target.value, formData.toDate);
                                                         }}
                                                     // onChange={handleChange}
                                                     />
+                                                      <Form.Control.Feedback type="invalid">
+                {formErrors.fromDate}
+              </Form.Control.Feedback>
                                                 </Col>
                                                 <Col xs={12} md={6}>
-                                                    <Form.Label> To Date</Form.Label>
+                                                    <Form.Label> To Date <span style={{color:"red"}}>*</span></Form.Label>
 
                                                     <Form.Control
                                                         // disabled={formData.id != ""}
@@ -506,13 +549,16 @@ const GalleryBooking = () => {
                                                         name="toDate"
                                                         placeholder="DateRange"
                                                         value={formData.toDate}
-                                                        // isInvalid={!!formErrors.startDate}
+                                                         isInvalid={!!formErrors.toDate}
                                                         onChange={(event) => {
                                                             handleChange(event);
                                                             fromDateToDate(formData.fromDate, event.target.value);
                                                         }}
                                                     // onChange={handleChange}
                                                     />
+                                                     <Form.Control.Feedback type="invalid">
+                {formErrors.toDate}
+              </Form.Control.Feedback>
                                                 </Col>
                                             </Row>
                                             <br></br>
@@ -545,7 +591,7 @@ const GalleryBooking = () => {
                                                             /> */}
                                                 </Col>
                                                 <Col xs={12} md={6} >
-                                                <Form.Label>  Gallery</Form.Label>
+                                                <Form.Label>  Gallery <span style={{color:"red"}}>*</span></Form.Label>
 
                                                     <Row>
                                                         {galleryList.map((gallery, index) => (
@@ -658,10 +704,13 @@ const GalleryBooking = () => {
                                                           name="startDate"
                                                           placeholder="DateRange"
                                                           value={formData.startDate}
-                                                          // isInvalid={!!formErrors.startDate}
+                                                           isInvalid={!!formErrors.startDate}
 
                                                           onChange={handleChange}
                                                       />
+                                                      <Form.Control.Feedback type="invalid">
+                {formErrors.startDate}
+              </Form.Control.Feedback>
                                                       </Col>
                                                       <Col xs={6} md={6}>
                                                       <Form.Control
@@ -670,10 +719,13 @@ const GalleryBooking = () => {
                                                             name="endDate"
                                                             placeholder="DateRange"
                                                             value={formData.endDate}
-                                                            // isInvalid={!!formErrors.startDate}
+                                                             isInvalid={!!formErrors.endDate}
 
                                                             onChange={handleChange}
                                                         />
+                                                          <Form.Control.Feedback type="invalid">
+                {formErrors.endDate}
+              </Form.Control.Feedback>
                                                       </Col>
                                                       </Row>
                                                         // <FormGroup controlId="textInput">
@@ -721,10 +773,24 @@ const GalleryBooking = () => {
                                     <br></br>
 
                                     <div style={{ textAlign: "center" }}>
-                                        <Button style={{ backgroundColor: "#ef7528", border: "none" }} type="submit">
+                                        <Button onClick={handleShow} style={{ backgroundColor: "#ef7528", border: "none" }} type="submit">
                                             Book
                                         </Button>
                                     </div>
+                                    <Modal show={show2} onHide={handleClose2}>
+        <Modal.Header closeButton>
+          <Modal.Title>Popup Title</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Woohoo, you're reading this text in a popup!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose2}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose2}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
                                 </Form>
                             </Container>
 
