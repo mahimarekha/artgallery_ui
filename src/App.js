@@ -4,6 +4,7 @@ import loadable from './component/Common/loader/loadable';
 import Loading from './component/Common/loader';
 import pMinDelay from 'p-min-delay';
 import GalleryBookingsMain from './page/gallerybooking';
+import Artists from './page/artist';
 
 // All Page Lazy Import
 const Furniture = loadable(() => pMinDelay(import('./page/furniture'), 250), { fallback: <Loading /> });
@@ -18,6 +19,8 @@ const ShopList = loadable(() => pMinDelay(import('./page/shop/shop-list'), 250),
 const ShopLeftSideBar = loadable(() => pMinDelay(import('./page/shop/shop-left-sidebar'), 250), { fallback: <Loading /> });
 const ShopRightSideBar = loadable(() => pMinDelay(import('./page/shop/shop-right-sidebar'), 250), { fallback: <Loading /> });
 const ProductDetails = loadable(() => pMinDelay(import('./page/product/index'), 250), { fallback: <Loading /> });
+const GalleryDetails = loadable(() => pMinDelay(import('./page/gallerydetails/index'), 250), { fallback: <Loading /> });
+
 const ProductDetailsTwos = loadable(() => pMinDelay(import('./page/product/product-details-two'), 250), { fallback: <Loading /> });
 const Cart = loadable(() => pMinDelay(import('./page/cart/index'), 250), { fallback: <Loading /> });
 const CartTwo = loadable(() => pMinDelay(import('./page/cart/cart-two'), 250), { fallback: <Loading /> });
@@ -48,6 +51,7 @@ const AllProducts = loadable(() => pMinDelay(import('./page/vendor/all-product')
 const Event = loadable(() => pMinDelay(import('./page/vendor/event'), 250), { fallback: <Loading /> });
 const Gallery = loadable(() => pMinDelay(import('./page/vendor/gallery'), 250), { fallback: <Loading /> });
 const GalleryBookingDetail = loadable(() => pMinDelay(import('./page/vendor/gallery-booking-detail'), 250), { fallback: <Loading /> });
+const ArtistRegistrationDetail = loadable(() => pMinDelay(import('./page/vendor/artist-registration-detail'), 250), { fallback: <Loading /> });
 
 const AllOrders = loadable(() => pMinDelay(import('./page/vendor/all-order'), 250), { fallback: <Loading /> });
 const VendorProfile = loadable(() => pMinDelay(import('./page/vendor/vendor-profile'), 250), { fallback: <Loading /> });
@@ -69,7 +73,7 @@ const ContactOne = loadable(() => pMinDelay(import('./page/contact'), 250), { fa
 const ContactTwo = loadable(() => pMinDelay(import('./page/contact/contact-two'), 250), { fallback: <Loading /> });
 const ScrollToTop = loadable(() => pMinDelay(import('./component/Common/ScrollToTop'), 250), { fallback: <Loading /> });
 const Fashion = loadable(() => pMinDelay(import('./page/'), 250), { fallback: <Loading /> });
-// const Artist = loadable(() => pMinDelay(import('./page/vendor/artist'), 250), { fallback: <Loading /> });
+//  const Artist = loadable(() => pMinDelay(import('./page/vendor/artist'), 250), { fallback: <Loading /> });
 
 const App = () => {
   return (
@@ -90,10 +94,12 @@ const App = () => {
             <Route path='/shoplist' exact component={ShopList} />
             <Route path='/shop-left-bar' exact component={ShopLeftSideBar} />
             <Route path='/shop-right-bar' exact component={ShopRightSideBar} />
+            <Route path='/gallery-details-one/:id' exact component={GalleryDetails} />
+
             <Route path='/product-details-one/:id' exact component={ProductDetails} />
             <Route path='/product-details-two/:id' exact component={ProductDetailsTwos} />
             <Route path='/cart' exact component={Cart} />
-            {/* <Route path='/vendor/artist' exact component={Artist} /> */}
+            
             <Route path='/cartTwo' exact component={CartTwo} />
             <Route path='/cartThree' exact component={CartThree} />
             <Route path='/empty-cart' exact component={EmptyCarts} />
@@ -116,6 +122,7 @@ const App = () => {
             <Route path='/blog-grid-two' exact component={BlogGridTwos} />
             <Route path='/blog-list-view' exact component={BlogListView} />
             <Route path='/gallerybooking' exact component={GalleryBookingsMain} />
+            <Route path='/artist' exact component={Artists} />
             <Route path='/blog-single-one' exact component={BlogSingleOnes} />
             <Route path='/vieweventdetails/:id' exact component={BlogSingleOnes} />
             <Route path='/blog-single-two' exact component={BlogSingleTwos} />
@@ -124,6 +131,7 @@ const App = () => {
             <Route path='/vendor/event' exact component={Event} />
             <Route path='/vendor/gallery' exact component={Gallery} />
             <Route path='/vendor/gallery-booking-detail' exact component={GalleryBookingDetail} />
+            <Route path='/vendor/artist-registration-detail' exact component={ArtistRegistrationDetail} />
 
             <Route path='/vendor/all-order' exact component={AllOrders} />
             <Route path='/vendor/vendor-profile' exact component={VendorProfile} />

@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from '../../component/Common/Header'
 import Banner from '../../component/Common/Banner'
-import ProductDetailsOne from '../../component/Common/ProductDetails/ProductDetails'
+import GalleryDetails from '../../component/Common/ProductDetails/GalleryDetails'
 import InstgramSlider from '../../component/Common/Instagram'
 import Footer from '../../component/Common/Footer'
 
@@ -10,7 +10,7 @@ const ProductDetails = () => {
         <>
             <Header />
             {/* <Banner title="Product Details" /> */}
-            <ProductDetailsOne />
+            <GalleryDetails />
             <InstgramSlider />
             <Footer />
         </>

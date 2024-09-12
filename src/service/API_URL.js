@@ -19,6 +19,11 @@ export const ARTIST ={
       POST:"/artiest",
        ARTISTGET:"/artiest/getartiest"
 }
+export const GALLERY_COLLECTION ={
+  GET:"/gallerycollection",
+    POST:"/gallerycollection",
+     ARTISTGET:"/gallerycollection/getcollections"
+}
 export const GALLERY ={
   GET:"/gallery",
     POST:"/gallery",

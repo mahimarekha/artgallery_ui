@@ -1,12 +1,35 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import ProductCard from '../../Common/Product/ProductCard';
+import GalleryList from '../../Common/Product/GalleryList';
 import Heading from '../Heading';
+import { ARTIST, GALLERY_COLLECTION, EVENTS } from '../../../service/API_URL';
+import CommonService from '../../../service/commonService';
 
 import { useSelector } from "react-redux";
 const HotProduct = () => { 
+    const [artistRegistrationList, setArtistRegistrationList] = useState([]);
 
     let products = useSelector((state) => state.products.products);
     
+    useEffect(() => {
+        getArtistRegistrationDetailList();
+
+        return () => {
+            setArtistRegistrationList([]);
+        }
+    }, []);
+
+    const getArtistRegistrationDetailList = () => {
+       
+            CommonService.postRequest(GALLERY_COLLECTION.ARTISTGET,{approvalStatus:"Approved",status:true}).then((res) => {
+
+                setArtistRegistrationList(res);
+    
+    
+            }).catch((err) => {
+    
+            });
+        }
     return (
         <>
     <section id="hot_Product_area" className="ptb-100">
@@ -29,9 +52,9 @@ const HotProduct = () => {
                         <div className="tab-content">
                           <div id="new_arrival" className="tab-pane fade show in active">
                               <div className="row">
-                                {products.slice(0, 8).map((data, index) =>(
+                                {artistRegistrationList.slice(0, 8).map((data, index) =>(
                                     <div className="col-lg-3 col-md-4 col-sm-6 col-12" key={index}>
-                                            <ProductCard data={data} />
+                                            <GalleryList data={data} />
                                     </div>
                                 ))}
                               </div>

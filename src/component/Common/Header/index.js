@@ -233,6 +233,9 @@ const Header = () => {
 
                                 </li>
                                 <li >
+                                    <a href="/artist" onClick={() => handleShow("shop")}><span>ArtistRegistration</span></a>
+                                </li>
+                                <li >
                                     <a href="/gallerybooking" onClick={() => handleShow("shop")}><span>GalleryBooking</span></a>
                                 </li>
                                 <li >

@@ -1,17 +1,17 @@
 import React from 'react'
 import Header from '../../component/Common/Header'
 import Layout from '../../component/VendorDashboard/Layout'
-import Artist from '../../component/VendorDashboard/Artist'
+import ArtistRegistrationDetail from '../../component/VendorDashboard/ArtistRegistrationDetail'
 import Banner from '../../component/Common/Banner'
 import Footer from '../../component/Common/Footer'
 import Calendar from '../../component/Blog/Calendar'
-const Artists = () => {
+const ArtistRegistrationDetails = () => {
     return (
         <>
              <Header />
             {/* <Banner title="Vendor" /> */}
             <Layout>
-             <Artist />
+             <ArtistRegistrationDetail />
              {/* <Calendar /> */}
              </Layout>
             {/* <Footer /> */}
@@ -19,4 +19,4 @@ const Artists = () => {
     )
 }
 
-export default Artists
+export default ArtistRegistrationDetails

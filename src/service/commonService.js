@@ -16,6 +16,13 @@ const CommonService = {
   getDetails(url) {
     return requests.get(url);
   },
+  getRole(){
+    let role;
+    if ( localStorage.getItem("role")) {
+      role =   localStorage.getItem("role");
+    }
+    return role;
+  },
   fileUpload(url,requestData) {
     return requests.post(url, requestData, {
         'Content-Type': 'multipart/form-data',

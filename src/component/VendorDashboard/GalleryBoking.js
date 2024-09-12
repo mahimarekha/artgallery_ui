@@ -267,6 +267,8 @@ const GalleryBooking = () => {
         console.log(formData)
         setValidated(true);
 
+
+
         if (validateForm()) {
 
             formData.bookedAuditorium = auditoriamList.filter((item) => item.isChecked);
@@ -306,6 +308,11 @@ const GalleryBooking = () => {
                 });
                 setValidated(false);
                 handleClose();
+                const updatedGalleryList = galleryList.map((item, i) => {
+                    return { ...item, isChecked: false }
+                });
+
+                setGalleryList(updatedGalleryList);
                 // getGalleryBookingList();
             }).catch((err) => {
 
@@ -338,6 +345,7 @@ const GalleryBooking = () => {
                 setValidated(false);
                 handleClose();
                 getGalleryBookingList();
+
             }).catch((err) => {
 
                 if (err.response.data.message) {
@@ -776,25 +784,25 @@ const GalleryBooking = () => {
                                     <br></br>
 
                                     <div style={{ textAlign: "center" }}>
-                                        <Button  style={{ backgroundColor: "#ef7528", border: "none" }} type="submit">
+                                        <Button style={{ backgroundColor: "#ef7528", border: "none" }} type="submit">
                                             Book
                                         </Button>
                                     </div>
-                                   
+
                                 </Form>
                                 <Modal show={show2} onHide={handleClose2} >
 
-<Modal.Body style={{fontSize:'larger'}}>Thank You For Registration, Once get confirmed we will get back to you...
-!<br/>
-<strong>Booking ID:</strong> {bookingId}
-</Modal.Body>
-<Modal.Footer>
-    <Button variant="secondary" onClick={handleClose2}>
-        Close
-    </Button>
-    
-</Modal.Footer>
-</Modal>
+                                    <Modal.Body style={{ fontSize: 'larger' }}>Thank You For Registration, Once get confirmed we will get back to you...
+                                        !<br />
+                                        <strong>Booking ID:</strong> {bookingId}
+                                    </Modal.Body>
+                                    <Modal.Footer>
+                                        <Button variant="secondary" onClick={handleClose2}>
+                                            Close
+                                        </Button>
+
+                                    </Modal.Footer>
+                                </Modal>
                             </Container>
 
 

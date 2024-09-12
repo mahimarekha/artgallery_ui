@@ -27,22 +27,60 @@ const Artist = () => {
     const [show, setShow] = useState(false);
     const [show1, setShow1] = useState(false);
     const [artistImageList, setArtistImageList] = useState([]);
+    const [show3, setShow3] = useState(false);
+    // const [eventImageList, setEventImageList] = useState([]);
+    const handleShow3 = () => setShow3(true);
+    const [show2, setShow2] = useState(false);
+    const handleClose2 = () => setShow2(false);
+    const handleShow2 = () => setShow2(true);
+    const [logourl, setLogoURL] = useState([]);
     const [artistList, setArtistList] = useState([]);
     const [artistId, setArtistId] = useState('');
     const [formData, setFormData] = useState({
-        artiestName: '',
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        mobile:'',
+        email:'',
+        password:'',
+        dob: '',
+        placeOfBirth: '',
+        nationality: '',
+        permAddress: '',
+        permCity: '',
+        permState: '',
+        permPin: '',
+        currAddress: '',
+        currCity: '',
+        currState: '',
+        currPin: '',
+        qualification: '',
+        year: '',
+        college: '',
+        state: '',
+        // artMedium: '',
         expreance: '',
-        profile: '',
-        status: true,
-        discription: '',
+        shortNote: '',
+        exhibitions: '',
+        // uploadArtwork: '',
 
     });
     const [imageData, setImageData] = useState({
 
         profile: '',
-
-
     });
+    const [artList, setArtList] = useState([
+        "Painting",
+        "Sculpture",
+        "Print making",
+        "Drawing",
+        "Photography",
+        "Digital",
+    ]);
+    const [exbhitionList, setExbhitionList] = useState([
+        "Solo",
+        "Group",
+    ]);
     const [validated, setValidated] = useState(false);
     const [validated1, setValidated1] = useState(false);
     const { id } = useParams();
@@ -55,7 +93,6 @@ const Artist = () => {
     const handleClose1 = () => setShow1(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [file, setFile] = useState(null);
-    const [logourl, setLogoURL] = useState(null);
     const [imageurl, setImageURL] = useState(null);
     const randProduct = (page) => {
         if (page) {
@@ -84,15 +121,23 @@ const Artist = () => {
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
     };
+    const getCurrentDate = () => {
+        const currentDate = new Date();
 
+        // Get the year, month, and day
+        const year = currentDate.getFullYear();
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Months are zero-based, so add 1
+        const day = String(currentDate.getDate()).padStart(2, '0');
+
+        // Format the date as "YYYY-MM-DD"
+        return `${year}-${month}-${day}`;
+    }
     const uploadImage = async (event) => {
         event.preventDefault();
-        const file = event.target.files[0];
+       //// const file = event.target.files[0];
         if (!file) {
             alert("Please select image to upload");
         }
-
-
         const formData = new FormData();
         formData.append('image', file);
         formData.append('imageName', file.name);
@@ -101,52 +146,22 @@ const Artist = () => {
 
             //console.log(response.data);
 
-            setLogoURL(response.url);
+            setLogoURL(prevItems => [...prevItems, 
+                {"imageURL":response.url,
+                "imageName":response.imageName}]);
+
+
 
         } catch (error) {
             console.error(error);
         }
+
+       
+
+
     };
-    const uploadImage1 = async (event) => {
-
-        event.preventDefault();
-        // const file = event.target.files[0];
-        if (!file) {
-            alert("Please select image to upload");
-            return;
-        }
-
-
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('imageName', file.name);
-
-        try {
-            const response = await CommonService.fileUpload(EVENTS.IMG_UPLOAD, formData);
-            const images = await CommonService.postRequest(IMAGES.GET,
-                {
-                    "imageName": response.imageName,
-                    "imageURL": response.url,
-                    "artiesId": artistId,
-                    "type":"artiest"
-                });
-
-            //console.log(response.data);
-            setArtistImageList([...artistImageList, {
-                "imageName": response.imageName,
-                "imageURL": response.url,
-                "artiesId": artistId,
-                "type":"artiest"
-            }]);
-
-            // setArtistImageList([response.url])
-            // setLogoURL(response.url);
-            // setImageURL(images.url)
-
-        } catch (error) {
-            console.error(error);
-        }
-    };
+   
+  
 
     const getArtistImageList = (artistId) => {
 
@@ -158,7 +173,7 @@ const Artist = () => {
 
         });
     }
-
+    
     const getArtistList = () => {
 
         CommonService.getDetails(ARTIST.GET, {}).then((res) => {
@@ -198,59 +213,98 @@ const Artist = () => {
         setFormErrors(errors);
         return formIsValid;
     };
+    const resetForm = ()=>{
+        setFormData({
+            
+            
+                firstName: '',
+                middleName: '',
+                lastName: '',
+                mobile:'',
+                email:'',
+                password:'',
+                dob: '',
+                placeOfBirth: '',
+                nationality: '',
+                permAddress: '',
+                permCity: '',
+                permState: '',
+                permPin: '',
+                currAddress: '',
+                currCity: '',
+                currState: '',
+                currPin: '',
+                qualification: '',
+                year: '',
+                college: '',
+                state: '',
+                // artMedium: '',
+                expreance: '',
+                shortNote: '',
+                exhibitions: '',
+                // uploadArtwork: '',
+       
+
+
+          
+        });
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
 
         setValidated(true);
         // if (validateForm()) {
-        if (formData.id) {
-            formData.profile = logourl ? logourl : formData.profile;
-            CommonService.putRequest(ARTIST.POST + "/" + formData.id, formData).then((res) => {
 
-                setShowSuccess(true);
-                setFormData({
-                    artiestName: '',
-                    expreance: '',
-                    profile: '',
-                    status: '',
-                    discription: '',
-                });
-                setValidated(false);
-                handleClose();
-                getArtistList();
-            }).catch((err) => {
-
-                if (err.response.data.message) {
-                    alert(err.response.data.message);
-                }
-
+        formData.uploadArtwork = logourl ? logourl : '';
+        CommonService.postRequest(ARTIST.POST, formData).then((res) => {
+            handleShow2();
+            
+            setShowSuccess(true);
+            setFormData({
+                firstName: '',
+                middleName: '',
+                lastName: '',
+                mobile:'',
+                email:'',
+                password:'',
+                dob: '',
+                placeOfBirth: '',
+                nationality: '',
+                permAddress: '',
+                permCity: '',
+                permState: '',
+                permPin: '',
+                currAddress: '',
+                currCity: '',
+                currState: '',
+                currPin: '',
+                qualification: '',
+                year: '',
+                college: '',
+                state: '',
+                // artMedium: '',
+                expreance: '',
+                shortNote: '',
+                exhibitions: '',
+                // uploadArtwork: '',
             });
-        } else {
-            formData.profile = logourl ? logourl : '';
-            CommonService.postRequest(ARTIST.POST, formData).then((res) => {
+            setValidated(false);
+            handleClose();
+            getArtistList();
+            resetForm();
+            setArtistImageList([]);
+        }).catch((err) => {
 
-                setShowSuccess(true);
-                setFormData({
-                    artiestName: '',
-                    expreance: '',
-                    profile: '',
-                    status: '',
-                    discription: '',
-                });
-                setValidated(false);
-                handleClose();
-                getArtistList();
-            }).catch((err) => {
+            if (err.response.data.message) {
+                alert(err.response.data.message);
+            }
 
-                if (err.response.data.message) {
-                    alert(err.response.data.message);
-                }
+        });
 
-            });
-        }
 
 
     };
+  
     const imageArtist = (artiesdetails) => {
         getArtistImageList(artiesdetails.id);
         setArtistId(artiesdetails.id)
@@ -263,22 +317,22 @@ const Artist = () => {
         handleShow();
     }
 
-    const deleteImage = async (image,index)=>{
+    const deleteImage = async (image, index) => {
         const userConfirmed = window.confirm('Do you want to delete the image?');
 
         if (userConfirmed) {
-          try {
-            const images = await CommonService.postRequest(IMAGES.DELETEIMAGES,
-                {
-                    "imageName": image.imageName,
-                    "imageId": image.id,
-                    
-                });
-              const newItems = artistImageList.filter((item, i) => i !== index);
-              setArtistImageList(newItems);
-          } catch (error) {
-            alert(error);
-          }
+            try {
+                const images = await CommonService.postRequest(IMAGES.DELETEIMAGES,
+                    {
+                        "imageName": image.imageName,
+                        "imageId": image.id,
+
+                    });
+                const newItems = artistImageList.filter((item, i) => i !== index);
+                setArtistImageList(newItems);
+            } catch (error) {
+                alert(error);
+            }
         }
     }
 
@@ -312,232 +366,500 @@ const Artist = () => {
 
     return (
         <>
-            <div className="row">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-                    <div className="vendor_order_boxed pt-4">
-                        <div className="mb-2">
-                            <h4>Artist</h4>
-                            <button
-                                // to="/vendor/add-products"
-                                data-toggle="tab" className="theme-btn-one bg-black btn_sm add_prod_button" onClick={handleShow}>Add Artist</button>
-                        </div>
-                        <div className="table-responsive">
-                            <table className="table pending_table">
-                                <thead className="thead-light">
-                                    <tr>
-                                        <th scope="col">Profile</th>
-                                        <th scope="col">Artist Name</th>
-                                        <th scope="col">Experience</th>
+            <div style={{ padding: "1rem", marginTop: "6rem", }}>
 
-                                        <th scope="col">Status</th>
+                {/* <h2 style={{textAlign:"center", color:"#ef7528", padding:"25px"}}>Gallery Boking</h2> */}
 
-                                        <th scope="col">Edit/Delete</th>
-                                        <th scope="col">Images </th>
+                <Card style={{
+                    width: '100%', background: "white",
+                    boxShadow: "0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)"
+                }}>
+
+                    <Card.Body >
+                        <Card.Title style={{ color: "#ef7528", marginLeft: "2rem", fontWeight: "550px" }}> Personal Details</Card.Title>
 
 
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {artistList.map((data, index) => (
-                                        <tr key={index}>
-
-                                            <td><img src={data.profile} height={50} width={50} /> </td>
-
-                                            {/* <td><Link to={ `/product-details-one/${data.id}`}><img width="70px" src={data.img} alt="img" /></Link></td> */}
-                                            <td>{data.artiestName}</td>
-                                            <td>{data.expreance} </td>
-                                            <td>{data.status ? 'Active' : "In Active"}</td>
-                                            <td><i className="fa fa-edit" onClick={() => editArtist(data)}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash" onClick={() => deleteArtist(data)}></i></button></td>
-
-                                            <td><Button style={{ backgroundColor: '#f79837', border: 'none' }} onClick={() => imageArtist(data)}>Add Images</Button> </td>
-                                        </tr>
-                                    ))}
-
-                                </tbody>
-                            </table>
-                        </div>
-
-                        {/* <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button> */}
-
-                        <Modal show={show} onHide={handleClose} size="sm">
-                            <Modal.Header closeButton  >
-                                <Modal.Title >Add Artist</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <Container>
-                                    <Form
-                                        noValidate validated={validated} onSubmit={handleSubmit} >
-
-                                        <InputGroup >
-                                            <FormGroup >
-                                                <Container>
-                                                    <Row>
-                                                        <Col >
-                                                            <Form.Control
-                                                                type="text" style={{ width: "100%" }}
-                                                                placeholder="Enter Artist name"
-                                                                name="artiestName"
-                                                                value={formData.artiestName}
-                                                                onChange={handleChange}
-                                                                isInvalid={!!formErrors.artiestName}
-                                                            />
-                                                        </Col>
-                                                        <Col >
-                                                            <Form.Control
-                                                                type="text" style={{ width: "100%" }}
-                                                                placeholder="Enter expirence"
-                                                                name="expreance"
-                                                                value={formData.expreance}
-                                                                onChange={handleChange}
-                                                                isInvalid={!!formErrors.expreance}
-                                                            />
-                                                        </Col>
-                                                    </Row>
-                                                    <br></br>
-                                                    <Row>
-                                                        <Col >
-
-                                                            <Form.Control type="file" style={{ width: "100%" }} onChange={uploadImage} accept="image/*" />
+                        <Container>
+                            <Form
+                                noValidate validated={validated} onSubmit={handleSubmit} >
 
 
-                                                            {/* <Button onClick={uploadImage} variant="contained" style={{marginTop:'10px'}} >Upload</Button>
-                                                   
-                                                    {logourl?  <img src={logourl}  alt='logo' height="50%" width="50%"/>:''} */}
+                                <FormGroup >
+                                    <Container>
+                                        <Row >
 
+                                            <Col xs={12} md={4}>
+                                                <Form.Label>Artist First name <span style={{ color: "red" }}>*</span></Form.Label>
 
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter first name "
+                                                    name="firstName"
+                                                    value={formData.firstName}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.firstName}
 
-                                                        </Col>
-                                                        <Col>
-                                                            {/* <Dropdown>
-                                                                <Dropdown.Toggle variant="" id="dropdown-basic">
-                                                                   Status
-                                                                </Dropdown.Toggle>
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.firstName}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                            <Col xs={12} md={4}>
+                                                <Form.Label>Middle Name</Form.Label>
 
-                                                                <Dropdown.Menu>
-                                                                    <Dropdown.Item value={true}>True</Dropdown.Item>
-                                                                    <Dropdown.Item value={false}>False</Dropdown.Item>
-                                                                </Dropdown.Menu>
-                                                            </Dropdown> */}
-                                                            <Form.Group controlId="formSelect">
-                                                                <Form.Control
-                                                                    as="select"
-                                                                    name="status"
-                                                                    value={formData.status}
-                                                                    onChange={(e) => handleChange(e.target.value)}
-                                                                >
-                                                                    <option value={true}>Active</option>
-                                                                    <option value={false}> In Active</option>
-                                                                </Form.Control>
-                                                            </Form.Group>
-                                                        </Col>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter middle name"
+                                                    name="middleName"
+                                                    value={formData.middleName}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.middleName}
+                                                />
+                                            </Col>
+                                            <Col xs={12} md={4} >
+                                                <Form.Label>Last Name <span style={{ color: "red" }}>*</span></Form.Label>
 
-                                                    </Row>
-                                                    <br></br>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter Last Name "
+                                                    name="lastName"
+                                                    value={formData.lastName}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.lastName}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.lastName}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                        </Row>
+                                        <br></br>
+                                        <Row>
+                                            <Col xs={12} md={4} >
+                                                <Form.Label>Phone Number <span style={{ color: "red" }}>*</span></Form.Label>
 
-                                                    <Row>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter phone number "
+                                                    name="mobile"
+                                                    value={formData.mobile}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.mobile}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.mobile}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                            <Col xs={12} md={4}  >
+                                                <Form.Label>Email <span style={{ color: "red" }}>*</span></Form.Label>
 
-                                                        <Col >
-                                                            {/* <Form.Control
-                                                                type="text" style={{ width: "100%" }}
-                                                                placeholder="Enter discription"
-                                                                name="discription"
-                                                                value={formData.discription}
-                                                                onChange={handleChange}
-                                                                isInvalid={!!formErrors.discription}
-                                                            /> */}
-                                                            <FloatingLabel controlId="floatingTextarea2" >
-                                                                <Form.Control
-                                                                    name="discription"
-                                                                    value={formData.discription}
-                                                                    onChange={handleChange}
-                                                                    isInvalid={!!formErrors.discription}
-                                                                    as="textarea"
-                                                                    placeholder="Enter discription"
-                                                                    style={{ height: '100px' }}
-                                                                />
-                                                            </FloatingLabel>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter email"
+                                                    name="email"
+                                                    value={formData.email}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.email}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.email}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                            <Col xs={12} md={4} >
+                                                <Form.Label>Password <span style={{ color: "red" }}>*</span></Form.Label>
 
-                                                        </Col>
-                                                    </Row>
-                                                </Container>
-                                            </FormGroup>
-                                        </InputGroup>
-                                        <Modal.Footer>
-                                            <Button variant="secondary" onClick={handleClose}>
-                                                Close
-                                            </Button>
-                                            <Button variant="primary" type="submit">
-                                                {formData.id ? "Update" : "Create"}
-                                            </Button>
-                                        </Modal.Footer>
-                                    </Form>
-                                </Container>
-                            </Modal.Body>
+                                                <Form.Control
+                                                    type="password"
+                                                    placeholder="Enter Password "
+                                                    name="password"
+                                                    value={formData.password}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.password}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.password}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                        </Row>
+                                        <br></br>
+                                        <Row>
+                                            <Col xs={12} md={4}>
+                                                <Form.Label> Date Of Birth </Form.Label>
 
-                        </Modal>
-                        <Modal show={show1} onHide={handleClose1} size="sm">
-                            <Modal.Header closeButton  >
-                                <Modal.Title >Add Images</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <Container>
-                                    <Form
-                                        noValidate validated={validated} onSubmit={handleSubmit} >
+                                                <Form.Control
+                                                    // disabled={formData.id != ""}
+                                                    type="date"
+                                                    min={getCurrentDate()}
+                                                    name="dob"
+                                                    placeholder="DateRange"
+                                                    value={formData.dob}
+                                                    isInvalid={!!formErrors.dob}
+                                                    onChange={(event) => {
+                                                        handleChange(event);
+                                                        // fromDateToDate(event.target.value, formData.toDate);
+                                                    }}
+                                                // onChange={handleChange}
+                                                />
 
-                                        <InputGroup >
-                                            <FormGroup >
-                                                <Container>
-                                                    <Row>
+                                            </Col>
+                                            <Col xs={12} md={4}>
+                                                <Form.Label>Place Of Birth</Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter place"
+                                                    name="placeOfBirth"
+                                                    value={formData.placeOfBirth}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.placeOfBirth}
+                                                />
+                                            </Col>
+                                            <Col xs={12} md={4}>
+                                                <Form.Label>Nationality <span style={{ color: "red" }}>*</span></Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Nationality"
+                                                    name="nationality"
+                                                    value={formData.nationality}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.nationality}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.lastName}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                        </Row>
+                                        <br></br>
+                                        <Col item xs={12} >
+
+                                            <h5 style={{ color: "#ef7528", fontWeight: "600", fontSize: "larger" }} >Permanent Address</h5>
+                                        </Col>
+                                        <br></br>
+                                        <Row>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>Permanent Address <span style={{ color: "red" }}>*</span></Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter address "
+                                                    name="permAddress"
+                                                    value={formData.permAddress}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.permAddress}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.permAddress}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>City <span style={{ color: "red" }}>*</span></Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter city "
+                                                    name="permCity"
+                                                    value={formData.permCity}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.permCity}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.permCity}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>State <span style={{ color: "red" }}>*</span></Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter state "
+                                                    name="permState"
+                                                    value={formData.permState}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.permState}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.permState}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>PIN Code <span style={{ color: "red" }}>*</span></Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter PIN "
+                                                    name="permPin"
+                                                    value={formData.permPin}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.permPin}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.permPin}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                        </Row>
+
+                                        <br></br>
+                                        <Col item xs={12} >
+                                            <h5 style={{ color: "#ef7528", fontWeight: "600", fontSize: "larger" }} >Current Address</h5>
+                                        </Col>
+                                        <br></br>
+                                        <Row>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>Current Address </Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter address "
+                                                    name="currAddress"
+                                                    value={formData.currAddress}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.currAddress}
+                                                />
+
+                                            </Col>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>City </Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter city "
+                                                    name="currCity"
+                                                    value={formData.currCity}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.currCity}
+                                                />
+
+                                            </Col>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>State </Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter state "
+                                                    name="currState"
+                                                    value={formData.currState}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.currState}
+                                                />
+
+                                            </Col>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>PIN Code </Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter PIN "
+                                                    name="currPin"
+                                                    value={formData.currPin}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.currPin}
+                                                />
+
+                                            </Col>
+                                        </Row>
+                                        <br></br>
+                                        <Col item xs={12} >
+                                            <h5 style={{ color: "#ef7528", fontWeight: "600", fontSize: "larger" }} >Educational Details</h5>
+                                        </Col>
+                                        <br></br>
+                                        <Row>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>Qualification</Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter qualification "
+                                                    name="qualification"
+                                                    value={formData.qualification}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.qualification}
+                                                />
+
+                                            </Col>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>Year</Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter year "
+                                                    name="year"
+                                                    value={formData.year}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.year}
+                                                />
+
+                                            </Col>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>College </Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter College "
+                                                    name="college"
+                                                    value={formData.college}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.college}
+                                                />
+
+                                            </Col>
+                                            <Col xs={12} md={3} >
+                                                <Form.Label>State </Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter state "
+                                                    name="state"
+                                                    value={formData.state}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.state}
+                                                />
+
+                                            </Col>
+                                        </Row>
+                                        <br></br>
+                                        <Col item xs={12} >
+                                            <h5 style={{ color: "#ef7528", fontWeight: "600", fontSize: "larger" }} >Profissional Details</h5>
+                                        </Col>
+                                        <br></br>
+                                        <Row>
+                                            {/* <Col xs={12} md={4} >
+                                                <Form.Label>Art Medium <span style={{ color: "red" }}>*</span></Form.Label>
+
+                                                <Form.Group controlId="formSelect">
+                                                    <Form.Control
+                                                        as="select"
+                                                        name="artMedium"
+                                                        value={formData.artMedium}
+                                                        onChange={handleChange}
+                                                    >
+                                                        <option value="">Select Type</option>
+
+                                                        {artList.map((data, index) => (
+
+                                                            <option value={data.id} key={index}> {data}</option>
+                                                        ))}
+                                                    </Form.Control>
+                                                </Form.Group>
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.artMedium}
+                                                </Form.Control.Feedback>
+                                            </Col> */}
+                                            <Col xs={12} md={4} >
+                                                <Form.Label>Experience  <span style={{ color: "red" }}>*</span></Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter experience "
+                                                    name="expreance"
+                                                    value={formData.expreance}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.expreance}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.expreance}
+                                                </Form.Control.Feedback>
+                                            </Col>
+                                            <Col xs={12} md={4} >
+                                                <Form.Label>Short Note</Form.Label>
+
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter short note "
+                                                    name="shortNote"
+                                                    value={formData.shortNote}
+                                                    onChange={handleChange}
+                                                    isInvalid={!!formErrors.shortNote}
+                                                />
+
+                                            </Col>
+                                            <Col xs={12} md={4} >
+                                                <Form.Label>Exhibition <span style={{ color: "red" }}>*</span></Form.Label>
+
+                                                <Form.Group controlId="formSelect">
+                                                    <Form.Control
+                                                        as="select"
+                                                        name="exhibitions"
+                                                        value={formData.exhibitions}
+                                                        onChange={handleChange}
+                                                    >
+                                                        <option value="">Select Type</option>
+
+                                                        {exbhitionList.map((data, index) => (
+
+                                                            <option value={data.id} key={index}> {data}</option>
+                                                        ))}
+                                                    </Form.Control>
+                                                </Form.Group>
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.exhibitions}
+                                                </Form.Control.Feedback>
+                                            </Col>
+
+                                        </Row>
+                                        <br></br>
+                                        <Row>
+                                           
+                                            {/* <Col xs={12} md={6} >
+                                                <Form.Label>Upload Art work  <span style={{ color: "red" }}>*</span></Form.Label>
+                                                <Row>
                                                         <Col xs={6} md={4}>
                                                             <Form.Control type="file" style={{ width: "100%" }} onChange={handleFileChange} accept="image/*" />
 
                                                         </Col>
                                                         <Col xs={6} md={4}>
-                                                            <Button variant="primary" onClick={uploadImage1} style={{ marginTop: '10px' }} >Upload</Button>
+                                                            <Button variant="primary" onClick={uploadImage} style={{ marginTop: '10px' }} >Upload</Button>
 
                                                         </Col>
                                                     </Row>
-                                                    <div style={{ marginTop: '1rem', height: "22rem", "overflow": "auto" }}>
+                                                {logourl.map((item, index) => (
+                                                    <img src={item.imageURL} key={index} height={100} width={100} />
+                                                ))}
+                                              
 
-                                                    <Row>
-                                                            {artistImageList.map((result,index) => (
-                                                                 
-                                                                <Col xs={6} md={4}>
-                                                                    <div class="image-container">
-                                                                    <Image src={result.imageURL} thumbnail  class="image"/>
-
-    <div class="overlay-text"><i className="fa fa-trash" onClick={() => deleteImage(result,index)} ></i></div>
-</div>
-
-                                                                </Col>
-                                                            ))}
-
-                                                        </Row>
-                                                    </div>
-
-                                                    
-
-
-
-
-                                                </Container>
-                                            </FormGroup>
-                                        </InputGroup>
-                                        <Modal.Footer>
-                                            <Button variant="secondary" onClick={handleClose1}>
-                                                Close
+                                            </Col> */}
+                                        </Row>
+                                        <ul>
+        {artistImageList.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+                                        <br></br>
+                                        <br></br>
+                                        <br></br>
+                                        <div style={{ textAlign: "center" }}>
+                                            <Button style={{ backgroundColor: "#ef7528", border: "none" }} type="submit">
+                                                Book
                                             </Button>
+                                        </div>
+                                        <Modal show={show2} onHide={handleClose2} >
 
-                                        </Modal.Footer>
-                                    </Form>
-                                </Container>
-                            </Modal.Body>
+                                            <Modal.Body style={{ fontSize: 'larger' }}>Registration Done Successfully.
+                                               
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button variant="secondary" onClick={handleClose2}>
+                                                    Close
+                                                </Button>
 
-                        </Modal>
-                    </div>
-                </div>
+                                            </Modal.Footer>
+                                        </Modal>
+                                        
+                                    </Container>
+                                </FormGroup>
+
+
+                            </Form>
+                            
+                        </Container>
+
+
+
+                    </Card.Body>
+                </Card>
+                <br></br>
+
+                <br></br>
+
             </div>
         </>
     )

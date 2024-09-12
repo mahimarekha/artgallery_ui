@@ -3,6 +3,7 @@ import JewellaryHeading from '../Heading'
 import { ProductData } from '../ProductData'
 import { Link } from 'react-router-dom'
 const ExploreProduct = () => {
+    
     return (
         <>
             <section id="explore_product_jewellary" className="ptb-100">
@@ -30,8 +31,10 @@ const ExploreProduct = () => {
                                                             <Link to="/product-details-one/2">
                                                                 <img src={data.img} alt="img" />
                                                             </Link>
+                                                            
                                                             <div className="jewellary_product_icon">
                                                                 <ul>
+                                                                   
                                                                     <li><a href="#!"><i className="fa fa-eye"></i></a></li>
                                                                     <li><a href="#!"><i className="fa fa-shopping-cart"></i></a></li>
                                                                     <li><a href="#!"><i className="fa fa-heart"></i></a></li>

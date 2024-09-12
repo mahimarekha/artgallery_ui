@@ -64,6 +64,7 @@ const LoginArea = () => {
     if (validateForm()) {
       CommonService.postRequest(LOGIN_URL.LOGIN, formData).then((res) => {
         localStorage.setItem('userDetail', JSON.stringify(res.user));
+        localStorage.setItem('role', res.user.role);
         localStorage.setItem('token', res.tokens.access.token);
         localStorage.setItem('refreshtoken', res.tokens.refresh.token)
         setShowSuccess(true);
@@ -77,8 +78,12 @@ const LoginArea = () => {
           title: 'Login Sucessfull',
           text: 'Welcome ' + res.user.name
         })
-       
+       if( res.user.role === 'admin'){
         history.push("/vendor/event");
+       }else  if( res.user.role === 'artist'){
+        history.push("/vendor/artist-registration-detail");
+       }
+       
       }).catch((err) => {
 
         Swal.fire({
