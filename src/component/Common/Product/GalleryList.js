@@ -32,7 +32,7 @@ const GalleryList = (props) => {
                             alt="Product" />
                     </Link>
                     <span className="badges">
-                        <span className={(['hot','new','sale'][Math.round(Math.random()*2)])}>{props.data.labels}</span>
+                        <span className={(['hot','new','sale'][Math.round(Math.random()*2)])}>{props.data.approvalStatus}</span>
                     </span>
                     <div className="actions">
                         <a href="#!" className="action wishlist" title="Wishlist" onClick={() => addToFav(props.data.id)}><AiOutlineHeart /></a>

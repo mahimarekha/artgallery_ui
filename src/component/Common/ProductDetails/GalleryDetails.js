@@ -120,6 +120,7 @@ const GalleryDetailsOne = () => {
                         text: 'Order Placed '
                       })
                       handleClose();
+                      getArtistRegistrationDetailList();
                 }).catch((err) => {
     
                     if (err.response.data.message) {
@@ -189,9 +190,8 @@ const GalleryDetailsOne = () => {
                                             <option value="medium">M</option>
                                             <option value="learz">L</option>
                                         </select> */}                      
-
-                                                            <button type="button" className="theme-btn-one bg-black btn_sm"  onClick={handleShow}>Book </button>
-
+{product.approvalStatus == 'Sold Out' ? <Button variant="outline-secondary" disabled={true}>Sold Out</Button> :  <button type="button" className="theme-btn-one bg-black btn_sm"  onClick={handleShow}>Buy </button>}
+                                                           
                                     </div>
                                     
                                     {/* <form id="product_count_form_two">
