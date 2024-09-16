@@ -52,6 +52,9 @@ const Event = loadable(() => pMinDelay(import('./page/vendor/event'), 250), { fa
 const Gallery = loadable(() => pMinDelay(import('./page/vendor/gallery'), 250), { fallback: <Loading /> });
 const GalleryBookingDetail = loadable(() => pMinDelay(import('./page/vendor/gallery-booking-detail'), 250), { fallback: <Loading /> });
 const ArtistRegistrationDetail = loadable(() => pMinDelay(import('./page/vendor/artist-registration-detail'), 250), { fallback: <Loading /> });
+const CollectionBookingScreen = loadable(() => pMinDelay(import('./page/vendor/collection-booking-screen'), 250), { fallback: <Loading /> });
+
+
 const ArtistData = loadable(() => pMinDelay(import('./page/vendor/artist-data'), 250), { fallback: <Loading /> });
 
 const AllOrders = loadable(() => pMinDelay(import('./page/vendor/all-order'), 250), { fallback: <Loading /> });
@@ -133,6 +136,9 @@ const App = () => {
             <Route path='/vendor/gallery' exact component={Gallery} />
             <Route path='/vendor/gallery-booking-detail' exact component={GalleryBookingDetail} />
             <Route path='/vendor/artist-registration-detail' exact component={ArtistRegistrationDetail} />
+            
+            <Route path='/vendor/collectionorders' exact component={CollectionBookingScreen} />
+
             <Route path='/vendor/artist-data' exact component={ArtistData} />
 
             <Route path='/vendor/all-order' exact component={AllOrders} />

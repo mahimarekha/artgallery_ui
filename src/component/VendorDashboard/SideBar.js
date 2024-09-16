@@ -40,6 +40,12 @@ const SideBar = () => {
         url: "/vendor/artist-registration-detail",
         icon: "fa fa-shopping-cart"
     },
+    {
+        name: "Collection Bookings",
+        url: "/vendor/collectionorders",
+        icon: "fa fa-shopping-cart"
+    },
+    
     ];
    let  leftMenu = role && role=== 'admin' ? adminMenu : role === 'artist' ? artiestMenu : [];
     return (

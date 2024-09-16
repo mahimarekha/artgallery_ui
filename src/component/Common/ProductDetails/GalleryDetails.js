@@ -100,7 +100,8 @@ const GalleryDetailsOne = () => {
     
             setValidated(true);
             if (validateForm()) {
-          const formInputData ={"artiestId":product.artiestId ? product.artiestId.id:"" ,
+          const formInputData ={"artiestId":
+            product.artiestId ? product.artiestId.id:"" ,
             "workId":product.id,
             "amount":product.price,
             "phone":formData.phone,
