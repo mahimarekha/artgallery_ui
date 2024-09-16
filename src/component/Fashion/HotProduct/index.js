@@ -21,7 +21,7 @@ const HotProduct = () => {
 
     const getArtistRegistrationDetailList = () => {
        
-            CommonService.postRequest(GALLERY_COLLECTION.ARTISTGET,{approvalStatus:"Approved",status:true}).then((res) => {
+            CommonService.postRequest(GALLERY_COLLECTION.ARTISTGET,{status:true}).then((res) => {
 
                 setArtistRegistrationList(res);
     

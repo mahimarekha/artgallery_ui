@@ -17,12 +17,14 @@ export const IMAGES ={
 export const ARTIST ={
     GET:"/artiest",
       POST:"/artiest",
-       ARTISTGET:"/artiest/getartiest"
+       ARTISTGET:"/artiest/getartiest",
+       ARTISTUPDATE:"/artiest/updateartist"
 }
 export const GALLERY_COLLECTION ={
   GET:"/gallerycollection",
     POST:"/gallerycollection",
-     ARTISTGET:"/gallerycollection/getcollections"
+     ARTISTGET:"/gallerycollection/getcollections",
+     ORDER:"/order"
 }
 export const GALLERY ={
   GET:"/gallery",

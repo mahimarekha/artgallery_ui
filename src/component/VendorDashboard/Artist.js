@@ -525,7 +525,7 @@ const Artist = () => {
                                                     isInvalid={!!formErrors.nationality}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
-                                                    {formErrors.lastName}
+                                                    {formErrors.nationality}
                                                 </Form.Control.Feedback>
                                             </Col>
                                         </Row>

@@ -28,6 +28,11 @@ const SideBar = () => {
         url: "/vendor/artist-registration-detail",
         icon: "fa fa-shopping-cart"
     },
+    {
+        name: "Artist Data",
+        url: "/vendor/artist-data",
+        icon: "fa fa-shopping-cart"
+    },
     ];
     const artiestMenu = [
     {

@@ -147,7 +147,7 @@ const ArtistRegistrationDetail = () => {
 
 
     };
-
+   
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -250,8 +250,8 @@ const ArtistRegistrationDetail = () => {
                                         <th scope="col">Style</th>
 
                                         <th scope="col">Price</th>
-                                        <th scope="col">Current Status</th>
-                                        <th scope="col">Action</th>
+                                        {/* <th scope="col">Current Status</th>
+                                        <th scope="col">Action</th> */}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -267,35 +267,7 @@ const ArtistRegistrationDetail = () => {
 
                                             <td>{data.style}</td>
                                             <td>{data.price}</td>
-                                            <td>{data.approvalStatus}</td>
-                                            <td >
-                                                {data.approvalStatus === "pending" ? (
-                                                    <>
-                                                        <Button variant="success" onClick={() => handleAccept(data.id, "Send For Approval")}
-                                                        >
-
-                                                            Send For Approval
-                                                        </Button>
-
-                                                        <br></br>
-                                                        <br></br>
-
-                                                    </>
-                                                ) : ""}
-                                                {getRole === 'admin' && data.approvalStatus === "Send For Approval" ? (
-                                                    <>
-                                                        <Button variant="success" onClick={() => handleAccept(data.id, "Approved")}
-                                                        >
-
-                                                           Approve
-                                                        </Button>
-
-                                                        <br></br>
-                                                        <br></br>
-
-                                                    </>
-                                                ) : ""}
-                                            </td>
+                                            
 
 
                                         </tr>
@@ -471,16 +443,14 @@ const ArtistRegistrationDetail = () => {
 
                                             <Col xs={12} md={6} >
                                                 <Form.Label>Upload Art work  <span style={{ color: "red" }}>*</span></Form.Label>
-                                                <Row>
-                                                    <Col xs={6} md={4}>
-                                                        <Form.Control type="file" style={{ width: "100%" }} onChange={handleFileChange} accept="image/*" />
+                                              
+                                                        <Form.Control type="file"  onChange={handleFileChange} accept="image/*" />
 
-                                                    </Col>
-                                                    <Col xs={6} md={4}>
+                                                    
+                                                    
                                                         <Button variant="primary" onClick={uploadImage} style={{ marginTop: '10px' }} >Upload</Button>
 
-                                                    </Col>
-                                                </Row>
+                                               
                                                 {logourl.map((item, index) => (
                                                     <img src={item.imageURL} key={index} height={100} width={100} />
                                                 ))}
