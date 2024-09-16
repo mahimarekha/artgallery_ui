@@ -85,11 +85,11 @@ const LoginArea = () => {
        }
        
       }).catch((err) => {
-
+console.log(err)
         Swal.fire({
           icon: 'error',
           title: 'Login Failed',
-          text: 'Invalid User name and password '
+          text: err.response.data.message
         })
       });
       // Handle form submission (e.g., send data to the server)
