@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import { HelpBlock } from 'react-bootstrap';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Toast, ToastContainer } from 'react-bootstrap';
-import { GALLERYBOOKING, GALLERY } from '../../service/API_URL';
+import { GALLERYBOOKING, GALLERY, EVENTS } from '../../service/API_URL';
 import { Grid, Card, Box, MenuItem, Select, InputLabel, TextField } from "react-bootstrap";
 import Image from 'react-bootstrap/Image';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -20,6 +20,7 @@ import CommonService from '../../service/commonService';
 import { useParams } from "react-router-dom";
 import { FormControl, FormGroup, Checkbox, Radio, ControlLabel } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
+import Swal from 'sweetalert2';
 import InputGroup from 'react-bootstrap/InputGroup';
 const GalleryBooking = () => {
     const [products, setProducts] = useState(useSelector((state) => state.products.products))
@@ -56,6 +57,11 @@ const GalleryBooking = () => {
         auditoriamFee: 0,
         numberOfDays: 0
     });
+    const [typeList, setTypeList] = useState([
+        "Collage on Paper",
+        "Acrylic On Paper",
+        "Other",
+    ]);
     const [validated, setValidated] = useState(false);
     const [validated1, setValidated1] = useState(false);
     const { id } = useParams();
@@ -68,7 +74,7 @@ const GalleryBooking = () => {
     const handleClose1 = () => setShow1(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [file, setFile] = useState(null);
-    const [logourl, setLogoURL] = useState(null);
+    const [logourl, setLogoURL] = useState([]);
     const [imageurl, setImageURL] = useState(null);
     const [galleryList, setGalleryList] = useState([]);
     const [auditoriamList, setAuditoriamList] = useState([]);
@@ -196,13 +202,35 @@ const GalleryBooking = () => {
 
 
     };
-    const uploadImage = async (event) => {
-        event.preventDefault();
-        const file = event.target.files[0];
+ 
+    const uploadImage = async (event,index) => {
+       
+        
+         const file = event.target.files[0];
         if (!file) {
             alert("Please select image to upload");
+            return;
         }
         const formData = new FormData();
+        formData.append('image', file);
+        formData.append('imageName', file.name);
+        try {
+            const response = await CommonService.fileUpload(EVENTS.IMG_UPLOAD, formData);
+
+            //console.log(response.data);
+
+            handleInputChange(index,{target:{name:"imageUrl",value:response.url}},);
+            // setLogoURL(prevItems => [...prevItems,
+            // {
+            //     "imageURL": response.url,
+            //     "imageName": response.imageName
+            // }]);
+
+
+
+        } catch (error) {
+            console.error(error);
+        }
     };
     const getGalleryBookingList = () => {
 
@@ -262,6 +290,11 @@ const GalleryBooking = () => {
         setFormErrors(errors);
         return formIsValid;
     };
+    const areAllFieldsFilled = (arr) => {
+        return arr.every(item => 
+          Object.values(item).every(value => value !== '')
+        );
+      };
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(formData)
@@ -277,11 +310,26 @@ const GalleryBooking = () => {
             formData.auditoriumBookedAmount = finalCost.auditoriamFee;
             formData.galleryBookedAmount = finalCost.galleryFee;
             formData.numberOfDays = finalCost.numberOfDays;
-
+            formData.enclosedPhotograph = fields;
+            if (formData.numberOfDays < 2) {
+                alert("select minimun two days")
+                return;
+            }
             if (formData.totalAmount < 1) {
                 alert("Invaid amount")
                 return;
             }
+           
+            if(!areAllFieldsFilled(fields)){
+                alert("Please fill all required details in art work");
+                return;
+            }
+
+            if(fields.length<=0){
+                alert("Upload arties work details")
+                return;
+            }
+           
             CommonService.postRequest(GALLERYBOOKING.POST, formData).then((res) => {
                 galleryBookingId(res.invoice);
                 handleShow2();
@@ -306,6 +354,12 @@ const GalleryBooking = () => {
                     endDate: '',
                     anyOtherDetailes: '',
                 });
+                resetArtistWork();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thank You For Registration, Once get confirmed we will get back to you...',
+                    text: 'Booking ID: ' + res.invoice
+                })
                 setValidated(false);
                 handleClose();
                 const updatedGalleryList = galleryList.map((item, i) => {
@@ -327,41 +381,35 @@ const GalleryBooking = () => {
     };
 
 
-    const editGalleryBooking = (gallerybooking) => {
-
-        setFormData(gallerybooking);
-        handleShow();
-    }
 
 
-    const deleteGalleryBooking = (gallerybooking) => {
-        const userConfirmed = window.confirm('Do you want to delete the record?');
-
-        if (userConfirmed) {
-            CommonService.deleteRequest(GALLERYBOOKING.POST + "/" + gallerybooking.id).then((res) => {
-                setToastMessage('Data submitted successfully!');
-                alert(" Registration Successfully.");
-                setShowSuccess(true);
-                setValidated(false);
-                handleClose();
-                getGalleryBookingList();
-
-            }).catch((err) => {
-
-                if (err.response.data.message) {
-                    setToastMessage('An error occurred while submitting data.');
-                }
-
-            });
-        } else {
-            // User clicked "Cancel"
-            console.log('User canceled the action.');
-            // You can handle the cancelation here
-        }
-
-
-    }
-
+    const [fields, setFields] = useState([
+        {imageUrl:'', title: '', medium: '', size: '', year: '', price: '' }
+      ]);
+    
+      // Handle input changes
+      const handleInputChange = (index,event) => {
+        const { name, value } = event.target;
+        const updatedFields = [...fields];
+        updatedFields[index][name] = value;
+        setFields(updatedFields);
+      };
+    
+      // Add new field set
+      const handleAddFields = () => {
+        setFields([...fields, {imageUrl:'', title: '', medium: '', size: '', year: '', price: '' }]);
+      };
+    
+      const resetArtistWork = () => {
+        setFields([{imageUrl:'', title: '', medium: '', size: '', year: '', price: '' }]);
+      };
+      // Remove field set
+      const handleRemoveFields = (index) => {
+        const updatedFields = fields.filter((_, i) => i !== index);
+        setFields(updatedFields);
+      };
+    
+    
 
     return (
         <>
@@ -510,7 +558,7 @@ const GalleryBooking = () => {
                 }}>
 
                     <Card.Body >
-                        <Card.Title style={{ color: "#ef7528", marginLeft: "2rem" }}> <i className="fa fa-id-badge" style={{ marginRight: "5px" }}></i>Gallery Booking Details</Card.Title>
+                        <Card.Title style={{ color: "#ef7528", marginLeft: "2rem" }}> <i className="fa fa-id-badge" style={{ marginRight: "5px" }}></i>Gallery Booking Details (For 2 days)</Card.Title>
 
                         {/* <Card.Title style={{textAlign: "center", fontSize: "x-large", fontWeight: "600"}}>GalleryBoking</Card.Title> */}
                         <Card.Text>
@@ -679,8 +727,8 @@ const GalleryBooking = () => {
                                             </Row>
                                             <br></br>
                                             <Row>
-                                                <Col xs={12} md={6}>
-                                                    <Form.Label> Enclosed Photograph</Form.Label>
+                                                {/* <Col xs={12} md={6}>
+                                                    <Form.Label> Upload Art Work</Form.Label>
 
                                                     <Form.Control
                                                         type="text"
@@ -690,7 +738,8 @@ const GalleryBooking = () => {
                                                         onChange={handleChange}
                                                         isInvalid={!!formErrors.artistName}
                                                     />
-                                                </Col>
+                                                </Col> */}
+                                               
                                                 <Col xs={12} md={6}>
                                                     <Form.Label> Guest Room Accomodation</Form.Label>
                                                     {radioGuestList.map((option, index) => (
@@ -754,9 +803,6 @@ const GalleryBooking = () => {
                                                                 isInvalid={!!formErrors.guestRoomAccomodation}
                                                             /> */}
                                                 </Col>
-                                            </Row>
-                                            <br></br>
-                                            <Row>
                                                 <Col xs={12} md={6}>
                                                     <Form.Label> Other Detailes</Form.Label>
 
@@ -770,27 +816,152 @@ const GalleryBooking = () => {
                                                         isInvalid={!!formErrors.anyOtherDetailes}
                                                     />
                                                 </Col>
-
                                             </Row>
-
-
-
-
-
-
+                                            <br></br>
+                                           
 
                                         </Container>
                                     </FormGroup>
                                     <br></br>
+                                    <>
+      {fields.map((field, index) => (
+        <div key={index} className="mb-3">
+          <Row>
+          <Col md={2}>
+          <Form.Label>Upload Art work  <span style={{ color: "red" }}>*</span></Form.Label>
+      {field.imageUrl ? <img src={field.imageUrl} width={50} />: <Form.Control type="file"     onChange={(e) => uploadImage(e,index)} accept="image/*" />} 
 
+
+
+    
+          {/* <Button variant="primary" onClick={uploadImage1} style={{ marginTop: '10px' }} >Upload</Button> */}
+          </Col >
+            <Col md={2}>
+              <Form.Group controlId={`formTitle${index}`}>
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="title"
+                  value={field.title}
+                  onChange={(e) => handleInputChange(index, e)}
+                  placeholder="Enter title"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={2}>
+              {/* <Form.Group controlId={`formMedium${index}`}>
+                <Form.Label>Medium</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="medium"
+                  value={field.medium}
+                  onChange={(e) => handleInputChange(index, e)}
+                  placeholder="Enter medium"
+                />
+                
+              </Form.Group> */}
+              <Form.Group controlId="formSelect">
+              <Form.Label>Medium</Form.Label>
+                                                    <Form.Control
+                                                        as="select"
+                                                        name="medium"
+                                                        value={field.medium}
+                                                        onChange={(e) => handleInputChange(index, e)}
+                                                    >
+                                                        <option value="">Select Type</option>
+
+                                                        {typeList.map((data, index) => (
+
+                                                            <option value={data} key={index}> {data}</option>
+                                                        ))}
+                                                    </Form.Control>
+                                                </Form.Group>
+              {/* <Form.Group controlId="formSelect">
+                                                    <Form.Control
+                                                       type="text"
+                                                       name="medium"
+                                                       value={field.medium}
+                                                       onChange={(e) => handleInputChange(index, e)}
+                                                       placeholder="Enter medium"
+                                                    >
+                                                        <option value="">Select Type</option>
+
+                                                        {typeList.map((data, index) => (
+
+                                                            <option value={data} key={index}> {data}</option>
+                                                        ))}
+                                                    </Form.Control>
+                                                </Form.Group> */}
+              
+            </Col>
+
+            <Col md={2}>
+              <Form.Group controlId={`formSize${index}`}>
+                <Form.Label>Size</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="size"
+                  value={field.size}
+                  onChange={(e) => handleInputChange(index, e)}
+                  placeholder="Enter size"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={1}>
+              <Form.Group controlId={`formYear${index}`}>
+                <Form.Label>Year</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="year"
+                  value={field.year}
+                  onChange={(e) => handleInputChange(index, e)}
+                  placeholder="Enter year"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={2}>
+              <Form.Group controlId={`formPrice${index}`}>
+                <Form.Label>Price</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="price"
+                  value={field.price}
+                  onChange={(e) => handleInputChange(index, e)}
+                  placeholder="Enter price"
+                />
+              </Form.Group>
+            </Col>
+
+            <Col md={1} className="d-flex align-items-end">
+              <Button variant="danger" onClick={() => handleRemoveFields(index)}>
+                Delete
+              </Button>
+            </Col>
+          </Row>
+        </div>
+      ))}
+      <div>
+      <Button variant="primary" style={{textAlign:"right"}} type="button" onClick={handleAddFields}>
+        Add More
+      </Button>
+      </div>
+
+     
+
+   
+    </>
                                     <div style={{ textAlign: "center" }}>
-                                        <Button style={{ backgroundColor: "#ef7528", border: "none" }} type="submit">
+                                        <Button style={{ backgroundColor: "#ef7528", border: "none" }} type="submit" >
                                             Book
                                         </Button>
                                     </div>
 
                                 </Form>
-                                <Modal show={show2} onHide={handleClose2} >
+                               
+                                {/* <Modal show={show2} onHide={handleClose2} centered >
 
                                     <Modal.Body style={{ fontSize: 'larger' }}>Thank You For Registration, Once get confirmed we will get back to you...
                                         !<br />
@@ -802,7 +973,8 @@ const GalleryBooking = () => {
                                         </Button>
 
                                     </Modal.Footer>
-                                </Modal>
+                                </Modal> */}
+
                             </Container>
 
 

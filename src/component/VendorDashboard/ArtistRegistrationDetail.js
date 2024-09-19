@@ -42,7 +42,7 @@ const ArtistRegistrationDetail = () => {
 
     const [showSuccess, setShowSuccess] = useState(false);
     const [artistRegistrationList, setArtistRegistrationList] = useState([]);
-
+    const [artistTypeList,setArtistTypeList] = useState([]);
     const [logourl, setLogoURL] = useState([]);
     const [imageurl, setImageURL] = useState(null);
     const [formData, setFormData] = useState({
@@ -77,7 +77,17 @@ const ArtistRegistrationDetail = () => {
         }
     }, []);
 
+    const getArtistTypeList = () => {
+            CommonService.postRequest(GALLERY_COLLECTION.TYPE,).then((res) => {
+                setArtistTypeList(res);
+    
+            }).catch((err) => {
+    
+            });
+    
 
+       
+    }
     const getArtistRegistrationDetailList = () => {
         console.log(getRole)
 

@@ -94,6 +94,12 @@ const Artist = () => {
     const [showSuccess, setShowSuccess] = useState(false);
     const [file, setFile] = useState(null);
     const [imageurl, setImageURL] = useState(null);
+    const [text, setText] = useState('');
+    const wordLimit = 500;
+    
+    const countWords = (text) => {
+        return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+      };
     const randProduct = (page) => {
         if (page) {
             let data = allData.sort((a, b) => 0.5 - Math.random())
@@ -184,11 +190,20 @@ const Artist = () => {
 
         });
     }
+  
     const handleChange = (event) => {
         const { name, value } = event.target;
+        const inputText = event.target.value;
+        const wordCount = countWords(inputText);
+        
+        // Only update if word count is within limit
+        if (wordCount <= wordLimit) {
+          setText(inputText);
+        }
         setFormData({
             ...formData,
             [name]: value
+            
         });
     };
     const validateForm = () => {
@@ -253,7 +268,7 @@ const Artist = () => {
         event.preventDefault();
 
         setValidated(true);
-        // if (validateForm()) {
+         if (validateForm()) {
 
         formData.uploadArtwork = logourl ? logourl : '';
         CommonService.postRequest(ARTIST.POST, formData).then((res) => {
@@ -301,7 +316,7 @@ const Artist = () => {
 
         });
 
-
+    }
 
     };
   
@@ -488,7 +503,7 @@ const Artist = () => {
                                                 <Form.Control
                                                     // disabled={formData.id != ""}
                                                     type="date"
-                                                    min={getCurrentDate()}
+                                                    max={getCurrentDate()}
                                                     name="dob"
                                                     placeholder="DateRange"
                                                     value={formData.dob}
@@ -760,7 +775,7 @@ const Artist = () => {
                                                 </Form.Control.Feedback>
                                             </Col>
                                             <Col xs={12} md={4} >
-                                                <Form.Label>Short Note</Form.Label>
+                                                <Form.Label>Short Note (max 500 words)</Form.Label>
 
                                                 <Form.Control
                                                     type="text"
@@ -768,8 +783,12 @@ const Artist = () => {
                                                     name="shortNote"
                                                     value={formData.shortNote}
                                                     onChange={handleChange}
+                                                    maxLength={500}
                                                     isInvalid={!!formErrors.shortNote}
                                                 />
+                                                 <Form.Control.Feedback type="invalid">
+                                                 {countWords(text)} / {wordLimit} words
+                                                </Form.Control.Feedback>
 
                                             </Col>
                                             <Col xs={12} md={4} >

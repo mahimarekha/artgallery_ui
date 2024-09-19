@@ -24,7 +24,8 @@ export const GALLERY_COLLECTION ={
   GET:"/gallerycollection",
     POST:"/gallerycollection",
      ARTISTGET:"/gallerycollection/getcollections",
-     ORDER:"/order"
+     ORDER:"/order",
+     TYPE:"/gallerymaterial"
 }
 export const GALLERY ={
   GET:"/gallery",
