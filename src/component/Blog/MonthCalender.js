@@ -175,7 +175,7 @@ class MonthCalendar extends React.Component {
           >
             {index == 0 ? <span className="number">{monthDate}</span> :
              <Link to={"/blog-list-view?currentMonth="+currenmonth}>
-             <span className="number" style={{ color: style }}>
+             <span className="number" style={{ color: style,fontSize:'large' }}>
                  
                 {formattedDate}
                  </span>
