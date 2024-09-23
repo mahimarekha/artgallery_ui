@@ -33,6 +33,12 @@ const SideBar = () => {
         url: "/vendor/artist-data",
         icon: "fa fa-shopping-cart"
     },
+    {
+        name: "Gallery Material",
+        url: "/vendor/gallery-material",
+        icon: "fa fa-shopping-cart"
+
+    },
     ];
     const artiestMenu = [
     {

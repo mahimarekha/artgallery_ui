@@ -239,8 +239,11 @@ const Header = () => {
                                     <a href="/gallerybooking" onClick={() => handleShow("shop")}><span>GalleryBooking</span></a>
                                 </li>
                                 <li >
-                                    <a href="/blog-list-view" onClick={() => handleShow("shop")}><span>Events</span></a>
+                                    <a href="/month-calender" onClick={() => handleShow("shop")}><span>Events</span></a>
                                 </li>
+                                {/* <li >
+                                    <a href="/month-calender" onClick={() => handleShow("shop")}><span>MonthCalendar</span></a>
+                                </li> */}
                                 <li >
                                     <a href="/login" onClick={() => handleShow("shop")}><span>Login</span></a>
                                    

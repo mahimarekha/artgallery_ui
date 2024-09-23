@@ -5,6 +5,7 @@ import Loading from './component/Common/loader';
 import pMinDelay from 'p-min-delay';
 import GalleryBookingsMain from './page/gallerybooking';
 import Artists from './page/artist';
+import MonthCalendar from './page/blog/month-calender';
 
 // All Page Lazy Import
 const Furniture = loadable(() => pMinDelay(import('./page/furniture'), 250), { fallback: <Loading /> });
@@ -44,12 +45,16 @@ const LookBooks = loadable(() => pMinDelay(import('./page/shop/look-book'), 250)
 const BlogGridThrees = loadable(() => pMinDelay(import('./page/blog/blog-grid-two'), 250), { fallback: <Loading /> });
 const BlogGridTwos = loadable(() => pMinDelay(import('./page/blog/'), 250), { fallback: <Loading /> });
 const BlogListView = loadable(() => pMinDelay(import('./page/blog/blog-list'), 250), { fallback: <Loading /> });
+const MonthCalendars = loadable(() => pMinDelay(import('./page/blog/month-calender'), 250), { fallback: <Loading /> });
+
 const BlogSingleOnes = loadable(() => pMinDelay(import('./page/blog/blog-single-one'), 250), { fallback: <Loading /> });
 const BlogSingleTwos = loadable(() => pMinDelay(import('./page/blog/blog-single-two'), 250), { fallback: <Loading /> });
 const Vendor = loadable(() => pMinDelay(import('./page/vendor/'), 250), { fallback: <Loading /> });
 const AllProducts = loadable(() => pMinDelay(import('./page/vendor/all-product'), 250), { fallback: <Loading /> });
 const Event = loadable(() => pMinDelay(import('./page/vendor/event'), 250), { fallback: <Loading /> });
 const Gallery = loadable(() => pMinDelay(import('./page/vendor/gallery'), 250), { fallback: <Loading /> });
+const GalleryMaterial = loadable(() => pMinDelay(import('./page/vendor/gallery-material'), 250), { fallback: <Loading /> });
+
 const GalleryBookingDetail = loadable(() => pMinDelay(import('./page/vendor/gallery-booking-detail'), 250), { fallback: <Loading /> });
 const ArtistRegistrationDetail = loadable(() => pMinDelay(import('./page/vendor/artist-registration-detail'), 250), { fallback: <Loading /> });
 const CollectionBookingScreen = loadable(() => pMinDelay(import('./page/vendor/collection-booking-screen'), 250), { fallback: <Loading /> });
@@ -125,6 +130,7 @@ const App = () => {
             <Route path='/blog-grid-three' exact component={BlogGridThrees} />
             <Route path='/blog-grid-two' exact component={BlogGridTwos} />
             <Route path='/blog-list-view' exact component={BlogListView} />
+            <Route path='/month-calender' exact component={MonthCalendars} />
             <Route path='/gallerybooking' exact component={GalleryBookingsMain} />
             <Route path='/artist' exact component={Artists} />
             <Route path='/blog-single-one' exact component={BlogSingleOnes} />
@@ -134,6 +140,7 @@ const App = () => {
             <Route path='/vendor/all-product' exact component={AllProducts} />
             <Route path='/vendor/event' exact component={Event} />
             <Route path='/vendor/gallery' exact component={Gallery} />
+            <Route path='/vendor/gallery-material' exact component={GalleryMaterial} />
             <Route path='/vendor/gallery-booking-detail' exact component={GalleryBookingDetail} />
             <Route path='/vendor/artist-registration-detail' exact component={ArtistRegistrationDetail} />
             

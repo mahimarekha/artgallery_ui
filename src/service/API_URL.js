@@ -32,6 +32,11 @@ export const GALLERY ={
     POST:"/gallery",
     GALLERYGET:"/gallery/getgallery"
 }
+export const GALLERYMATERIAL ={
+  GET:"/gallerymaterial",
+    POST:"/gallerymaterial",
+    GALLERYGET:"/gallerymaterial/getgallerymaterial"
+}
 export const GALLERYBOOKING ={
   GET:"/gallerybooking",
     POST:"/gallerybooking",

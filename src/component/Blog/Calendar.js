@@ -279,7 +279,7 @@ class Calendar extends React.Component {
       <div className="calendar">
        
          <div className="headertitle">
-         <h5>CALENDAR OF EVENTS 2024-25</h5>
+         <h5>CALENDAR OF EVENTS </h5>
          </div>
        
         {this.renderHeader()}
