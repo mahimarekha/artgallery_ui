@@ -11,7 +11,7 @@ const ProductDetailsTwo = () => {
             <Header />
             <Banner title="Product Desils " />
             <ProductDetailsTwos />
-            <InstgramSlider />
+            {/* <InstgramSlider /> */}
             <Footer />
         </>
     )
