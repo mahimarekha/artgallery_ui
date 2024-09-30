@@ -4,14 +4,14 @@ import Heading from '../Heading'
 const Blog = () => {
     const BlogData = [
         {
-            img: "https://artistimages.blob.core.windows.net/artistimage/1727687644206Firefly press relese 80787.jpg",
+            img: "https://artistimages.blob.core.windows.net/artistimage/1727690924675AdobeStock_196016288_Preview.jpeg",
             date: "Expressions",
             title: `Solo Painting Exhibition`,
             para: `Paintings exhibition done by Karishma, and 4 differently able children and 20 Kerala women Artists. Exhibition will be inaugurated at 11.30 AM on 26th May 2023 by Major B V Ram Kumar, Director NIEPID, and Sri Ranjan Sood, MD NavSys Marine Technologies Pvt. Ltd.`,
             button: "Read More"
         },
         {
-            img: "https://artistimages.blob.core.windows.net/artistimage/1727687644206Firefly press relese 80787.jpg",
+            img: "https://artistimages.blob.core.windows.net/artistimage/1727690924675AdobeStock_196016288_Preview.jpeg",
             date: "Sukalyan Datta",
             title: `Solo Painting Exhibition`,
             para: `State Gallery of Art sponsoring Solo Painting Exhibition to the sponsorship award winner of All India Art Competition and Exhibition 2021.
@@ -22,7 +22,7 @@ Exhibition inaugurated at 5.00 PM on 17th April 2023 by Smt. Anjupoddar, Art lov
             button: "Read More"
         },
         {
-            img: "https://artistimages.blob.core.windows.net/artistimage/1727687644206Firefly press relese 80787.jpg",
+            img: "https://artistimages.blob.core.windows.net/artistimage/1727690924675AdobeStock_196016288_Preview.jpeg",
             date: "Tushar Kanti Pradhan",
             title: `Solo Painting Exhibition`,
             para: `State Gallery of Art sponsoring Solo Painting Exhibition to the sponsorship award winner of All India Art Competition and Exhibition 2021.
