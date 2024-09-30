@@ -11,10 +11,9 @@ import img9 from '../../assets/img/blog/post9.png'
 export const BlogData = [
     {
         img: img1,
-        date: "24 February 2021",
-        title: `The Luxury Winter Accessory That’s Trending Now`,
-        para: `No matter what you spend on your wardrobe, there are three pieces that can
-    always elevate your look – shoes, handbags, and sunglasses.`,
+        date: "Solo Painting Exhibition",
+        title: `Expressions`,
+        para: `Paintings exhibition done by Karishma, and 4 differently able children and 20 Kerala women Artists. Exhibition will be inaugurated at 11.30 AM on 26th May 2023 by Major B V Ram Kumar, Director NIEPID, and Sri Ranjan Sood, MD NavSys Marine Technologies Pvt. Ltd.`,
         button: "Read More"
     },
     {

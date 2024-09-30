@@ -8,9 +8,9 @@ const About = () => {
     return (
         <>
             <Header />
-            <Banner title="About" />
+            {/* <Banner title="About" /> */}
             <AboutComponent />
-            <InstgramSlider />
+            {/* <InstgramSlider /> */}
             <Footer />
         </>
     )

@@ -7,8 +7,8 @@ const AboutComponent = () => {
     return (
         <>
            <AboutTop/> 
-           <Functionality/>
-           <Feature/>
+           {/* <Functionality/> */}
+           {/* <Feature/> */}
            <Team className="mb-100"/>
         </>
     )

@@ -34,7 +34,7 @@ const HotProduct = () => {
         <>
     <section id="hot_Product_area" className="ptb-100">
         <div className="container">
-            <Heading heading="Hot Products" para="See What Everyone Is Shopping from Andshop E-Commerce" />
+            <Heading heading="New Collections" para="See What Everyone Is Shopping from Andshop E-Commerce" />
             <div className="row">
                 <div className="col-lg-12">
                     <div className="tabs_center_button">
