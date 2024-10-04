@@ -167,7 +167,7 @@ class MonthCalendar extends React.Component {
         formattedDate = dateFns.format(monthDate, dateFormat);
         const cloneDay = day;
         days.push(
-          <div
+          <div style={{ backgroundColor: style }}
             className={`col cell ${index == 0 ? "disabled" : ""}`}
             key={day}
 
@@ -175,7 +175,7 @@ class MonthCalendar extends React.Component {
           >
             {index == 0 ? <span className="number">{monthDate}</span> :
              <Link to={"/blog-list-view?currentMonth="+currenmonth}>
-             <span className="number" style={{ color: style,fontSize:'large' }}>
+             <span className="number" style={{ color:'black' }}>
                  
                 {formattedDate}
                  </span>
@@ -192,16 +192,16 @@ class MonthCalendar extends React.Component {
       });
       rows.push(
         <div className="month" >
-          <div className="row">{days}</div>
+          <div className="row" style={{color:"black"}} >{days}</div>
         </div>
       );
       console.log("adfasdfasfda")
     };
 
     // Render the three arrays of months
-    renderMonthCells(firstHalfCurrentYear, "red");
-    renderMonthCells(secondHalfCurrentYear, "blue");
-    renderMonthCells(firstHalfNextYear, "green");
+    renderMonthCells(firstHalfCurrentYear, "#ff0000cc");
+    renderMonthCells(secondHalfCurrentYear, "deepskyblue");
+    renderMonthCells(firstHalfNextYear, "rgb(255 255 0 / 61%)");
 
     return <div className="body">{rows}</div>;
   }
