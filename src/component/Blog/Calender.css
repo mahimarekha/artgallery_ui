@@ -200,9 +200,9 @@ main {
   border-bottom: 1px solid var(--border-color);
 }
 
-.calendar .body .row:last-child {
+/* .calendar .body .row:last-child {
   border-bottom: none;
-}
+} */
 
 .calendar .body .cell:last-child {
   border-right: none;
