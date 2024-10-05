@@ -248,7 +248,7 @@ const GalleryDetailsOne = () => {
             </div>
         }
 
-            <RelatedProduct />
+            {/* <RelatedProduct /> */}
 
             <Modal show={show} onHide={handleClose} animation={false} centered>
         <Modal.Header closeButton>

@@ -8,24 +8,29 @@ import img4 from '../../assets/img/team/team4.png'
 
 const TeamData =[
     {
-        img:img1,
-        name:"Ms. Sandela",
-        posation:"CEO",
+        img:'https://artistimages.blob.core.windows.net/artistimage/1727689789956Sri-Anumula-Revanth-Reddy.webp',
+        name:"Sri ANUMULA REVENTH REDDY",
+        posation:"Hon'ble Chief Minister",
+        subtitle:'Government of Telangana'
     },
     {
-        img:img2,
-        name:"Mr. Heroas",
-        posation:"Head Of Markating",
+        img:'https://artistimages.blob.core.windows.net/artistimage/1727689876162Sri Jupally Krishna Rao.webp',
+        name:"Sri  JUPALLY KRISHNA RAO",
+        posation:"Hon’ble Minister",
+        subtitle:'Prohibition & Excise and Sports, Youth Services, Tourism & Culture Dept.,  Government of Telangana'
     },
     {
-        img:img3,
-        name:"Ms. Valona",
-        posation:"Manager",
+        img:'https://artistimages.blob.core.windows.net/artistimage/1727689834974eee604_7688947dccc74a089914139fb0a56874~mv2.webp',
+        name:"Smt. VANI PRASAD, IAS",
+        posation:"Principal Secretary to Government of Telangana",
+        subtitle:`Youth Advancement, Tourism & Culture and Archeology Dept. &
+President, State Gallery of Art`
     },
     {
-        img:img4,
-        name:"Ms. Raka",
-        posation:"Admin",
+        img:'https://artistimages.blob.core.windows.net/artistimage/1727689924384Dr_K_Lakshmi, IAS.webp',
+        name:"DR. K. LAKSHMI, IAS",
+        posation:"Director",
+        subtitle:'State Gallery of Art'
     }
 ]
 
@@ -34,7 +39,7 @@ const Team = (props) => {
         <>
         <section id="team_area" className={`ptb-100 ${props.class}`} >
         <div className="container">
-            <Heading heading="Expert Team" para="This is our expert team members of AndShop" />
+            <Heading heading="" para="" />
             <div className="row">
                 {TeamData.map((data, index)=>(
                     <div className="col-lg-3" key={index}>
@@ -45,14 +50,18 @@ const Team = (props) => {
                             </div>
                             <div className="team-content">
                                 <h4 className="team-name font--bold">{data.name}</h4>
-                                <span className="team-title">{data.posation}</span>
-                                <ul className="team-social pos-absolute">
+                                <span className="team-title"> <p>{data.posation}</p></span>
+                               
+                                <div>
+                                     <p style={{color:'black'}}>{data.subtitle}</p>
+                                    </div>
+                                {/* <ul className="team-social pos-absolute">
                                     <li><a href="#!"><i className="fa fa-facebook-f"></i></a></li>
                                     <li><a href="#!"><i className="fa fa-twitter"></i></a></li>
                                     <li><a href="#!"><i className="fa fa-linkedin"></i></a></li>
                                     <li><a href="#!"><i className="fa fa-instagram"></i></a></li>
                                     <li><a href="#!"><i className="fa fa-google-plus-g"></i></a></li>
-                                </ul>
+                                </ul> */}
                             </div>
                         </div>
                     </div>

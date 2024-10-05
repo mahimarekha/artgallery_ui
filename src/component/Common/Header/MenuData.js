@@ -58,6 +58,14 @@ export const MenuData = [
           
         ]
     },
+    {
+        name: "About",
+        href: "/about",
+        mega_menu: false,
+        children: [
+          
+        ]
+    },
     // {
     //     name: "Month Calender",
     //     href: "/month-calender",
