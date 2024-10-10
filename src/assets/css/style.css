@@ -732,7 +732,7 @@ button {
     color: var(--main-theme-color);
 } */
 
-.menu-hover-color--green nav>ul>li>a:hover {
+.menu-hover-color-- nav>ul>li>a:hover {
     color: #047B42;
 }
 

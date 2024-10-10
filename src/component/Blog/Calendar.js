@@ -70,7 +70,7 @@ class Calendar extends React.Component {
           </div> */}
         </div>
         <div className="col col-center">
-          <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
+          <span >{dateFns.format(this.state.currentMonth, dateFormat)}</span>
         </div>
         <div className="col col-end " onClick={this.nextMonth}>
           {/* <div className="icon cal-next">chevron_right</div> */}
@@ -196,7 +196,7 @@ class Calendar extends React.Component {
             </span> */}
             <span>
               <div className="scrolling">
-              {eventDetails?eventDetails.imageURList.map((items)=>(<div class="truncate" > 
+              {eventDetails?eventDetails.imageURList.map((items)=>(<div  class="truncate" > 
               
               <OverlayTrigger trigger={[ "focus","hover"]} placement="top"  overlay={<Popover id="popover-basic" show={false}>
                 <Popover.Header as="h3" style={{ backgroundColor: '#f58233', color: 'white' }}> {items.eventName}   </Popover.Header>
@@ -219,7 +219,7 @@ class Calendar extends React.Component {
                 </Popover.Body>
               </Popover>}>
            
-             <Link to={"/vieweventdetails/"+items.id+"?"+currentMonthParames.toString()}> <span style={{"color":`${items.colorCode}`,"text-decoration":"underline"}}>{items.eventName} </span></Link>
+             <Link to={"/vieweventdetails/"+items.id+"?"+currentMonthParames.toString()} style={{fontSize:"13px"}}> <span style={{"color":`${items.colorCode}`,"text-decoration":"underline"}} >{items.eventName} </span></Link>
             
            
                 

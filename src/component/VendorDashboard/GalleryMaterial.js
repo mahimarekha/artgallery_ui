@@ -30,13 +30,8 @@ const GalleryMaterial = () => {
     const [galleryList, setGalleryList] = useState([]);
     const [galleryMaterialList, setGalleryMaterialList] = useState([]);
 
-    const [typeList, setTypeList] = useState([
-        "Gallery",
-        "Other",
-    ]);
     const [formData, setFormData] = useState({
         materialName: '',
-        
         status: true,
     });
   
@@ -119,15 +114,16 @@ const GalleryMaterial = () => {
 
                 setShowSuccess(true);
                 setFormData({
-                    galleryName: '',
-                    price: '',
-                    type: '',
-                    galleryName: '',
+                    // galleryName: '',
+                    materialName:'',
+                    // price: '',
+                    // type: '',
+                    
                     status: true,
                 });
                 setValidated(false);
                 handleClose();
-                getGalleryList();
+                getGalleryMaterialList();
             }).catch((err) => {
 
                 if (err.response.data.message) {
@@ -137,19 +133,20 @@ const GalleryMaterial = () => {
             });
         } else {
             formData.profile = logourl ? logourl : '';
-            CommonService.postRequest(GALLERY.POST, formData).then((res) => {
+            CommonService.postRequest(GALLERYMATERIAL.POST, formData).then((res) => {
 
                 setShowSuccess(true);
                 setFormData({
-                    galleryName: '',
-                    price: '',
-                    type: '',
-                    ac: '',
+                    // galleryName: '',
+                    materialName:'',
+                    // price: '',
+                    // type: '',
+                    // ac: '',
                     status: true,
                 });
                 setValidated(false);
                 handleClose();
-                getGalleryList();
+                getGalleryMaterialList();
             }).catch((err) => {
 
                 if (err.response.data.message) {
@@ -182,7 +179,7 @@ const GalleryMaterial = () => {
 
                 setValidated(false);
                 handleClose();
-                getGalleryList();
+                getGalleryMaterialList();
             }).catch((err) => {
 
                 if (err.response.data.message) {
@@ -216,9 +213,9 @@ const GalleryMaterial = () => {
                                 <thead className="thead-light">
                                     <tr>
                                         <th scope="col">Gallery Name</th>
-                                        <th scope="col">Type</th>
+                                        {/* <th scope="col">Type</th>
                                         <th scope="col">Price</th>
-                                        <th scope="col">AC Price</th>
+                                        <th scope="col">AC Price</th> */}
                                         <th scope="col">Status</th>
                                         <th scope="col">Edit/Delete</th>
                                     </tr>
@@ -231,10 +228,10 @@ const GalleryMaterial = () => {
                                             {/* <td><img src={data.profile} height={50} width={50} /> </td> */}
 
                                             {/* <td><Link to={ `/product-details-one/${data.id}`}><img width="70px" src={data.img} alt="img" /></Link></td> */}
-                                            <td>{data.galleryName}</td>
-                                            <td>{data.type}</td>
+                                            <td>{data.materialName}</td>
+                                            {/* <td>{data.type}</td>
                                             <td>{data.price} </td>
-                                            <td>{data.ac} </td>
+                                            <td>{data.ac} </td> */}
                                             <td>{data.status ? 'Active' : "In Active"}</td>
                                             <td><i className="fa fa-edit" onClick={() => editGallery(data)}></i> <button style={{ background: "Transparent" }}><i className="fa fa-trash" onClick={() => deleteGallery(data)}></i></button></td>
 

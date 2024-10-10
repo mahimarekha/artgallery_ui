@@ -113,7 +113,7 @@ const Header = () => {
                                     </div>
                                     <div>
                                        
-                                    <div style={{color:"black", fontSize: "30px", fontWeight:"500"}}>
+                                    <div style={{color:"black", fontSize: "29px", fontWeight:"500"}}>
                                       <div>
                                       Welcome to State Gallery of ART
                                       </div>
