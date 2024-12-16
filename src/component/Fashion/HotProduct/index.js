@@ -52,7 +52,7 @@ const HotProduct = () => {
                         <div className="tab-content">
                           <div id="new_arrival" className="tab-pane fade show in active">
                               <div className="row">
-                                {artistRegistrationList.slice(0, 8).map((data, index) =>(
+                                {artistRegistrationList.map((data, index) =>(
                                     <div className="col-lg-3 col-md-4 col-sm-6 col-12" key={index}>
                                             <GalleryList data={data} />
                                     </div>

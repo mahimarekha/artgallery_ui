@@ -109,7 +109,7 @@ const GalleryBookingDetail = () => {
                                         <th scope="col">Booking Amount</th> */}
                                         <th scope="col">Nature Of Exbhition</th>
                                         <th scope="col">Number Of Participents</th>
-                                        <th scope="col">Enclosed Photograph</th>
+                                        {/* <th scope="col">Enclosed Photograph</th> */}
                                         <th scope="col">Guest Room Accomodation</th>
                                         <th scope="col">start Date</th>
                                         <th scope="col">end Date</th>
@@ -129,13 +129,11 @@ const GalleryBookingDetail = () => {
                                             <td>{data.email}</td>
                                             <td>{data.fromDate}</td>
                                             <td>{data.toDate} </td>
-                                            {/* <td>{data.bookedGallery} </td> */}
-                                            {/* <td>{data.bookedAuditorium}</td> */}
+                                           
                                             <td>{data.natureOfExbhition}</td>
                                             <td>{data.numberOfParticipents}</td>
-                                            <td>{data.enclosedPhotograph} </td>
+                                            {/* <td>{data.enclosedPhotograph} </td> */}
                                             <td>{data.guestRoomAccomodation} </td>
-                                            {/* <td>{row.active ? 'Active' : 'Inactive'}</td> */}
                                             <td>{data.startDate ? data.startDate : "null"} </td>
                                             <td>{data.endDate ? data.endDate : "null"} </td>
                                             <td>{data.anyOtherDetailes}</td>

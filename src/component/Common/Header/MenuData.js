@@ -35,6 +35,22 @@ export const MenuData = [
     //     ]
     // },
     {
+        name: "About",
+        href: "/about",
+        mega_menu: false,
+        children: [
+          
+        ]
+    },
+    {
+        name: "Events",
+        href: "/month-calender",
+        mega_menu: false,
+        children: [
+          
+        ]
+    },
+    {
         name: "Artist Registarion",
         href: "/artist",
         mega_menu: false,
@@ -50,22 +66,16 @@ export const MenuData = [
           
         ]
     },
-    {
-        name: "Events",
-        href: "/month-calender",
-        mega_menu: false,
-        children: [
+    // {
+    //     name: "Gallery Painting",
+    //     href: "/gallerypainting",
+    //     mega_menu: false,
+    //     children: [
           
-        ]
-    },
-    {
-        name: "About",
-        href: "/about",
-        mega_menu: false,
-        children: [
-          
-        ]
-    },
+    //     ]
+    // },
+   
+    
     // {
     //     name: "Month Calender",
     //     href: "/month-calender",

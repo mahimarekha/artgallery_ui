@@ -115,7 +115,7 @@ const Header = () => {
                                        
                                     <div style={{color:"black", fontSize: "29px", fontWeight:"500"}}>
                                       <div>
-                                      Welcome to State Gallery of ART
+                                       State Gallery of ART
                                       </div>
                                       <div>
                                       <p style={{ fontWeight:"500"}}>Asia's biggest gallery</p>
@@ -237,6 +237,9 @@ const Header = () => {
                                 </li>
                                 <li >
                                     <a href="/gallerybooking" onClick={() => handleShow("shop")}><span>Gallery Booking</span></a>
+                                </li>
+                                <li >
+                                    <a href="/gallerypainting" onClick={() => handleShow("shop")}><span>Gallery Painting</span></a>
                                 </li>
                                 <li >
                                     <a href="/month-calender" onClick={() => handleShow("shop")}><span>Events</span></a>

@@ -42,3 +42,8 @@ export const GALLERYBOOKING ={
     POST:"/gallerybooking",
     GALLERYGET:"/gallerybooking/getgallerybooking"
 }
+export const GALLERYPAINTING ={
+  GET:"/gallerypainting",
+    POST:"/gallerypainting",
+    GALLERYGET:"/gallerypainting/getgallerypainting"
+}

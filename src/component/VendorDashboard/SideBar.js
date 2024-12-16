@@ -8,7 +8,24 @@ const SideBar = () => {
     if (localStorage.getItem("role")) {
         role = localStorage.getItem("role");
     }
-    const adminMenu = [{
+    const adminMenu = [
+        {
+            name: "Admin Upload Collection",
+            url: "/vendor/adminupload",
+            icon: "fa fa-shopping-cart"
+        }
+    //     , {
+    //     name: "Artist Collection",
+    //     url: "/vendor/artist-registration-detail",
+    //     icon: "fa fa-shopping-cart"
+    // },
+    // {
+    //     name: "Collection Bookings",
+    //     url: "/vendor/collectionorders",
+    //     icon: "fa fa-shopping-cart"
+    // }
+    ,
+    {
         name: "Events",
         url: "/vendor/event",
         icon: "fa fa-shopping-cart"
@@ -33,12 +50,12 @@ const SideBar = () => {
         url: "/vendor/artist-data",
         icon: "fa fa-shopping-cart"
     },
-    {
-        name: "Gallery Material",
-        url: "/vendor/gallery-material",
-        icon: "fa fa-shopping-cart"
+    // {
+    //     name: "Gallery Material",
+    //     url: "/vendor/gallery-material",
+    //     icon: "fa fa-shopping-cart"
 
-    },
+    // },
     ];
     const artiestMenu = [
     {

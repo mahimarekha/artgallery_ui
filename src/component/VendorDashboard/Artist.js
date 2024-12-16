@@ -209,9 +209,21 @@ const Artist = () => {
     const validateForm = () => {
         let errors = {};
         let formIsValid = true;
-        if (!formData.eventName) {
+        if (!formData.firstName) {
             formIsValid = false;
-            errors["artiestName"] = "artiest name is required";
+            errors["firstName"] = "first name is required";
+        }
+        if (!formData.lastName) {
+            formIsValid = false;
+            errors["lastName"] = "last name is required";
+        }
+        if (!formData.mobile) {
+            formIsValid = false;
+            errors["mobile"] = "mobile is required";
+        }
+        if (!formData.email) {
+            formIsValid = false;
+            errors["email"] = "Email is required";
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
             formIsValid = false;
             errors["email"] = "Email is invalid";
@@ -224,7 +236,30 @@ const Artist = () => {
             formIsValid = false;
             errors["password"] = "Password must be at least 6 characters";
         }
-
+        if (!formData.permAddress) {
+            formIsValid = false;
+            errors["permAddress"] = "perment address is required";
+        }
+        if (!formData.permCity) {
+            formIsValid = false;
+            errors["permCity"] = "perment city is required";
+        }
+        if (!formData.permState ) {
+            formIsValid = false;
+            errors["permState"] = "perment state is required";
+        }
+        if (!formData.permPin ) {
+            formIsValid = false;
+            errors["permPin"] = "perment pin is required";
+        }
+        if (!formData.expreance ) {
+            formIsValid = false;
+            errors["expreance"] = "experience is required";
+        }
+        if (!formData.exhibitions ) {
+            formIsValid = false;
+            errors["exhibitions"] = "exhibitions is required";
+        }
         setFormErrors(errors);
         return formIsValid;
     };
@@ -266,7 +301,7 @@ const Artist = () => {
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-
+debugger
         setValidated(true);
          if (validateForm()) {
 
@@ -847,7 +882,7 @@ const Artist = () => {
                                         <br></br>
                                         <div style={{ textAlign: "center" }}>
                                             <Button style={{ backgroundColor: "#ef7528", border: "none" }} type="submit">
-                                                Book
+                                                Register
                                             </Button>
                                         </div>
                                         <Modal show={show2} onHide={handleClose2} >

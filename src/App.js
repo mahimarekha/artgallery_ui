@@ -4,8 +4,10 @@ import loadable from './component/Common/loader/loadable';
 import Loading from './component/Common/loader';
 import pMinDelay from 'p-min-delay';
 import GalleryBookingsMain from './page/gallerybooking';
+import GalleryPaintingsMain from './page/gallerypainting';
 import Artists from './page/artist';
 import MonthCalendar from './page/blog/month-calender';
+import GalleryPainting from './component/VendorDashboard/GalleryPainting';
 
 // All Page Lazy Import
 const Furniture = loadable(() => pMinDelay(import('./page/furniture'), 250), { fallback: <Loading /> });
@@ -32,6 +34,8 @@ const CheckoutTwos = loadable(() => pMinDelay(import('./page/checkout/checkout-t
 const WishLists = loadable(() => pMinDelay(import('./page/shop/wishList'), 250), { fallback: <Loading /> });
 const Compares = loadable(() => pMinDelay(import('./page/shop/compares'), 250), { fallback: <Loading /> });
 const About = loadable(() => pMinDelay(import('./page/about'), 250), { fallback: <Loading /> });
+// const GalleryPainting = loadable(() => pMinDelay(import('./page/gallerypainting'), 250), { fallback: <Loading /> });
+
 const OrderComplete = loadable(() => pMinDelay(import('./page/order/order-complete'), 250), { fallback: <Loading /> });
 const OrderTracking = loadable(() => pMinDelay(import('./page/order/order-tracking'), 250), { fallback: <Loading /> });
 const ProductHover = loadable(() => pMinDelay(import('./page/product/product-hover'), 250), { fallback: <Loading /> });
@@ -58,6 +62,7 @@ const GalleryMaterial = loadable(() => pMinDelay(import('./page/vendor/gallery-m
 const GalleryBookingDetail = loadable(() => pMinDelay(import('./page/vendor/gallery-booking-detail'), 250), { fallback: <Loading /> });
 const ArtistRegistrationDetail = loadable(() => pMinDelay(import('./page/vendor/artist-registration-detail'), 250), { fallback: <Loading /> });
 const CollectionBookingScreen = loadable(() => pMinDelay(import('./page/vendor/collection-booking-screen'), 250), { fallback: <Loading /> });
+const ArtistCollections = loadable(() => pMinDelay(import('./page/vendor/artiest-collection'), 250), { fallback: <Loading /> });
 
 
 const ArtistData = loadable(() => pMinDelay(import('./page/vendor/artist-data'), 250), { fallback: <Loading /> });
@@ -119,6 +124,7 @@ const App = () => {
             <Route path='/order-complete' exact component={OrderComplete} />
             <Route path='/order-tracking' exact component={OrderTracking} />
             <Route path='/about' exact component={About} />
+            <Route path='/gallerypainting' exact component={GalleryPainting} />
             <Route path='/product-hover' exact component={ProductHover} />
             <Route path='/order-success' exact component={OrderSuccesses} />
             <Route path='/email-template-one' exact component={EmailTemplateOnes} />
@@ -144,13 +150,17 @@ const App = () => {
             <Route path='/vendor/gallery-booking-detail' exact component={GalleryBookingDetail} />
             <Route path='/vendor/artist-registration-detail' exact component={ArtistRegistrationDetail} />
             
+            {/* <Route path='/vendor/artist-collections' exact component={ArtistCollections} /> */}
+
+            {/* <Route path='/vendor/artist-registration-detail' exact component={ArtistRegistrationDetail} /> */}
+
             <Route path='/vendor/collectionorders' exact component={CollectionBookingScreen} />
 
             <Route path='/vendor/artist-data' exact component={ArtistData} />
 
             <Route path='/vendor/all-order' exact component={AllOrders} />
             <Route path='/vendor/vendor-profile' exact component={VendorProfile} />
-            <Route path='/vendor/add-products' exact component={AddProducts} />
+            <Route path='/vendor/adminupload' exact component={ArtistCollections} />
             <Route path='/vendor/vendor-setting' exact component={VendorSetting} />
             <Route path='/my-account' exact component={MyAccounts} />
             <Route path='/my-account/customer-order' exact component={CustomerOrder} />

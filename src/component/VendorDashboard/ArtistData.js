@@ -108,7 +108,7 @@ const ArtistData = () => {
                 <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                     <div className="vendor_order_boxed pt-4">
                         <div className="mb-2">
-                            <h4>Collection Details</h4>
+                            <h4>Artist Details</h4>
                             {/* {getRole === 'artist' ? <button
                                 
                                 data-toggle="tab" className="theme-btn-one bg-black btn_sm add_prod_button" onClick={handleShow}>Add Collection</button>:""} */}

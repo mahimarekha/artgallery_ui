@@ -20,7 +20,7 @@ import { useParams } from "react-router-dom";
 import { FormControl, FormGroup, Checkbox, Radio, ControlLabel } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import InputGroup from 'react-bootstrap/InputGroup';
-const ArtistRegistrationDetail = () => {
+const ArtistCollections = () => {
     let allData = [...useSelector((state) => state.products.products)];
     const [show, setShow] = useState(false);
     const getRole =  CommonService.getRole();
@@ -92,7 +92,7 @@ const ArtistRegistrationDetail = () => {
         console.log(getRole)
 
         if(getRole === 'admin'){
-            CommonService.postRequest(GALLERY_COLLECTION.ARTISTGET,{approvalStatus:"Send For Approval"}).then((res) => {
+            CommonService.postRequest(GALLERY_COLLECTION.ARTISTGET,{isUploadAdmin:true}).then((res) => {
 
                 setArtistRegistrationList(res);
     
@@ -163,7 +163,9 @@ const ArtistRegistrationDetail = () => {
 
         setValidated(true);
         // if (validateForm()) {
+            formData.isUploadAdmin = true;
         if (formData.id) {
+           // formData.isUploadAdmin = true;
             formData.imageURL = logourl.length > 0 ? logourl : formData.imageURL;
             CommonService.putRequest(GALLERY_COLLECTION.POST + "/" + formData.id, formData).then((res) => {
 
@@ -236,7 +238,7 @@ const ArtistRegistrationDetail = () => {
                         <div className="mb-2">
                             <h4>Collection Details</h4>
 
-                            {getRole === 'artist'  ? <button
+                            {getRole === 'admin'  ? <button
                                 // to="/vendor/add-products"
                                 data-toggle="tab" className="theme-btn-one bg-black btn_sm add_prod_button" onClick={handleShow}>Add Collection</button>:""}
                             
@@ -490,4 +492,4 @@ const ArtistRegistrationDetail = () => {
     )
 }
 
-export default ArtistRegistrationDetail
+export default ArtistCollections

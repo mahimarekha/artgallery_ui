@@ -2013,7 +2013,7 @@ button {
 ---------------------------*/
 
 #banner_one {
-    background-image: url('../img/common/banner_3.jpg');
+    background-image: url('../img/common/home-2.jpeg');
     padding: 200px 0;
     display: flex;
     align-items: center;
@@ -2021,6 +2021,8 @@ button {
     background-repeat: no-repeat;
     position: relative;
     overflow: hidden;
+    width: auto;
+    height: auto;
 }
 
 .banner_text_one h1 {
