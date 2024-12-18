@@ -44,7 +44,7 @@ const ListCard = (props) => {
                                     <h4 className="title"><Link to={ `/product-details-one/${props.data.id}`}>{props.data.title}</Link></h4>
                                     <p>{props.data.description}</p>
                                     <span className="price">
-                                        <span className="new">${props.data.price}. 00</span>
+                                        <span className="new">₹{props.data.price}. 00</span>
                                     </span>
                                 </div>
                                 <div className="actions">

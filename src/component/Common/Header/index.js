@@ -232,6 +232,11 @@ const Header = () => {
                                     
 
                                 </li>
+                                <li>
+                                    <a href="/about" onClick={() => handleShow("home")}><span>About</span></a>
+                                    
+
+                                </li>
                                 <li >
                                     <a href="/artist" onClick={() => handleShow("shop")}><span>Artist Registration</span></a>
                                 </li>

@@ -22,7 +22,7 @@ const BabyToys = () => {
             <TopProducts />
             <BannerBottom />
             <BlogArea />
-            <Instagram />
+            {/* <Instagram /> */}
             <Footer />
         </>
     )

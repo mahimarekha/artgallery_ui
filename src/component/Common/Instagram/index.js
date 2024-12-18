@@ -37,7 +37,7 @@ const InstgramSlider = (props) => {
   };
   return (
     <>
-      {props.container ? (
+      {/* {props.container ? (
         <section id="instagram_area_one" >
           <div className="container">
             <Heading heading="FOLLOW US INSTAGRAM" />
@@ -82,7 +82,7 @@ const InstgramSlider = (props) => {
             </div>
           </div>
         </section>
-      )}
+      )} */}
 
     </>
   )

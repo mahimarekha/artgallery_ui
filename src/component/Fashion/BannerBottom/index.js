@@ -9,7 +9,7 @@ import img5 from '../../../assets/img/offer/kids.jpg'
 const BannerBottom = () => {
     return (
         <>
-        <section id="product_variation_one" className="pt-100">
+        {/* <section id="product_variation_one" className="pt-100">
         <div className="container-fluid">
             <div className="row">
                 <div className="col-lg-4 col-md-6">
@@ -62,7 +62,7 @@ const BannerBottom = () => {
                 </div>
             </div>
         </div>
-        </section>
+        </section> */}
         </>
     )
 }

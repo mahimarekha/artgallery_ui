@@ -45,7 +45,7 @@ const ProductCard = (props) => {
                         <Link to={`/product-details-one/${props.data.id}`}>{props.data.title}</Link>
                     </h5>
                     <span className="price">
-                        <span className="new">${props.data.price}.00</span>
+                        <span className="new">₹{props.data.price}.00</span>
                     </span>
                 </div>
             </div>
