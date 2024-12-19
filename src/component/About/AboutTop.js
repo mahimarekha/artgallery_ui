@@ -8,12 +8,12 @@ const AboutTop = () => {
             <section id="about-top" className="ptb-100">
                 <div className="container">
                     <div className="row">
-                        <div className="col-lg-12 col-md-6col-sm-12 col-12">
+                        {/* <div className="col-lg-12 col-md-6col-sm-12 col-12">
                             <div className="about_top_img">
                                 <img style={{height:"1000px", width:"90rem"}}
                                 src="https://artistimages.blob.core.windows.net/artistimage/1727690044138DSC03001_JPG.webp" alt="img" />
                             </div>
-                        </div>
+                        </div> */}
                         <div className="col-lg-12 col-md-6 col-sm-12 col-12">
                             <div className="about_top_left_content">
                                 <br></br>

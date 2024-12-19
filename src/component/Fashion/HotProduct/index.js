@@ -34,16 +34,16 @@ const HotProduct = () => {
         <>
     <section id="hot_Product_area" className="ptb-100">
         <div className="container">
-            <Heading heading="New Collections" para="See What Everyone Is Shopping from Andshop E-Commerce" />
+            <Heading heading="New Collections"  />
             <div className="row">
                 <div className="col-lg-12">
                     <div className="tabs_center_button">
                         <ul className="nav nav-tabs">
                             <li><a data-toggle="tab" href="#new_arrival" className="active">New Arrival</a></li>
-                            <li><a data-toggle="tab" href="#trending">Trending</a></li>
+                            {/* <li><a data-toggle="tab" href="#trending">Trending</a></li>
                             <li><a data-toggle="tab" href="#best_sellers">Best Sellers</a></li> 
                             <li><a data-toggle="tab" href="#featured">Featured</a></li>
-                            <li><a data-toggle="tab" href="#on_sall">On sall</a></li>
+                            <li><a data-toggle="tab" href="#on_sall">On sall</a></li> */}
                           </ul>
                     </div>
                 </div>

@@ -47,7 +47,7 @@ const TodayDeal = () => {
     <>
     <section id="to_days_area" className="ptb-100 slider_arrows_one">
         <div className="container">
-            <Heading heading="ToDay's Deal" para="See What Everyone Is Shopping from Andshop E-Commerce Today"/>
+            <Heading heading="ToDay's Deal" />
             <div className="row">
                 <div className="col-lg-12">
                     <div className="todays_slider">
