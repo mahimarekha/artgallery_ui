@@ -21,7 +21,7 @@ const TeamData =[
     },
     {
         // img:'https://artistimages.blob.core.windows.net/artistimage/1727689834974eee604_7688947dccc74a089914139fb0a56874~mv2.webp',
-       img:'https://apacnewsnetwork.com/wp-content/uploads/2024/11/News4.png',
+       img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMWkb2VNtbWeVuxaQzfMv_RO63mJzMDBk-EA&s',
        
         name:"Smita Sabharwal, IAS",
         posation:"Secretary to Government of Telangana",
