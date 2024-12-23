@@ -20,11 +20,12 @@ const TeamData =[
         subtitle:'Prohibition & Excise and Sports, Youth Services, Tourism & Culture Dept.,  Government of Telangana'
     },
     {
-        img:'https://artistimages.blob.core.windows.net/artistimage/1727689834974eee604_7688947dccc74a089914139fb0a56874~mv2.webp',
-        name:"Smt. VANI PRASAD, IAS",
-        posation:"Principal Secretary to Government of Telangana",
-        subtitle:`Youth Advancement, Tourism & Culture and Archeology Dept. &
-President, State Gallery of Art`
+        // img:'https://artistimages.blob.core.windows.net/artistimage/1727689834974eee604_7688947dccc74a089914139fb0a56874~mv2.webp',
+       img:'https://apacnewsnetwork.com/wp-content/uploads/2024/11/News4.png',
+       
+        name:"Smita Sabharwal, IAS",
+        posation:"Secretary to Government of Telangana",
+        subtitle:`Youth Advancement, Tourism & Culture Department Government of Telangana`
     },
     {
         img:'https://artistimages.blob.core.windows.net/artistimage/1727689924384Dr_K_Lakshmi, IAS.webp',
