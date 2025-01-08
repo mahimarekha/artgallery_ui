@@ -1,39 +1,39 @@
 export const MenuData = [
-    // {
-    //     name: "Home",
-    //     href: "/",
-    //     children: [
-    //         {
-    //             name: "Fashion",
-    //             href: "/"
-    //         },
-    //         {
-    //             name: "Furniture",
-    //             href: "/furniture"
-    //         },
-    //         {
-    //             name: "Electronics",
-    //             href: "/electronics"
-    //         },
-    //         {
-    //             name: "Grocery",
-    //             href: "/grocery"
-    //         },
-    //         {
-    //             name: "Pharmacy",
-    //             href: "/pharmacy"
-    //         },
-    //         {
-    //             name: "Jewllary",
-    //             href: "/jewllary"
-    //         },
-    //         {
-    //             name: "Baby Toys",
-    //             href: "/baby-toys"
-    //         },
+    {
+        name: "Home",
+        href: "/",
+        // children: [
+        //     {
+        //         name: "Fashion",
+        //         href: "/"
+        //     },
+        //     {
+        //         name: "Furniture",
+        //         href: "/furniture"
+        //     },
+        //     {
+        //         name: "Electronics",
+        //         href: "/electronics"
+        //     },
+        //     {
+        //         name: "Grocery",
+        //         href: "/grocery"
+        //     },
+        //     {
+        //         name: "Pharmacy",
+        //         href: "/pharmacy"
+        //     },
+        //     {
+        //         name: "Jewllary",
+        //         href: "/jewllary"
+        //     },
+        //     {
+        //         name: "Baby Toys",
+        //         href: "/baby-toys"
+        //     },
 
-    //     ]
-    // },
+        // ]
+    },
     {
         name: "About",
         href: "/about",
@@ -51,13 +51,22 @@ export const MenuData = [
         ]
     },
     {
-        name: "Artist Registarion",
-        href: "/artist",
-        mega_menu: false,
+        name: "Artist",
+        // href: "/artist",
+        // mega_menu: false,
         children: [
+            {
+                name: "Artist Registration",
+                href: "/artist"
+          },
+            {
+                name: "Artist To Search",
+                href: "/artisttosearch"
+          },
           
         ]
     },
+                  
     {
         name: "Gallery Booking",
         href: "/gallerybooking",
@@ -240,10 +249,11 @@ export const MenuData = [
         mega_menu: false,
         children: [
         ]
-    }
+    },
     // {
     //     name: "Pages",
     //     href: "#!",
+        
     //     children: [
     //         {
     //             name: "Vendor Dashboard",

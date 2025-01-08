@@ -6,6 +6,9 @@ import pMinDelay from 'p-min-delay';
 import GalleryBookingsMain from './page/gallerybooking';
 import GalleryPaintingsMain from './page/gallerypainting';
 import Artists from './page/artist';
+import ArtistRegistrationDetails from "./page/artisttosearch"
+import ArtistToSearchs from './component/VendorDashboard/ArtistToSearch';
+import ArtistImagess from './page/artistimages';
 import MonthCalendar from './page/blog/month-calender';
 import GalleryPainting from './component/VendorDashboard/GalleryPainting';
 
@@ -138,7 +141,9 @@ const App = () => {
             <Route path='/blog-list-view' exact component={BlogListView} />
             <Route path='/month-calender' exact component={MonthCalendars} />
             <Route path='/gallerybooking' exact component={GalleryBookingsMain} />
+            <Route path='/artistimages/:id' exact component={ArtistImagess} />
             <Route path='/artist' exact component={Artists} />
+            <Route path='/artisttosearch' exact component={ArtistRegistrationDetails} />
             <Route path='/blog-single-one' exact component={BlogSingleOnes} />
             <Route path='/vieweventdetails/:id' exact component={BlogSingleOnes} />
             <Route path='/blog-single-two' exact component={BlogSingleTwos} />

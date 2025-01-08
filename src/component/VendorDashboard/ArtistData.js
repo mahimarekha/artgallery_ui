@@ -150,9 +150,10 @@ const ArtistData = () => {
                                             <td>{data.placeOfBirth} </td> */}
                                            <td>{data.nationality}</td> 
                                            {/* <td>{data.approvalStatus}</td> */}
-                                            <td ><Button variant="danger" onClick={() => handleAccept(data)} className="ms-2">
+                                            <td >{data.userStatus ? "Approved":
+                                                <Button variant="danger" onClick={() => handleAccept(data)} className="ms-2">
                                                             Approve
-                                                        </Button>
+                                                        </Button>}
                                                         
 
                                                     

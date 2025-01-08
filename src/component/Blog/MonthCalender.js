@@ -205,14 +205,17 @@ class MonthCalendar extends React.Component {
 
     return <div className="body">{rows}</div>;
   }
-
   onDateClick = (day) => {
-   // this.refs.overlay.hide();
- //  history.push("/blog-list-view?currentMonth=" + day);
-    // this.setState({
-    //   selectedDate: day
-    // });
+    const formattedDate = dateFns.format(day, "YYYY-MM-DD");
+    this.props.history.push(`/blog-list-view?currentMonth=${formattedDate}`);
   };
+//   onDateClick = (day) => {
+//    // this.refs.overlay.hide();
+//  //  history.push("/blog-list-view?currentMonth=" + day);
+//     // this.setState({
+//     //   selectedDate: day
+//     // });
+//   };
 
   nextMonth = () => {
     this.setState({

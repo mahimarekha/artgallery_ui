@@ -105,14 +105,17 @@ const Header = () => {
                         <div className="container">
                             <div className="row">
                                 <div className="col-12 d-flex align-items-center justify-content-between">
+                                <img style={{height:"100px"}} src="https://artistimages.blob.core.windows.net/artistimage/WhatsApp Image 2024-12-24 at 10.51.40 AM.jpeg" alt="Example" />
+
                                     <div className="header-logo">
-                                        
+
                                         <div className="logo">
                                             <Link to="/"><img src={logo} alt="logo" /></Link>
                                         </div>
                                     </div>
+
                                     <div>
-                                       
+
                                     <div style={{color:"black", fontSize: "29px", fontWeight:"500"}}>
                                       <div>
                                        State Gallery of ART
@@ -128,11 +131,16 @@ const Header = () => {
                                                 {MenuData.map((item, index) => (
                                                     <NaveItems item={item} key={index} />
                                                 ))}
+
                                             </ul>
+
                                         </nav>
+                                        
+                                        
                                     </div>
 
                                     <ul className="header-action-link action-color--black action-hover-color--golden">
+                                    
                                     {/* <li>
                                    <Link to={"/login"}>Login</Link>
                         
@@ -237,9 +245,24 @@ const Header = () => {
                                     
 
                                 </li>
-                                <li >
+                                {/* <li >
                                     <a href="/artist" onClick={() => handleShow("shop")}><span>Artist Registration</span></a>
+                                </li> */}
+                                
+                                <li>
+                                    <a href="#!" onClick={() => handleShow("pages")}><span>Artist </span></a>
+
+                                    {
+                                        show === "pages" ?
+                                            <ul className="mobile-sub-menu">
+                                                <li><Link to="/artist">Artist Registration</Link></li>
+                                                <li><Link to="/vendor-dashboard">Artist To Search</Link></li>
+                                                
+                                            </ul>
+                                            : null
+                                    }
                                 </li>
+                                
                                 <li >
                                     <a href="/gallerybooking" onClick={() => handleShow("shop")}><span>Gallery Booking</span></a>
                                 </li>

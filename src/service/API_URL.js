@@ -18,7 +18,8 @@ export const ARTIST ={
     GET:"/artiest",
       POST:"/artiest",
        ARTISTGET:"/artiest/getartiest",
-       ARTISTUPDATE:"/artiest/updateartist"
+       ARTISTUPDATE:"/artiest/updateartist",
+       FINDARTIEST:"/artiest/getartiestDetails"
 }
 export const GALLERY_COLLECTION ={
   GET:"/gallerycollection",

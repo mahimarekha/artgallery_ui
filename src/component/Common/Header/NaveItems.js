@@ -36,16 +36,16 @@ const NaveItems = (props) => {
                 </li>
             ) : (
                 <li className="has-dropdown">
-                                                    <Link to={props.item.href} className="main-menu-link">{props.item.name}</Link>
-
-                    {/* <a href="#!" className="main-menu-link">{props.item.name} <i className="fa fa-angle-down"></i></a>
+                                                    {/* <Link to={props.item.href} className="main-menu-link">{props.item.name}</Link> */}
+{props.item.children && props.item.children.length?<><a href="#!" className="main-menu-link">{props.item.name} <i className="fa fa-angle-down"></i></a>
                     <ul className="sub-menu">
                         {props.item.children.map((data, index) => (
                             <li key={index}>
                                 <Link to={data.href}>{data.name}</Link>
                             </li>
                         ))}
-                    </ul> */}
+                    </ul></>: <Link to={props.item.href} className="main-menu-link">{props.item.name}</Link>}
+                    
                 </li>
 
             )}
