@@ -83,7 +83,31 @@ const Gallery = () => {
             setGalleryList([]);
         }
     }, []);
+    const validateForm = () => {
+        let errors = {};
+        let formIsValid = true;
+        
+        if (!formData.galleryName) {
+            formIsValid = false;
+            errors["galleryName"] = " required";
+        } 
+        if (!formData.price) {
+            formIsValid = false;
+            errors["price"] = " required";
+        }
+        if (!formData.ac) {
+            formIsValid = false;
+            errors["ac"] = " required";
+        }
+        if (!formData.type) {
+            formIsValid = false;
+            errors["type"] = "type is required";
+        }
+       
 
+        setFormErrors(errors);
+        return formIsValid;
+    };
     const handleFileChange = (event) => {
         setFile(event.target.files[0]);
     };
@@ -149,7 +173,9 @@ const Gallery = () => {
         event.preventDefault();
 
         setValidated(true);
-        // if (validateForm()) {
+        if(!validateForm()){
+            return;
+                    }
         if (formData.id) {
             formData.profile = logourl ? logourl : formData.profile;
             CommonService.putRequest(GALLERY.POST + "/" + formData.id, formData).then((res) => {
@@ -201,10 +227,13 @@ const Gallery = () => {
 
 
     const editGallery = (gallery) => {
-        debugger
+      
         setFormData(gallery);
         handleShow();
     }
+
+
+
 
 
     const deleteGallery = (gallery) => {
@@ -304,6 +333,9 @@ const Gallery = () => {
                                                                 onChange={handleChange}
                                                                 isInvalid={!!formErrors.galleryName}
                                                             />
+                                                            <Form.Control.Feedback type="invalid">
+                                                    {formErrors.galleryName}
+                                                </Form.Control.Feedback>
                                                         </Col>
                                                         <Col >
                                                         {/* key={index}
@@ -330,6 +362,9 @@ const Gallery = () => {
                                                              ))}
                                                         </Form.Control>
                                                     </Form.Group>
+                                                    <Form.Control.Feedback type="invalid">
+                                                    {formErrors.type}
+                                                </Form.Control.Feedback>
                                                                 {/* <Form.Group controlId="formSelect">
                                                                     <Form.Control
                                                                         as="select"
@@ -358,6 +393,9 @@ const Gallery = () => {
                                                                 onChange={handleChange}
                                                                 isInvalid={!!formErrors.price}
                                                             />
+                                                            <Form.Control.Feedback type="invalid">
+                                                    {formErrors.price}
+                                                </Form.Control.Feedback>
                                                         </Col>
                                                     
                                                    
@@ -370,6 +408,9 @@ const Gallery = () => {
                                                                 onChange={handleChange}
                                                                 isInvalid={!!formErrors.ac}
                                                             />
+                                                            <Form.Control.Feedback type="invalid">
+                                                    {formErrors.ac}
+                                                </Form.Control.Feedback>
                                                         </Col>
 </Row>
 <br></br>

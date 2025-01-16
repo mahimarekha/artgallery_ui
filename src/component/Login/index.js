@@ -79,7 +79,7 @@ const LoginArea = () => {
           text: 'Welcome ' + res.user.name
         })
        if( res.user.role === 'admin'){
-        history.push("/vendor/event");
+        history.push("/vendor/adminupload");
        }else  if( res.user.role === 'artist'){
         history.push("/vendor/artist-registration-detail");
        }

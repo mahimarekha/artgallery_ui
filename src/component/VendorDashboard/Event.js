@@ -128,18 +128,20 @@ const Event = () => {
         if (!formData.eventName) {
             formIsValid = false;
             errors["eventName"] = "event name is required";
-        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        } 
+        if (!formData.startDate) {
             formIsValid = false;
-            errors["email"] = "Email is invalid";
+            errors["startDate"] = "start Date is required";
         }
-
-        if (!formData.password) {
+        if (!formData.endDate) {
             formIsValid = false;
-            errors["password"] = "Password is required";
-        } else if (formData.password.length < 6) {
-            formIsValid = false;
-            errors["password"] = "Password must be at least 6 characters";
+            errors["endDate"] = "endDate is required";
         }
+        if (!formData.organizer) {
+            formIsValid = false;
+            errors["organizer"] = "organizer is required";
+        }
+       
 
         setFormErrors(errors);
         return formIsValid;
@@ -184,10 +186,14 @@ const Event = () => {
 
 
     }
+    
     const handleSubmit = (event) => {
         event.preventDefault();
 
         setValidated(true);
+        if(!validateForm()){
+return;
+        }
         if(formData.id){
             formData.imageURL =   logourl ? logourl :formData.imageURL;
             CommonService.patchRequest(EVENTS.POST+"/"+formData.id, formData).then((res) => {
@@ -419,6 +425,9 @@ const Event = () => {
                                                             onChange={handleChange}
                                                             isInvalid={!!formErrors.eventName}
                                                         />
+                                                           <Form.Control.Feedback type="invalid">
+                                                    {formErrors.eventName}
+                                                </Form.Control.Feedback>
                                                     </Col>
                                                     <Col xs={6} md={6}>
                                                         <Form.Control
@@ -429,6 +438,9 @@ const Event = () => {
                                                             onChange={handleChange}
                                                             isInvalid={!!formErrors.organizer}
                                                         />
+                                                        <Form.Control.Feedback type="invalid">
+                                                    {formErrors.organizer}
+                                                </Form.Control.Feedback>
                                                     </Col>
                                                 </Row>
                                                 <br></br>
@@ -440,10 +452,13 @@ const Event = () => {
                                                             name="startDate"
                                                             placeholder="DateRange"
                                                             value={formData.startDate}
-                                                            // isInvalid={!!formErrors.startDate}
+                                                             isInvalid={!!formErrors.startDate}
 
                                                             onChange={handleChange}
                                                         />
+                                                        <Form.Control.Feedback type="invalid">
+                                                    {formErrors.startDate}
+                                                </Form.Control.Feedback>
                                                     </Col>
                                                     <Col xs={6} md={6}>
                                                         <Form.Control
@@ -452,10 +467,13 @@ const Event = () => {
                                                             name="endDate"
                                                             placeholder="DateRange"
                                                             value={formData.endDate}
-                                                            // isInvalid={!!formErrors.startDate}
+                                                             isInvalid={!!formErrors.startDate}
 
                                                             onChange={handleChange}
                                                         />
+                                                        <Form.Control.Feedback type="invalid">
+                                                    {formErrors.endDate}
+                                                </Form.Control.Feedback>
                                                     </Col>
 
                                                 </Row>

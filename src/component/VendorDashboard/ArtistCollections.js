@@ -65,7 +65,28 @@ const ArtistCollections = () => {
             getArtistRegistrationDetailList();
         })
     };
+    const validateForm = () => {
+        let errors = {};
+        let formIsValid = true;
+       
+        if (!formData.title) {
+            formIsValid = false;
+            errors["title"] = "name is required";
+        } 
+        if (!formData.medium) {
+            formIsValid = false;
+            errors["medium"] = " required";
+        }
+       
+        if (!formData.price) {
+            formIsValid = false;
+            errors["price"] = "price is required";
+        }
+       
 
+        setFormErrors(errors);
+        return formIsValid;
+    };
     const handleReject = () => {
         setIsAccepted(false);
     };
@@ -157,12 +178,44 @@ const ArtistCollections = () => {
 
 
     };
-   
+    const editArtistCollections = (artistCollections) => {
+        debugger
+        setFormData(artistCollections);
+        handleShow();
+    }
+    const deleteArtistCollections = (artistCollections) => {
+        const userConfirmed = window.confirm('Do you want to delete the record?');
+
+        if (userConfirmed) {
+            CommonService.deleteRequest(GALLERY_COLLECTION.POST + "/" + artistCollections.id).then((res) => {
+
+                setShowSuccess(true);
+
+                setValidated(false);
+                handleClose();
+                getArtistRegistrationDetailList();
+            }).catch((err) => {
+
+                if (err.response.data.message) {
+                    alert(err.response.data.message);
+                }
+
+            });
+        } else {
+            // User clicked "Cancel"
+            console.log('User canceled the action.');
+            // You can handle the cancelation here
+        }
+
+
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
 
         setValidated(true);
-        // if (validateForm()) {
+        if(!validateForm()){
+            return;
+                    }
             formData.isUploadAdmin = true;
         if (formData.id) {
            // formData.isUploadAdmin = true;
@@ -177,7 +230,7 @@ const ArtistCollections = () => {
                     price: '',
                     height: '',
                     width: '',
-                    price: '',
+                   
                     style: '',
                     artworkCode: '',
                     sizeType:'',
@@ -206,7 +259,7 @@ const ArtistCollections = () => {
                     artworkCode: '',
                     sizeType: '',
                     style: '',
-                    price: '',
+                    
                     height: '',
                     width: '',
                     price: '',
@@ -236,7 +289,7 @@ const ArtistCollections = () => {
                 <div className="col-lg-12 col-md-12 col-sm-12 col-12">
                     <div className="vendor_order_boxed pt-4">
                         <div className="mb-2">
-                            <h4>Collection Details</h4>
+                            <h4>Artist Collection</h4>
 
                             {getRole === 'admin'  ? <button
                                 // to="/vendor/add-products"
@@ -250,8 +303,6 @@ const ArtistCollections = () => {
                                     <tr>
                                     <th scope="col">Image</th>
                                 
-                                        <th scope="col">Title</th>
-
                                         <th scope="col">Artiest Name</th>
 
 
@@ -262,6 +313,7 @@ const ArtistCollections = () => {
                                         <th scope="col">Style</th>
 
                                         <th scope="col">Price</th>
+                                        <th scope="col">Edit/Delete</th>
                                         {/* <th scope="col">Current Status</th>
                                         <th scope="col">Action</th> */}
                                     </tr>
@@ -272,14 +324,15 @@ const ArtistCollections = () => {
                                         <tr key={index}>
                                                 <td>{data.imageURL.length ? <img src={data.imageURL[0].imageURL}/>:''}</td>
                                             <td>{data.title}</td>
-                                            <td>{data.artiestId?.firstName } {data.artiestId?.middleName } {data.artiestId?.lastName }</td>
+                                            {/* <td>{data.artiestId?.firstName } {data.artiestId?.middleName } {data.artiestId?.lastName }</td> */}
                                             <td>{data.medium} </td>
                                             <td>{data.year} </td>
                                             <td>{data.height} *  {data.width}</td>
 
                                             <td>{data.style}</td>
                                             <td>{data.price}</td>
-                                            
+                                            <td><i className="fa fa-edit" onClick={() => editArtistCollections(data)}></i><button style={{ background: "Transparent" }}><i className="fa fa-trash" onClick={() => deleteArtistCollections(data)}></i></button></td>
+
 
 
                                         </tr>
@@ -293,7 +346,7 @@ const ArtistCollections = () => {
             </div>
             <Modal show={show} onHide={handleClose} size="sm">
                 <Modal.Header closeButton  >
-                    <Modal.Title >Add Gallery</Modal.Title>
+                    <Modal.Title >Add Artist</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Container>
@@ -307,12 +360,15 @@ const ArtistCollections = () => {
                                             <Col >
                                                 <Form.Control
                                                     type="text" style={{ width: "100%" }}
-                                                    placeholder="Enter Gallery name"
+                                                    placeholder="Enter Artist name"
                                                     name="title"
                                                     value={formData.title}
                                                     onChange={handleChange}
                                                     isInvalid={!!formErrors.title}
                                                 />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.title}
+                                                </Form.Control.Feedback>
                                             </Col>
                                             <Col >
                                                 {/* key={index}
@@ -338,7 +394,12 @@ const ArtistCollections = () => {
                                                             <option value={data} key={index}> {data}</option>
                                                         ))}
                                                     </Form.Control>
+                                                    
                                                 </Form.Group>
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.medium}
+                                                </Form.Control.Feedback>
+                                               
                                                 {/* <Form.Group controlId="formSelect">
                                                                     <Form.Control
                                                                         as="select"
@@ -354,6 +415,7 @@ const ArtistCollections = () => {
                                                                         ))}
                                                                     </Form.Control>
                                                                 </Form.Group> */}
+                                                                
                                             </Col>
                                         </Row>
                                         <br></br>
@@ -367,6 +429,9 @@ const ArtistCollections = () => {
                                                     onChange={handleChange}
                                                     isInvalid={!!formErrors.price}
                                                 />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {formErrors.price}
+                                                </Form.Control.Feedback>
                                             </Col>
                                             <Col >
                                                 <Form.Control
